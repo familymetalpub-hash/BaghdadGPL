@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ADMIPRO GPL v8 — إدارة العملاء (نظام موحد)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#16324f; --navy2:#1e3d59; --amber:#f0a500; --bg:#eef2f7;
+  --card:#ffffff; --line:#e3e8f0; --txt:#22303e; --mut:#7b8a99;
+  --green:#1f9d55; --red:#d64545; --blue:#2563eb; --orange:#e07b00; --purple:#7c3aed;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:'Cairo','Segoe UI',Tahoma,Arial,sans-serif;
+  background:var(--bg); color:var(--txt); font-size:15px; line-height:1.6;
+}
+/* ===== Topbar ===== */
+.topbar{
+  background:linear-gradient(135deg,var(--navy),var(--navy2));
+  color:#fff; padding:14px 22px; display:flex; align-items:center; gap:16px; flex-wrap:wrap;
+  box-shadow:0 2px 10px rgba(0,0,0,.18); position:sticky; top:0; z-index:50;
+}
+.topbar .brand{display:flex; align-items:center; gap:12px; margin-inline-end:auto}
+.topbar .logo{
+  width:44px;height:44px;border-radius:10px;background:var(--amber);color:var(--navy);
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:19px;
+}
+.topbar h1{font-size:19px;margin:0;font-weight:800}
+.topbar .sub{font-size:12px;opacity:.75;margin:0}
+.btn{
+  border:0;border-radius:9px;padding:9px 16px;font-family:inherit;font-size:14px;font-weight:700;
+  cursor:pointer;transition:.15s;display:inline-flex;align-items:center;gap:7px;
+}
+.btn-primary{background:var(--amber);color:#20304a}
+.btn-primary:hover{filter:brightness(1.08)}
+.btn-ghost{background:rgba(255,255,255,.12);color:#fff}
+.btn-ghost:hover{background:rgba(255,255,255,.22)}
+.btn-soft{background:#eef2f7;color:var(--navy);border:1px solid var(--line)}
+.btn-soft:hover{background:#e2e9f2}
+.btn-danger{background:#fdeaea;color:var(--red);border:1px solid #f5c6c6}
+.btn-danger:hover{background:#fadcdc}
+.btn-green{background:var(--green);color:#fff}
+.btn-green:hover{filter:brightness(1.08)}
+/* ===== Layout ===== */
+.wrap{max-width:1200px;margin:22px auto;padding:0 16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:0 2px 8px rgba(22,50,79,.06);margin-bottom:18px;overflow:hidden}
+.card-h{padding:14px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.card-h h2{margin:0;font-size:16.5px;color:var(--navy)}
+.card-h .hint{font-size:12px;color:var(--mut)}
+.card-b{padding:16px 18px}
+/* ===== Filters ===== */
+.filters{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.search-box{position:relative;flex:1 1 320px;min-width:250px}
+.search-box input{
+  width:100%;padding:10px 38px 10px 12px;border:1.5px solid var(--line);border-radius:10px;
+  font-family:inherit;font-size:14px;background:#fbfcfe;
+}
+.search-box input:focus{outline:none;border-color:var(--amber);background:#fff}
+.search-box .s-ico{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:15px}
+.seg{display:inline-flex;border:1.5px solid var(--line);border-radius:10px;overflow:hidden;background:#fbfcfe}
+.seg button{
+  border:0;background:transparent;padding:9px 14px;font-family:inherit;font-size:13px;font-weight:700;
+  color:var(--mut);cursor:pointer;border-inline-start:1px solid var(--line);
+}
+.seg button:first-child{border-inline-start:0}
+.seg button.on{background:var(--navy2);color:#fff}
+.dinput{
+  padding:9px 12px;border:1.5px solid var(--line);border-radius:10px;font-family:inherit;font-size:13.5px;
+  background:#fbfcfe;color:var(--txt);
+}
+.dinput:focus{outline:none;border-color:var(--amber)}
+.periode-label{
+  font-size:12.5px;background:#fff8e6;color:#8a6400;border:1px solid #f2ddab;
+  padding:5px 12px;border-radius:99px;font-weight:700;
+}
+/* ===== Tables ===== */
+.tbl-wrap{overflow-x:auto}
+table.tbl{width:100%;border-collapse:collapse;min-width:760px}
+.tbl thead th{
+  background:var(--navy2);color:#fff;font-size:13px;font-weight:700;padding:11px 12px;text-align:right;white-space:nowrap;
+}
+.tbl tbody td{padding:11px 12px;border-bottom:1px solid var(--line);font-size:14px;vertical-align:middle}
+.tbl tbody tr:last-child td{border-bottom:0}
+.tbl tbody tr.rowlink{cursor:pointer;transition:background .12s}
+.tbl tbody tr.rowlink:hover{background:#f6f9fd}
+.tbl .num{text-align:center}
+.ref-pill{background:#eef2f7;border:1px solid var(--line);border-radius:7px;padding:2px 9px;font-size:12.5px;font-weight:700;color:var(--navy);white-space:nowrap}
+.name-link{color:var(--navy);font-weight:800;text-decoration:none;border-bottom:2px dotted transparent}
+.name-link:hover{color:var(--amber);border-bottom-color:var(--amber)}
+.tel{direction:ltr;unicode-bidi:embed;font-weight:600;white-space:nowrap}
+.debt{background:#fdecec;color:var(--red);border:1px solid #f3c3c3;border-radius:99px;padding:3px 12px;font-weight:800;font-size:13px;white-space:nowrap}
+.zero{background:#e8f7ee;color:var(--green);border:1px solid #bfe6cd;border-radius:99px;padding:3px 14px;font-weight:800;font-size:13px;white-space:nowrap}
+.badge{display:inline-block;border-radius:7px;padding:3px 10px;font-size:12px;font-weight:800;white-space:nowrap}
+.b-montage{background:#e3edff;color:var(--blue);border:1px solid #c4d8ff}
+.b-entretien{background:#e6f7ec;color:var(--green);border:1px solid #bfe6cd}
+.b-reparation{background:#fdeedd;color:var(--orange);border:1px solid #f4d5a8}
+.b-epreuve{background:#f1e9fd;color:var(--purple);border:1px solid #dcc9f7}
+.acts{white-space:nowrap;text-align:center}
+.icon-btn{
+  border:1px solid var(--line);background:#fbfcfe;border-radius:8px;width:32px;height:32px;cursor:pointer;
+  font-size:14px;margin-inline-start:5px;transition:.12s;display:inline-flex;align-items:center;justify-content:center;
+}
+.icon-btn:hover{background:#eef2f7}
+.icon-btn.del:hover{background:#fdeaea;border-color:#f3c3c3}
+.empty-row td{text-align:center;padding:34px 12px;color:var(--mut);font-size:14.5px}
+/* ===== Summary bar ===== */
+.sumbar{display:flex;gap:10px;flex-wrap:wrap;padding:12px 18px;background:#f7fafd;border-top:1px solid var(--line)}
+.sum-item{background:#fff;border:1px solid var(--line);border-radius:10px;padding:7px 15px;font-size:13px;display:flex;gap:8px;align-items:center}
+.sum-item b{font-size:14.5px;color:var(--navy)}
+.sum-item .lbl{color:var(--mut);font-weight:700;font-size:12px}
+/* ===== Client view ===== */
+.back-btn{
+  background:#fff;border:1.5px solid var(--line);border-radius:10px;padding:8px 16px;font-family:inherit;
+  font-weight:700;font-size:13.5px;color:var(--navy);cursor:pointer;margin-bottom:14px;
+}
+.back-btn:hover{border-color:var(--amber);color:var(--amber)}
+.chead{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start}
+.chead .avatar{
+  width:58px;height:58px;border-radius:14px;background:linear-gradient(135deg,var(--navy2),#2c5a85);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;flex-shrink:0;
+}
+.chead .infos{flex:1;min-width:230px}
+.chead h3{margin:0 0 2px;font-size:19px;color:var(--navy)}
+.chead .meta{font-size:13px;color:var(--mut);display:flex;gap:14px;flex-wrap:wrap;margin-top:5px}
+.veh-tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}
+.veh-tag{background:#eef2f7;border:1px dashed #c6d2e0;border-radius:8px;padding:3px 11px;font-size:12.5px;font-weight:700;color:var(--navy);direction:ltr;unicode-bidi:embed}
+.veh-tag small{color:var(--mut);font-weight:600}
+.cstats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-top:14px}
+.stat{background:#f7fafd;border:1px solid var(--line);border-radius:11px;padding:10px 14px;text-align:center}
+.stat .lbl{font-size:11.5px;color:var(--mut);font-weight:700}
+.stat .val{font-size:17px;font-weight:800;color:var(--navy);margin-top:2px}
+.stat .val.g{color:var(--green)} .stat .val.r{color:var(--red)}
+/* chips */
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{
+  border:1.5px solid var(--line);background:#fbfcfe;border-radius:99px;padding:6px 15px;font-family:inherit;
+  font-size:13px;font-weight:700;color:var(--mut);cursor:pointer;transition:.12s;
+}
+.chip.on{background:var(--navy2);border-color:var(--navy2);color:#fff}
+.chip:hover:not(.on){border-color:var(--amber);color:var(--amber)}
+/* op detail row */
+tr.opdetail>td{background:#f8fafc;padding:0 18px 16px;border-bottom:2px solid #dbe4ee}
+.opdetail .dbox{border:1px solid #dde5ef;border-radius:12px;background:#fff;padding:14px 16px;margin-top:13px}
+.opdetail h4{margin:0 0 10px;font-size:14px;color:var(--navy);display:flex;align-items:center;gap:8px}
+table.ptbl{width:100%;border-collapse:collapse;max-width:720px}
+.ptbl th{background:#eef2f7;color:var(--navy);font-size:12.5px;padding:8px 10px;text-align:right;border:1px solid var(--line)}
+.ptbl td{padding:8px 10px;font-size:13.5px;border:1px solid var(--line)}
+.ptbl td.num, .ptbl th.num{text-align:center}
+.ptbl td.prod{font-weight:700;color:#33475b;direction:ltr;text-align:left;unicode-bidi:embed}
+.ptbl tfoot td{background:#f7fafd;font-weight:800}
+.ptbl tfoot .rest{color:var(--red)}
+.opnote{font-size:13px;color:var(--mut);margin:10px 0 0}
+.dbox .dbtns{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap}
+/* ===== Modals ===== */
+.overlay{
+  position:fixed;inset:0;background:rgba(15,30,48,.55);z-index:100;display:flex;align-items:flex-start;
+  justify-content:center;padding:34px 14px;overflow:auto;backdrop-filter:blur(2px);
+}
+.modal{
+  background:#fff;border-radius:16px;width:100%;max-width:640px;box-shadow:0 18px 50px rgba(0,0,0,.3);
+  animation:pop .16s ease;
+}
+@keyframes pop{from{transform:scale(.96);opacity:0}to{transform:scale(1);opacity:1}}
+.modal-h{padding:15px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px}
+.modal-h h3{margin:0;font-size:16.5px;color:var(--navy);flex:1}
+.modal-x{border:0;background:#f1f4f8;border-radius:8px;width:32px;height:32px;font-size:16px;cursor:pointer;color:var(--mut)}
+.modal-x:hover{background:#fdeaea;color:var(--red)}
+.modal-b{padding:18px 20px;max-height:70vh;overflow:auto}
+.modal-f{padding:14px 20px;border-top:1px solid var(--line);display:flex;gap:10px;justify-content:flex-start}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fgrid .full{grid-column:1/-1}
+.fld label{display:block;font-size:12.5px;font-weight:800;color:var(--navy);margin-bottom:5px}
+.fld label .req{color:var(--red)}
+.fld input,.fld select,.fld textarea{
+  width:100%;padding:9px 12px;border:1.5px solid var(--line);border-radius:9px;font-family:inherit;font-size:14px;background:#fbfcfe;
+}
+.fld input:focus,.fld select:focus,.fld textarea:focus{outline:none;border-color:var(--amber);background:#fff}
+.vline,.pline{display:grid;gap:8px;margin-bottom:9px;align-items:center}
+.vline{grid-template-columns:1fr 1fr 36px}
+.pline{grid-template-columns:1fr 74px 118px 118px 36px}
+.pline input,.vline input{padding:8px 10px;border:1.5px solid var(--line);border-radius:8px;font-family:inherit;font-size:13.5px;background:#fbfcfe}
+.pline input:focus,.vline input:focus{outline:none;border-color:var(--amber)}
+.pline .ltot{font-size:12.5px;font-weight:800;color:var(--navy);text-align:center;background:#f7fafd;border:1px dashed var(--line);border-radius:8px;padding:8px 4px}
+.mini-x{border:1px solid #f3c3c3;background:#fdeaea;color:var(--red);border-radius:8px;width:34px;height:34px;cursor:pointer;font-size:15px}
+.mini-x:hover{background:#fadcdc}
+.sub-t{font-size:13px;font-weight:800;color:var(--navy);margin:16px 0 8px;display:flex;align-items:center;gap:8px}
+.link-add{background:none;border:0;color:var(--blue);font-family:inherit;font-weight:800;font-size:12.5px;cursor:pointer;padding:2px 4px}
+.link-add:hover{text-decoration:underline}
+.totals-box{background:#f7fafd;border:1px solid var(--line);border-radius:11px;padding:12px 16px;margin-top:14px;display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
+.totals-box .t{text-align:center}
+.totals-box .lbl{font-size:11.5px;color:var(--mut);font-weight:700}
+.totals-box .val{font-size:16px;font-weight:800;color:var(--navy)}
+.totals-box .val.r{color:var(--red)} .totals-box .val.g{color:var(--green)}
+/* ===== Toast ===== */
+#toast{
+  position:fixed;bottom:26px;right:50%;transform:translateX(50%) translateY(80px);background:var(--navy);color:#fff;
+  padding:11px 24px;border-radius:12px;font-weight:700;font-size:14px;box-shadow:0 8px 26px rgba(0,0,0,.3);
+  opacity:0;transition:.25s;z-index:300;pointer-events:none;max-width:90vw;text-align:center;
+}
+#toast.show{opacity:1;transform:translateX(50%) translateY(0)}
+footer{ text-align:center;color:var(--mut);font-size:12.5px;padding:8px 14px 26px }
+footer b{color:var(--navy)}
+/* ===== Print (فاتورة) ===== */
+#print-area{display:none}
+@media print{
+  body *{visibility:hidden}
+  #print-area,#print-area *{visibility:visible}
+  #print-area{display:block !important;position:absolute;top:0;right:0;left:0;background:#fff}
+  .inv{font-family:'Cairo',Tahoma,sans-serif;color:#111;padding:20px 26px}
+  .inv-head{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid #16324f;padding-bottom:12px}
+  .inv-head h1{margin:0;font-size:22px;color:#16324f}
+  .inv-head .co{font-size:12.5px;color:#444}
+  .inv-title{text-align:center;font-size:19px;font-weight:800;margin:16px 0 4px;letter-spacing:1px}
+  .inv-meta{display:flex;justify-content:space-between;font-size:13px;margin-bottom:12px}
+  .inv-block{border:1px solid #999;border-radius:8px;padding:8px 14px;font-size:13px;margin-bottom:12px}
+  .inv-block b{color:#16324f}
+  table.inv-t{width:100%;border-collapse:collapse;font-size:13px}
+  .inv-t th{background:#16324f;color:#fff;padding:7px 9px;border:1px solid #16324f;text-align:right}
+  .inv-t td{padding:7px 9px;border:1px solid #999}
+  .inv-t td.ltr{direction:ltr;text-align:left}
+  .inv-t .num{text-align:center}
+  .inv-tot{margin-top:10px;width:290px;margin-inline-start:auto;border-collapse:collapse;font-size:13.5px}
+  .inv-tot td{border:1px solid #999;padding:6px 12px}
+  .inv-tot .rest{color:#c22;font-weight:800}
+  .inv-foot{margin-top:34px;display:flex;justify-content:space-between;font-size:12.5px;color:#333}
+  .inv-sig{border-top:1px dotted #555;padding-top:5px;width:170px;text-align:center}
+}
+@media (max-width:640px){
+  .fgrid{grid-template-columns:1fr}
+  .pline{grid-template-columns:1fr 60px 96px 96px 34px}
+  .topbar{padding:12px 14px}
+}
+</style>
+</head>
+<body>
+
+<!-- ======================= Topbar ======================= -->
+<div class="topbar">
+  <div class="brand">
+    <div class="logo">FM</div>
+    <div>
+      <h1>ADMIPRO GPL <span style="color:var(--amber)">v8</span> — العملاء والفواتير</h1>
+      <p class="sub">نظام موحّد — يغني عن الصفحات المنفصلة (Montage / Réparation / Épreuve) — Family Metal · Baghdad GPL</p>
+    </div>
+  </div>
+  <button class="btn btn-ghost" onclick="exportData()" title="حفظ نسخة احتياطية">⬇ تصدير</button>
+  <button class="btn btn-ghost" onclick="document.getElementById('import-file').click()" title="استعادة نسخة احتياطية">⬆ استيراد</button>
+  <input type="file" id="import-file" accept=".json,application/json" style="display:none" onchange="importData(this)">
+  <button class="btn btn-primary" onclick="openClientModal()">➕ إضافة عميل</button>
+</div>
+
+<div class="wrap">
+
+  <!-- ======================= 1) Journal de ventes ======================= -->
+  <div id="view-journal">
+
+    <div class="card">
+      <div class="card-h">
+        <h2>📒 يومية المبيعات — Journal de ventes</h2>
+        <span class="hint">اضغط على اسم العميل لفتح مساحته الخاصة (جميع عملياته موحّدة في مكان واحد)</span>
+      </div>
+      <div class="card-b">
+        <div class="filters">
+          <div class="search-box">
+            <span class="s-ico">🔍</span>
+            <input id="q" type="text" autocomplete="off"
+                   placeholder="بحث بالاسم / رقم الهاتف / الريفيرونس / ماتريكيل السيارة..."
+                   oninput="setQ(this.value)">
+          </div>
+
+          <div class="seg" id="seg-date">
+            <button class="on" data-mode="all" onclick="setDateMode('all')">كل التواريخ</button>
+            <button data-mode="month" onclick="setDateMode('month')">حسب الشهر</button>
+            <button data-mode="range" onclick="setDateMode('range')">من — إلى</button>
+          </div>
+
+          <input type="month" id="f-month" class="dinput" style="display:none" onchange="setMonth(this.value)">
+          <input type="date"  id="f-from"  class="dinput" style="display:none" onchange="setFrom(this.value)">
+          <input type="date"  id="f-to"    class="dinput" style="display:none" onchange="setTo(this.value)">
+
+          <span id="periode-label" class="periode-label" style="display:none"></span>
+          <button class="btn btn-soft" onclick="resetFilters()">✖ مسح الفلاتر</button>
+        </div>
+      </div>
+
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead>
+            <tr>
+              <th>الريفيرونس</th>
+              <th>الاسم الكامل</th>
+              <th>رقم الهاتف</th>
+              <th class="num">عدد العمليات</th>
+              <th class="num">المبلغ الإجمالي</th>
+              <th class="num">باقي المبلغ</th>
+              <th class="num">إجراءات</th>
+            </tr>
+          </thead>
+          <tbody id="clients-body"></tbody>
+        </table>
+      </div>
+
+      <div class="sumbar" id="journal-sum"></div>
+    </div>
+
+  </div>
+
+  <!-- ======================= 2) مساحة العميل (المكتب الموحد) ======================= -->
+  <div id="view-client" style="display:none">
+
+    <button class="back-btn" onclick="backToJournal()">↩ رجوع إلى يومية المبيعات</button>
+
+    <div class="card">
+      <div class="card-b">
+        <div class="chead">
+          <div class="avatar" id="c-avatar">👤</div>
+          <div class="infos">
+            <h3 id="c-nom">—</h3>
+            <div class="meta">
+              <span>🗂 الريفيرونس: <b id="c-ref" style="color:var(--navy)">—</b></span>
+              <span>📞 <b class="tel" id="c-tel">—</b></span>
+            </div>
+            <div class="veh-tags" id="c-vehs"></div>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn btn-soft" onclick="openClientModal(state.clientId)">✏️ تعديل العميل</button>
+            <button class="btn btn-primary" onclick="openOpModal(state.clientId)">➕ إضافة عملية / فاتورة</button>
+          </div>
+        </div>
+        <div class="cstats" id="c-stats"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-h">
+        <h2>🧾 عمليات العميل (موحّدة)</h2>
+        <span class="hint">اضغط على العملية لعرض المنتجات المستهلكة فيها</span>
+        <div class="chips" id="op-chips" style="margin-inline-start:auto"></div>
+      </div>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead>
+            <tr>
+              <th>التاريخ</th>
+              <th>نوع العملية</th>
+              <th>الماتريكيل</th>
+              <th class="num">المنتجات</th>
+              <th class="num">المبلغ</th>
+              <th class="num">المدفوع</th>
+              <th class="num">الباقي</th>
+              <th class="num">⚙</th>
+            </tr>
+          </thead>
+          <tbody id="ops-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<footer>
+  <b>ADMIPRO GPL v8 — Clients Unifié</b> · البيانات محفوظة محلياً في هذا المتصفح — احفظ نسخة احتياطية دورياً بزر «تصدير» ·
+  Family Metal / Baghdad GPL
+</footer>
+
+<div id="toast"></div>
+<div id="print-area"></div>
+
+<!-- ======================= Modal: عميل ======================= -->
+<div class="overlay" id="modal-client" style="display:none" onclick="if(event.target===this)closeModal('modal-client')">
+  <div class="modal">
+    <div class="modal-h">
+      <h3 id="mc-title">➕ إضافة عميل</h3>
+      <button class="modal-x" onclick="closeModal('modal-client')">✕</button>
+    </div>
+    <div class="modal-b">
+      <div class="fgrid">
+        <div class="fld full">
+          <label>الاسم الكامل <span class="req">*</span></label>
+          <input id="mc-nom" type="text" placeholder="مثال: كمال بوعلام">
+        </div>
+        <div class="fld">
+          <label>رقم الهاتف</label>
+          <input id="mc-tel" type="tel" dir="ltr" placeholder="0557 12 34 56">
+        </div>
+        <div class="fld">
+          <label>الريفيرونس (تلقائي — يمكن تعديله)</label>
+          <input id="mc-ref" type="text" dir="ltr" placeholder="CL-0001">
+        </div>
+      </div>
+
+      <div class="sub-t">🚗 سيارات العميل (يمكن إضافة أكثر من سيارة) <span style="font-weight:600;color:var(--mut);font-size:11.5px">— يظهر ملف العميل عند البحث بماتريكيل أي سيارة من سياراته</span></div>
+      <div id="mc-vehs"></div>
+      <button class="link-add" onclick="addVehLine()">➕ إضافة سيارة</button>
+    </div>
+    <div class="modal-f">
+      <button class="btn btn-green" onclick="saveClient()">💾 حفظ العميل</button>
+      <button class="btn btn-soft" onclick="closeModal('modal-client')">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<!-- ======================= Modal: عملية / فاتورة ======================= -->
+<div class="overlay" id="modal-op" style="display:none" onclick="if(event.target===this)closeModal('modal-op')">
+  <div class="modal">
+    <div class="modal-h">
+      <h3 id="mo-title">➕ إضافة عملية</h3>
+      <button class="modal-x" onclick="closeModal('modal-op')">✕</button>
+    </div>
+    <div class="modal-b">
+      <div class="fgrid">
+        <div class="fld">
+          <label>نوع العملية <span class="req">*</span></label>
+          <select id="mo-type">
+            <option value="montage">تركيب (Montage)</option>
+            <option value="entretien">صيانة (Entretien)</option>
+            <option value="reparation">تصليح (Réparation)</option>
+            <option value="epreuve">إثبات (Épreuve)</option>
+          </select>
+        </div>
+        <div class="fld">
+          <label>التاريخ <span class="req">*</span></label>
+          <input id="mo-date" type="date">
+        </div>
+        <div class="fld full">
+          <label>ماتريكيل السيارة</label>
+          <input id="mo-mat" type="text" dir="ltr" list="veh-datalist" placeholder="45231-116-16">
+          <datalist id="veh-datalist"></datalist>
+        </div>
+      </div>
+
+      <div class="sub-t">📦 المنتجات المستهلكة <span style="font-weight:600;color:var(--mut);font-size:11.5px">— اختر من القائمة أو اكتب تصنيفاً جديداً</span></div>
+      <div id="mo-lines"></div>
+      <button class="link-add" onclick="addProdLine()">➕ إضافة منتوج</button>
+
+      <div class="fgrid" style="margin-top:14px">
+        <div class="fld">
+          <label>يد العاملة (Main d'œuvre)</label>
+          <input id="mo-labor" type="number" min="0" step="50" value="0" oninput="recalcOpModal()">
+        </div>
+        <div class="fld">
+          <label>المدفوع (Payé)</label>
+          <input id="mo-paye" type="number" min="0" step="50" value="0" oninput="recalcOpModal()">
+        </div>
+        <div class="fld full">
+          <label>ملاحظات</label>
+          <input id="mo-note" type="text" placeholder="ملاحظة اختيارية...">
+        </div>
+      </div>
+
+      <div class="totals-box">
+        <div class="t"><div class="lbl">المبلغ الإجمالي</div><div class="val" id="mo-total">0 دج</div></div>
+        <div class="t"><div class="lbl">المدفوع</div><div class="val g" id="mo-paid">0 دج</div></div>
+        <div class="t"><div class="lbl">الباقي (الدين)</div><div class="val r" id="mo-reste">0 دج</div></div>
+      </div>
+    </div>
+    <div class="modal-f">
+      <button class="btn btn-green" onclick="saveOp()">💾 حفظ العملية</button>
+      <button class="btn btn-soft" onclick="closeModal('modal-op')">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<datalist id="prod-datalist"></datalist>
+
+<script>
+'use strict';
+/* =====================================================================
+   ADMIPRO GPL v8 — Clients Unifié
+   نظام موحّد لإدراج العملاء والفواتير (يلغي الصفحات المنفصلة
+   Montage / Réparation / Épreuve): كل العمليات في مساحة خاصة بكل عميل.
+   ===================================================================== */
+
+const KEY = 'admipro_gpl_v8_clients_unifie_v1';
+
+const TYPES = {
+  montage:    { label:'تركيب (Montage)',      cls:'b-montage'    },
+  entretien:  { label:'صيانة (Entretien)',    cls:'b-entretien'  },
+  reparation: { label:'تصليح (Réparation)',   cls:'b-reparation' },
+  epreuve:    { label:'إثبات (Épreuve)',      cls:'b-epreuve'    }
+};
+
+const BASE_CATALOG = [
+  "INSTALATION KIT BRC 4 SILINDE",
+  "INSTALATION KIT BRC 3 SILINDE",
+  "INSTALATION RESERVOIRE 60L",
+  "INSTALATION RESERVOIRE 40L",
+  "INSTALATION FILTRE BRC",
+  "SCANAIRE",
+  "EPREUVE RESERVOIRE 60L",
+  "REPARATION INJECTEUR BRC",
+  "ELECTROVANNE BRC",
+  "RAIL INJECTEUR BRC"
+];
+
+/* ---------- تخزين آمن (لا ينهار إذا كان localStorage ممنوعاً) ---------- */
+const store = {
+  get(){ try{ return JSON.parse(localStorage.getItem(KEY)); }catch(e){ return null; } },
+  set(d){ try{ localStorage.setItem(KEY, JSON.stringify(d)); }catch(e){} }
+};
+
+let DB = null;
+
+function save(){ store.set(DB); }
+
+/* ---------- بيانات نموذجية (أول تشغيل فقط) ---------- */
+function seed(){
+  const d = {
+    seq:{ c:6, o:9 },
+    clients:[
+      {
+        id:'CL-0001', ref:'CL-0001', nom:'كمال بوعلام', tel:'0557 12 34 56',
+        vehicules:[
+          { matricule:'45231-116-16', marque:'Renault Symbol' },
+          { matricule:'78945-031-17', marque:'Peugeot 301' }
+        ],
+        operations:[
+          { id:'OP-0001', type:'montage', date:'2026-08-12', matricule:'45231-116-16', note:'تركيب كامل لأول مرة',
+            produits:[
+              { d:'INSTALATION KIT BRC 4 SILINDE', q:1, pu:48000 },
+              { d:'INSTALATION RESERVOIRE 60L',    q:1, pu:22000 }
+            ], mainOeuvre:0, montant:70000, paye:50000 },
+          { id:'OP-0002', type:'entretien', date:'2026-09-02', matricule:'45231-116-16', note:'',
+            produits:[
+              { d:'SCANAIRE',               q:1, pu:3500 },
+              { d:'INSTALATION FILTRE BRC', q:1, pu:4000 }
+            ], mainOeuvre:0, montant:7500, paye:7500 }
+        ]
+      },
+      {
+        id:'CL-0002', ref:'CL-0002', nom:'سفيان مراحي', tel:'0661 45 88 20',
+        vehicules:[
+          { matricule:'10234-116-15', marque:'Dacia Logan' },
+          { matricule:'55420-009-18', marque:'Seat Ibiza' }
+        ],
+        operations:[
+          { id:'OP-0003', type:'montage', date:'2026-07-21', matricule:'10234-116-15', note:'',
+            produits:[
+              { d:'INSTALATION KIT BRC 4 SILINDE', q:1, pu:48000 },
+              { d:'INSTALATION RESERVOIRE 40L',    q:1, pu:18000 }
+            ], mainOeuvre:0, montant:66000, paye:30000 },
+          { id:'OP-0004', type:'reparation', date:'2026-08-30', matricule:'10234-116-15', note:'تسريب في السكة',
+            produits:[ { d:'REPARATION INJECTEUR BRC', q:2, pu:2500 } ], mainOeuvre:1500, montant:6500, paye:0 },
+          { id:'OP-0005', type:'epreuve', date:'2026-09-05', matricule:'55420-009-18', note:'',
+            produits:[ { d:'EPREUVE RESERVOIRE 60L', q:1, pu:2500 } ], mainOeuvre:0, montant:2500, paye:2500 }
+        ]
+      },
+      {
+        id:'CL-0003', ref:'CL-0003', nom:'محمد الأمين قادري', tel:'0770 22 55 41',
+        vehicules:[ { matricule:'33445-020-19', marque:'VW Golf 5' } ],
+        operations:[
+          { id:'OP-0006', type:'epreuve', date:'2026-08-14', matricule:'33445-020-19', note:'',
+            produits:[ { d:'EPREUVE RESERVOIRE 60L', q:1, pu:2500 } ], mainOeuvre:0, montant:2500, paye:2500 },
+          { id:'OP-0007', type:'entretien', date:'2026-09-08', matricule:'33445-020-19', note:'',
+            produits:[
+              { d:'SCANAIRE',               q:1, pu:3500 },
+              { d:'INSTALATION FILTRE BRC', q:1, pu:4000 }
+            ], mainOeuvre:500, montant:8000, paye:8000 }
+        ]
+      },
+      {
+        id:'CL-0004', ref:'CL-0004', nom:'يوسف حمداوي', tel:'0555 78 41 09',
+        vehicules:[
+          { matricule:'61230-116-14', marque:'Fiat Palio' },
+          { matricule:'90211-031-20', marque:'Renault Clio 4' }
+        ],
+        operations:[
+          { id:'OP-0008', type:'montage', date:'2026-09-01', matricule:'90211-031-20', note:'دفعات على القسط',
+            produits:[
+              { d:'INSTALATION KIT BRC 3 SILINDE', q:1, pu:43000 },
+              { d:'INSTALATION RESERVOIRE 60L',    q:1, pu:22000 }
+            ], mainOeuvre:0, montant:65000, paye:0 }
+        ]
+      },
+      {
+        id:'CL-0005', ref:'CL-0005', nom:'عبد الرحمان زروقي', tel:'0698 33 21 77',
+        vehicules:[ { matricule:'44870-116-21', marque:'Kia Picanto' } ],
+        operations:[]
+      }
+    ]
+  };
+  store.set(d);
+  return d;
+}
+
+function load(){
+  const d = store.get();
+  if(d && Array.isArray(d.clients)) return d;
+  return seed();
+}
+
+/* ---------- أدوات مساعدة ---------- */
+function esc(s){
+  return String(s==null?'':s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+/* توحيد النص للبحث: إزالة التشكيل، توحيد الألف/الهاء/الياء، وتحويل الأرقام العربية
+   وحذف الفواصل حتى يطابق البحث بالماتريكيل "45231-116-16" أيضاً "4523111616" */
+function norm(s){
+  let t = String(s==null?'':s).toLowerCase();
+  t = t.replace(/[\u064B-\u0652\u0640]/g,'');
+  t = t.replace(/[أإآٱ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي').replace(/ؤ/g,'و').replace(/ئ/g,'ي');
+  t = t.replace(/[٠-٩]/g, function(d){ return String('٠١٢٣٤٥٦٧٨٩'.indexOf(d)); });
+  t = t.replace(/[\s\-\.\/\\_,]/g,'');
+  return t;
+}
+function fmtM(n){
+  n = Math.round(Number(n)||0);
+  /* توحيد فاصلة الآلاف (بعض البيئات تستعمل مسافة غير فاصلة U+202F) */
+  return n.toLocaleString('fr-FR').replace(/[\u202f\u00a0]/g,' ') + ' دج';
+}
+function fmtDate(iso){
+  if(!iso) return '—';
+  const p = String(iso).split('-');
+  return p.length===3 ? (p[2]+'/'+p[1]+'/'+p[0]) : iso;
+}
+function today(){ return new Date().toISOString().slice(0,10); }
+function pad4(n){ return String(n).padStart(4,'0'); }
+function resteCell(reste){
+  const r = Math.round(Number(reste)||0);
+  return r > 0 ? '<span class="debt">'+fmtM(r)+'</span>' : '<span class="zero">صفر</span>';
+}
+function clientById(id){ return DB.clients.find(function(c){ return c.id===id; }) || null; }
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toast._h);
+  toast._h = setTimeout(function(){ t.classList.remove('show'); }, 2300);
+}
+
+/* كل التصنيفات المستعملة + الكتالوج الأساسي */
+function allDesignations(){
+  const set = new Set(BASE_CATALOG);
+  DB.clients.forEach(function(c){
+    c.operations.forEach(function(o){
+      (o.produits||[]).forEach(function(p){ if(p.d) set.add(p.d); });
+    });
+  });
+  return Array.from(set);
+}
+
+/* ---------- حالة الواجهة ---------- */
+const state = {
+  view:'journal',          // journal | client
+  clientId:null,
+  q:'',
+  dateMode:'all',          // all | month | range
+  month:'', from:'', to:'',
+  opFilter:'all'           // all | montage | entretien | reparation | epreuve
+};
+
+/* ---------- فلترة يومية المبيعات ---------- */
+function filterOpsByDate(ops){
+  if(state.dateMode==='month' && state.month){
+    return ops.filter(function(o){ return String(o.date||'').indexOf(state.month)===0; });
+  }
+  if(state.dateMode==='range'){
+    const f = state.from || '';
+    const t = state.to   || '';
+    return ops.filter(function(o){
+      if(f && String(o.date||'') < f) return false;
+      if(t && String(o.date||'') > t) return false;
+      return true;
+    });
+  }
+  return ops;
+}
+
+function clientHaystack(c){
+  let h = (c.nom||'') + ' ' + (c.ref||'') + ' ' + (c.tel||'');
+  (c.vehicules||[]).forEach(function(v){ h += ' ' + (v.matricule||'') + ' ' + (v.marque||''); });
+  return norm(h);
+}
+
+function journalRows(){
+  const q = norm(state.q);
+  const rows = [];
+  DB.clients.slice()
+    .sort(function(a,b){ return String(a.ref).localeCompare(String(b.ref)); })
+    .forEach(function(c){
+      if(q && !clientHaystack(c).includes(q)) return;
+      const ops = filterOpsByDate(c.operations||[]);
+      if(state.dateMode!=='all' && ops.length===0) return; // خارج الفترة => لا يظهر في اليومية
+      let total = 0, paye = 0;
+      ops.forEach(function(o){ total += Number(o.montant)||0; paye += Number(o.paye)||0; });
+      rows.push({ c:c, ops:ops, count:ops.length, total:total, reste: Math.max(0, total - paye) });
+    });
+  return rows;
+}
+
+/* ---------- عرض: يومية المبيعات ---------- */
+function renderJournal(){
+  const rows = journalRows();
+  const tb = document.getElementById('clients-body');
+
+  if(rows.length===0){
+    const isFiltered = state.q || state.dateMode!=='all';
+    tb.innerHTML = '<tr class="empty-row"><td colspan="7">'
+      + (isFiltered
+          ? '🔍 لا يوجد أي عميل مطابق للبحث / الفترة المحددة.'
+          : 'لا يوجد عملاء بعد — اضغط زر «➕ إضافة عميل» للبدء.')
+      + '</td></tr>';
+  } else {
+    tb.innerHTML = rows.map(function(r){
+      const c = r.c;
+      return '<tr class="rowlink" onclick="openClient(\''+c.id+'\')">'
+        + '<td><span class="ref-pill">'+esc(c.ref)+'</span></td>'
+        + '<td><a class="name-link" href="javascript:void(0)" onclick="event.preventDefault();openClient(\''+c.id+'\')">'+esc(c.nom)+'</a></td>'
+        + '<td class="tel">'+esc(c.tel||'—')+'</td>'
+        + '<td class="num"><b>'+r.count+'</b></td>'
+        + '<td class="num"><b>'+fmtM(r.total)+'</b></td>'
+        + '<td class="num">'+resteCell(r.reste)+'</td>'
+        + '<td class="acts" onclick="event.stopPropagation()">'
+        +   '<button class="icon-btn" title="إضافة عملية / فاتورة" onclick="openClient(\''+c.id+'\',\'addOp\')">🧾</button>'
+        +   '<button class="icon-btn" title="تعديل العميل" onclick="openClientModal(\''+c.id+'\')">✏️</button>'
+        +   '<button class="icon-btn del" title="حذف العميل" onclick="deleteClient(\''+c.id+'\')">🗑</button>'
+        + '</td></tr>';
+    }).join('');
+  }
+
+  /* شريط الملخص */
+  let nOps=0, nTot=0, nRest=0;
+  rows.forEach(function(r){ nOps+=r.count; nTot+=r.total; nRest+=r.reste; });
+  document.getElementById('journal-sum').innerHTML =
+      '<div class="sum-item"><span class="lbl">العملاء المعروضون</span><b>'+rows.length+'</b></div>'
+    + '<div class="sum-item"><span class="lbl">عدد العمليات</span><b>'+nOps+'</b></div>'
+    + '<div class="sum-item"><span class="lbl">المبلغ الإجمالي</span><b>'+fmtM(nTot)+'</b></div>'
+    + '<div class="sum-item"><span class="lbl">مجموع الباقي (الديون)</span><b style="color:var(--red)">'+fmtM(nRest)+'</b></div>'
+    + (periodActive() ? '<div class="sum-item"><span class="lbl">⚠ الإحصائيات محسوبة وفق الفترة المحددة فقط</span></div>' : '');
+
+  renderDatalists();
+}
+
+function periodActive(){ return state.dateMode!=='all'; }
+
+function periodLabelText(){
+  if(state.dateMode==='month' && state.month) return '📅 شهر: '+state.month;
+  if(state.dateMode==='range' && (state.from||state.to)) return '📅 من '+(state.from||'...')+' إلى '+(state.to||'...');
+  return '';
+}
+
+/* ---------- فلاتر ---------- */
+function setQ(v){ state.q = v; if(state.view==='journal') renderJournal(); }
+function setDateMode(m){
+  state.dateMode = m;
+  document.querySelectorAll('#seg-date button').forEach(function(b){
+    b.classList.toggle('on', b.dataset.mode===m);
+  });
+  document.getElementById('f-month').style.display = (m==='month') ? '' : 'none';
+  document.getElementById('f-from').style.display  = (m==='range') ? '' : 'none';
+  document.getElementById('f-to').style.display    = (m==='range') ? '' : 'none';
+  updatePeriodeLabel();
+  renderJournal();
+}
+function setMonth(v){ state.month = v; updatePeriodeLabel(); renderJournal(); }
+function setFrom(v){ state.from = v; updatePeriodeLabel(); renderJournal(); }
+function setTo(v){ state.to = v; updatePeriodeLabel(); renderJournal(); }
+function updatePeriodeLabel(){
+  const el = document.getElementById('periode-label');
+  const txt = periodLabelText();
+  el.style.display = txt ? '' : 'none';
+  el.textContent = txt;
+}
+function resetFilters(){
+  state.q=''; state.dateMode='all'; state.month=''; state.from=''; state.to='';
+  document.getElementById('q').value='';
+  document.getElementById('f-month').value='';
+  document.getElementById('f-from').value='';
+  document.getElementById('f-to').value='';
+  setDateMode('all');
+}
+
+/* ---------- فتح مساحة العميل ---------- */
+function openClient(id, then){
+  const c = clientById(id);
+  if(!c) return;
+  state.view = 'client';
+  state.clientId = id;
+  state.opFilter = 'all';
+  document.getElementById('view-journal').style.display = 'none';
+  document.getElementById('view-client').style.display  = '';
+  renderClientView();
+  window.scrollTo({ top:0, behavior:'smooth' });
+  if(then==='addOp') openOpModal(id);
+}
+function backToJournal(){
+  state.view = 'journal';
+  state.clientId = null;
+  document.getElementById('view-client').style.display  = 'none';
+  document.getElementById('view-journal').style.display = '';
+  renderJournal();
+}
+
+function renderClientView(){
+  const c = clientById(state.clientId);
+  if(!c){ backToJournal(); return; }
+
+  document.getElementById('c-avatar').textContent = esc((c.nom||'?').trim().charAt(0)) ;
+  document.getElementById('c-nom').textContent = c.nom;
+  document.getElementById('c-ref').textContent = c.ref;
+  document.getElementById('c-tel').textContent = c.tel || '—';
+
+  const vehs = c.vehicules||[];
+  document.getElementById('c-vehs').innerHTML = vehs.length
+    ? vehs.map(function(v){ return '<span class="veh-tag">🚗 '+esc(v.matricule)+(v.marque?' <small>· '+esc(v.marque)+'</small>':'')+'</span>'; }).join('')
+    : '<span class="veh-tag" style="color:var(--mut)">لا توجد سيارات مسجلة</span>';
+
+  let total=0, paye=0;
+  c.operations.forEach(function(o){ total+=Number(o.montant)||0; paye+=Number(o.paye)||0; });
+  const reste = Math.max(0, total-paye);
+  document.getElementById('c-stats').innerHTML =
+      '<div class="stat"><div class="lbl">عدد العمليات</div><div class="val">'+c.operations.length+'</div></div>'
+    + '<div class="stat"><div class="lbl">المبلغ الإجمالي</div><div class="val">'+fmtM(total)+'</div></div>'
+    + '<div class="stat"><div class="lbl">المدفوع</div><div class="val g">'+fmtM(paye)+'</div></div>'
+    + '<div class="stat"><div class="lbl">باقي المبلغ</div>'+(reste>0?'<div class="val r">'+fmtM(reste)+'</div>':'<div class="val g">صفر</div>')+'</div>';
+
+  /* شرائح النوع */
+  const counts = { all:c.operations.length, montage:0, entretien:0, reparation:0, epreuve:0 };
+  c.operations.forEach(function(o){ if(counts[o.type]!=null) counts[o.type]++; });
+  let chips = '<button class="chip'+(state.opFilter==='all'?' on':'')+'" onclick="setOpFilter(\'all\')">الكل ('+counts.all+')</button>';
+  Object.keys(TYPES).forEach(function(t){
+    chips += '<button class="chip'+(state.opFilter===t?' on':'')+'" onclick="setOpFilter(\''+t+'\')">'+TYPES[t].label+' ('+counts[t]+')</button>';
+  });
+  document.getElementById('op-chips').innerHTML = chips;
+
+  renderOpsTable(c);
+}
+
+function setOpFilter(t){ state.opFilter = t; renderClientView(); }
+
+function renderOpsTable(c){
+  const tb = document.getElementById('ops-body');
+  let ops = c.operations.slice();
+  if(state.opFilter!=='all') ops = ops.filter(function(o){ return o.type===state.opFilter; });
+  ops.sort(function(a,b){ return String(b.date).localeCompare(String(a.date)); });
+
+  if(ops.length===0){
+    tb.innerHTML = '<tr class="empty-row"><td colspan="8">لا توجد عمليات '+
+      (state.opFilter!=='all'?'من نوع «'+TYPES[state.opFilter].label+'» ':'')+
+      'لهذا العميل بعد — اضغط «➕ إضافة عملية / فاتورة».</td></tr>';
+    return;
+  }
+
+  tb.innerHTML = ops.map(function(o){
+    const t = TYPES[o.type] || TYPES.montage;
+    const nb = (o.produits||[]).length;
+    return '<tr class="rowlink" onclick="toggleOpDetail(\''+o.id+'\')">'
+      + '<td style="white-space:nowrap">'+fmtDate(o.date)+'</td>'
+      + '<td><span class="badge '+t.cls+'">'+t.label+'</span></td>'
+      + '<td class="tel">'+esc(o.matricule||'—')+'</td>'
+      + '<td class="num">'+nb+' منتوج</td>'
+      + '<td class="num"><b>'+fmtM(o.montant)+'</b></td>'
+      + '<td class="num">'+fmtM(o.paye)+'</td>'
+      + '<td class="num">'+resteCell(Number(o.montant)-Number(o.paye))+'</td>'
+      + '<td class="acts" onclick="event.stopPropagation()">'
+      +   '<button class="icon-btn" title="تعديل العملية" onclick="openOpModal(\''+c.id+'\',\''+o.id+'\')">✏️</button>'
+      +   '<button class="icon-btn del" title="حذف العملية" onclick="deleteOp(\''+c.id+'\',\''+o.id+'\')">🗑</button>'
+      + '</td></tr>'
+      + '<tr class="opdetail" id="det-'+o.id+'" style="display:none"><td colspan="8"></td></tr>';
+  }).join('');
+}
+
+function toggleOpDetail(opId){
+  const c = clientById(state.clientId); if(!c) return;
+  const o = c.operations.find(function(x){ return x.id===opId; }); if(!o) return;
+  const tr = document.getElementById('det-'+opId); if(!tr) return;
+  const showing = tr.style.display !== 'none';
+  /* إغلاق كل التفاصيل المفتوحة */
+  document.querySelectorAll('tr.opdetail').forEach(function(x){ x.style.display='none'; });
+  if(showing) return; // كانت مفتوحة => نغلقها فقط
+
+  const t = TYPES[o.type] || TYPES.montage;
+  let h = '<div class="dbox">'
+    + '<h4><span class="badge '+t.cls+'">'+t.label+'</span> تفاصيل العملية — '+fmtDate(o.date)+' — ماتريكيل: <span class="tel">'+esc(o.matricule||'—')+'</span></h4>'
+    + '<table class="ptbl"><thead><tr><th style="width:52%">التصنيف (المنتوج المستهلك)</th><th class="num">الكمية</th><th class="num">سعر الوحدة</th><th class="num">المجموع</th></tr></thead><tbody>';
+  (o.produits||[]).forEach(function(p){
+    h += '<tr><td class="prod">'+esc(p.d)+'</td><td class="num">'+(Number(p.q)||0)+'</td><td class="num">'+fmtM(p.pu)+'</td><td class="num"><b>'+fmtM((Number(p.q)||0)*(Number(p.pu)||0))+'</b></td></tr>';
+  });
+  if(Number(o.mainOeuvre)>0){
+    h += '<tr><td class="prod">MAIN D\'OEUVRE (يد عاملة)</td><td class="num">1</td><td class="num">'+fmtM(o.mainOeuvre)+'</td><td class="num"><b>'+fmtM(o.mainOeuvre)+'</b></td></tr>';
+  }
+  const reste = Math.max(0, Number(o.montant)-Number(o.paye));
+  h += '</tbody><tfoot>'
+    + '<tr><td colspan="3">المبلغ الإجمالي</td><td class="num">'+fmtM(o.montant)+'</td></tr>'
+    + '<tr><td colspan="3">المدفوع</td><td class="num">'+fmtM(o.paye)+'</td></tr>'
+    + '<tr><td colspan="3">الباقي</td><td class="num rest">'+(reste>0?fmtM(reste):'<span class="zero">صفر</span>')+'</td></tr>'
+    + '</tfoot></table>'
+    + (o.note ? '<p class="opnote">📝 '+esc(o.note)+'</p>' : '')
+    + '<div class="dbtns">'
+    + '<button class="btn btn-soft" onclick="printOp(\''+c.id+'\',\''+o.id+'\')">🖨 طباعة الفاتورة</button>'
+    + '<button class="btn btn-soft" onclick="openOpModal(\''+c.id+'\',\''+o.id+'\')">✏️ تعديل العملية</button>'
+    + '<button class="btn btn-danger" onclick="deleteOp(\''+c.id+'\',\''+o.id+'\')">🗑 حذف العملية</button>'
+    + '</div></div>';
+  tr.querySelector('td').innerHTML = h;
+  tr.style.display = '';
+}
+
+/* ---------- Modal: عميل ---------- */
+function openClientModal(id){
+  const c = id ? clientById(id) : null;
+  state._editClientId = id || null;
+  document.getElementById('mc-title').textContent = c ? ('✏️ تعديل العميل — '+c.nom) : '➕ إضافة عميل';
+  document.getElementById('mc-nom').value = c ? c.nom : '';
+  document.getElementById('mc-tel').value = c ? (c.tel||'') : '';
+  document.getElementById('mc-ref').value = c ? c.ref : ('CL-'+pad4(DB.seq.c));
+  document.getElementById('mc-vehs').innerHTML = '';
+  const vs = c ? (c.vehicules||[]) : [];
+  if(vs.length===0) addVehLine();
+  vs.forEach(function(v){ addVehLine(v.matricule, v.marque); });
+  document.getElementById('modal-client').style.display = 'flex';
+  setTimeout(function(){ document.getElementById('mc-nom').focus(); }, 60);
+}
+function addVehLine(mat, marque){
+  const d = document.createElement('div');
+  d.className = 'vline';
+  d.innerHTML =
+      '<input type="text" dir="ltr" class="v-mat" placeholder="الماتريكيل (45231-116-16)" value="'+esc(mat||'')+'">'
+    + '<input type="text" class="v-marque" placeholder="الماركة / النوع" value="'+esc(marque||'')+'">'
+    + '<button class="mini-x" title="حذف السيارة" onclick="this.parentNode.remove()">✕</button>';
+  document.getElementById('mc-vehs').appendChild(d);
+}
+function saveClient(){
+  const nom = document.getElementById('mc-nom').value.trim();
+  if(!nom){ toast('⚠️ الرجاء إدخال الاسم الكامل'); return; }
+  const tel = document.getElementById('mc-tel').value.trim();
+  const ref = document.getElementById('mc-ref').value.trim() || ('CL-'+pad4(DB.seq.c));
+  const vehs = [];
+  document.querySelectorAll('#mc-vehs .vline').forEach(function(l){
+    const m = l.querySelector('.v-mat').value.trim();
+    if(m) vehs.push({ matricule:m, marque:l.querySelector('.v-marque').value.trim() });
+  });
+
+  const editingId = state._editClientId;
+  let c = editingId ? clientById(editingId) : null;
+  if(c){
+    c.nom=nom; c.tel=tel; c.ref=ref; c.vehicules=vehs;
+    toast('✅ تم تحديث بيانات العميل');
+  } else {
+    c = { id:'CL-'+pad4(DB.seq.c), ref:ref, nom:nom, tel:tel, vehicules:vehs, operations:[] };
+    DB.seq.c++;
+    DB.clients.push(c);
+    toast('✅ تمت إضافة العميل بنجاح');
+  }
+  state._editClientId = null;
+  save();
+  closeModal('modal-client');
+  if(state.view==='client' && state.clientId===c.id) renderClientView();
+  else renderJournal();
+}
+
+function deleteClient(id){
+  const c = clientById(id); if(!c) return;
+  if(!confirm('حذف العميل «'+c.nom+'» وكل عملياته ('+c.operations.length+' عملية) نهائياً؟')) return;
+  DB.clients = DB.clients.filter(function(x){ return x.id!==id; });
+  save();
+  toast('🗑 تم حذف العميل');
+  if(state.view==='client' && state.clientId===id) backToJournal();
+  else renderJournal();
+}
+
+/* ---------- Modal: عملية / فاتورة ---------- */
+function openOpModal(clientId, opId){
+  const c = clientById(clientId); if(!c) return;
+  state._opClientId = clientId;
+  state._opEditId = opId || null;
+  const o = opId ? c.operations.find(function(x){ return x.id===opId; }) : null;
+
+  document.getElementById('mo-title').textContent = o ? ('✏️ تعديل العملية — '+c.nom) : ('➕ عملية جديدة — '+c.nom);
+  document.getElementById('mo-type').value = o ? o.type : 'montage';
+  document.getElementById('mo-date').value = o ? o.date : today();
+  document.getElementById('mo-mat').value  = o ? (o.matricule||'') : '';
+  document.getElementById('mo-note').value = o ? (o.note||'') : '';
+  document.getElementById('mo-labor').value = o ? (Number(o.mainOeuvre)||0) : 0;
+  document.getElementById('mo-paye').value  = o ? (Number(o.paye)||0) : 0;
+
+  /* قائمة ماتريكيلات سيارات هذا العميل */
+  document.getElementById('veh-datalist').innerHTML = (c.vehicules||[])
+    .map(function(v){ return '<option value="'+esc(v.matricule)+'">'; }).join('');
+
+  /* خطوط المنتجات */
+  const lines = (o && o.produits && o.produits.length) ? o.produits : [{ d:'', q:1, pu:0 }];
+  const box = document.getElementById('mo-lines');
+  box.innerHTML = '';
+  lines.forEach(function(p){ addProdLine(p.d, p.q, p.pu); });
+
+  recalcOpModal();
+  document.getElementById('modal-op').style.display = 'flex';
+  setTimeout(function(){ document.getElementById('mo-type').focus(); }, 60);
+}
+
+function addProdLine(d, q, pu){
+  const row = document.createElement('div');
+  row.className = 'pline';
+  row.innerHTML =
+      '<input type="text" dir="ltr" class="p-d" list="prod-datalist" placeholder="تصنيف المنتوج (مثال: INSTALATION KIT BRC 4 SILINDE)" value="'+esc(d||'')+'">'
+    + '<input type="number" min="1" step="1" class="p-q" placeholder="الكمية" value="'+(q!=null?q:1)+'" oninput="recalcOpModal()">'
+    + '<input type="number" min="0" step="50" class="p-pu" placeholder="سعر الوحدة" value="'+(pu!=null?pu:0)+'" oninput="recalcOpModal()">'
+    + '<div class="ltot">0 دج</div>'
+    + '<button class="mini-x" title="حذف السطر" onclick="this.parentNode.remove();recalcOpModal()">✕</button>';
+  document.getElementById('mo-lines').appendChild(row);
+  recalcOpModal();
+}
+
+function readOpLines(){
+  const lines = [];
+  document.querySelectorAll('#mo-lines .pline').forEach(function(l){
+    const d = l.querySelector('.p-d').value.trim();
+    if(!d) return;
+    lines.push({
+      d: d,
+      q: Number(l.querySelector('.p-q').value)||0,
+      pu: Number(l.querySelector('.p-pu').value)||0
+    });
+  });
+  return lines;
+}
+
+function recalcOpModal(){
+  let total = 0;
+  document.querySelectorAll('#mo-lines .pline').forEach(function(l){
+    const q = Number(l.querySelector('.p-q').value)||0;
+    const pu = Number(l.querySelector('.p-pu').value)||0;
+    const lt = q*pu;
+    l.querySelector('.ltot').textContent = fmtM(lt);
+    total += lt;
+  });
+  const labor = Number(document.getElementById('mo-labor').value)||0;
+  const paye  = Number(document.getElementById('mo-paye').value)||0;
+  total += labor;
+  const reste = Math.max(0, total - paye);
+  document.getElementById('mo-total').textContent = fmtM(total);
+  document.getElementById('mo-paid').textContent  = fmtM(paye);
+  document.getElementById('mo-reste').textContent = fmtM(reste);
+}
+
+function saveOp(){
+  const c = clientById(state._opClientId); if(!c) return;
+  const lines = readOpLines();
+  const labor = Number(document.getElementById('mo-labor').value)||0;
+  const paye  = Number(document.getElementById('mo-paye').value)||0;
+  if(lines.length===0 && labor<=0){ toast('⚠️ أضف منتوجاً واحداً على الأقل أو يد عاملة'); return; }
+  let montant = labor;
+  lines.forEach(function(p){ montant += p.q*p.pu; });
+
+  const data = {
+    type: document.getElementById('mo-type').value,
+    date: document.getElementById('mo-date').value || today(),
+    matricule: document.getElementById('mo-mat').value.trim(),
+    note: document.getElementById('mo-note').value.trim(),
+    produits: lines,
+    mainOeuvre: labor,
+    montant: montant,
+    paye: paye
+  };
+
+  if(state._opEditId){
+    const o = c.operations.find(function(x){ return x.id===state._opEditId; });
+    if(o) Object.assign(o, data);
+    toast('✅ تم تحديث العملية');
+  } else {
+    data.id = 'OP-'+pad4(DB.seq.o);
+    DB.seq.o++;
+    c.operations.push(data);
+    toast('✅ تمت إضافة العملية / الفاتورة');
+  }
+  save();
+  closeModal('modal-op');
+  renderClientView();
+}
+
+function deleteOp(cid, oid){
+  const c = clientById(cid); if(!c) return;
+  const o = c.operations.find(function(x){ return x.id===oid; }); if(!o) return;
+  if(!confirm('حذف عملية «'+TYPES[o.type].label+'» بتاريخ '+fmtDate(o.date)+' نهائياً؟')) return;
+  c.operations = c.operations.filter(function(x){ return x.id!==oid; });
+  save();
+  toast('🗑 تم حذف العملية');
+  renderClientView();
+}
+
+/* ---------- طباعة الفاتورة ---------- */
+function printOp(cid, oid){
+  const c = clientById(cid); if(!c) return;
+  const o = c.operations.find(function(x){ return x.id===oid; }); if(!o) return;
+  const t = TYPES[o.type] || TYPES.montage;
+  const reste = Math.max(0, Number(o.montant)-Number(o.paye));
+
+  let rowsHtml = '';
+  (o.produits||[]).forEach(function(p){
+    rowsHtml += '<tr><td class="ltr">'+esc(p.d)+'</td><td class="num">'+(Number(p.q)||0)+'</td><td class="num">'+fmtM(p.pu)+'</td><td class="num">'+fmtM((Number(p.q)||0)*(Number(p.pu)||0))+'</td></tr>';
+  });
+  if(Number(o.mainOeuvre)>0){
+    rowsHtml += '<tr><td class="ltr">MAIN D\'OEUVRE (يد عاملة)</td><td class="num">1</td><td class="num">'+fmtM(o.mainOeuvre)+'</td><td class="num">'+fmtM(o.mainOeuvre)+'</td></tr>';
+  }
+
+  document.getElementById('print-area').innerHTML =
+  '<div class="inv">'
+    + '<div class="inv-head">'
+    +   '<div><h1>FAMILY METAL — BAGHDAD GPL</h1><div class="co">تحويل وصيانة أنظمة GPL · www.familymetaldz.com</div></div>'
+    +   '<div class="co" style="text-align:left">فاتورة / FACTURE<br>رقم: <b>'+esc(o.id)+'</b><br>التاريخ: <b>'+fmtDate(o.date)+'</b></div>'
+    + '</div>'
+    + '<div class="inv-title">'+t.label+'</div>'
+    + '<div class="inv-block"><b>العميل:</b> '+esc(c.nom)+' &nbsp;·&nbsp; <b>الريفيرونس:</b> '+esc(c.ref)+' &nbsp;·&nbsp; <b>الهاتف:</b> '+esc(c.tel||'—')+' &nbsp;·&nbsp; <b>الماتريكيل:</b> '+esc(o.matricule||'—')+'</div>'
+    + '<table class="inv-t"><thead><tr><th style="width:50%">التصنيف / Désignation</th><th class="num">Qté</th><th class="num">P.U</th><th class="num">Total</th></tr></thead>'
+    + '<tbody>'+(rowsHtml||'<tr><td colspan="4" class="num">—</td></tr>')+'</tbody></table>'
+    + '<table class="inv-tot">'
+    + '<tr><td>المبلغ الإجمالي</td><td class="num"><b>'+fmtM(o.montant)+'</b></td></tr>'
+    + '<tr><td>المدفوع</td><td class="num">'+fmtM(o.paye)+'</td></tr>'
+    + '<tr><td><b>الباقي</b></td><td class="num rest">'+(reste>0?fmtM(reste):'صفر')+'</td></tr>'
+    + '</table>'
+    + '<div class="inv-foot"><div class="inv-sig">توقيع العميل</div><div class="inv-sig">ختم المحل</div></div>'
+    + '</div>';
+
+  setTimeout(function(){ window.print(); }, 60);
+}
+
+/* ---------- تصدير / استيراد ---------- */
+function exportData(){
+  const blob = new Blob([JSON.stringify(DB, null, 2)], { type:'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'ADMIPRO_GPL_backup_'+today()+'.json';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  toast('⬇ تم تصدير نسخة احتياطية');
+}
+function importData(input){
+  const f = input.files && input.files[0];
+  if(!f) return;
+  const r = new FileReader();
+  r.onload = function(){
+    try{
+      const d = JSON.parse(r.result);
+      if(!d || !Array.isArray(d.clients)) throw new Error('bad');
+      DB = d;
+      if(!DB.seq) DB.seq = { c:DB.clients.length+1, o:100 };
+      save();
+      backToJournal();
+      toast('⬆ تم استيراد البيانات بنجاح');
+    }catch(e){
+      toast('⚠️ ملف غير صالح');
+    }
+    input.value = '';
+  };
+  r.readAsText(f);
+}
+
+/* ---------- datalists ---------- */
+function renderDatalists(){
+  document.getElementById('prod-datalist').innerHTML =
+    allDesignations().map(function(d){ return '<option value="'+esc(d)+'">'; }).join('');
+}
+
+/* ---------- إغلاق النوافذ ---------- */
+function closeModal(id){
+  document.getElementById(id).style.display = 'none';
+}
+document.addEventListener('keydown', function(e){
+  if(e.key==='Escape'){ closeModal('modal-client'); closeModal('modal-op'); }
+});
+
+/* ---------- الإقلاع ---------- */
+DB = load();
+setDateMode('all');
+renderJournal();
+</script>
+</body>
+</html>
