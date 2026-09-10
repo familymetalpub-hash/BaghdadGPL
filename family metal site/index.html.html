@@ -1,54 +1,67 @@
-<!DOCTYPE html>
-<html lang="ar">
+<!doctype html>
+<html lang="fr" dir="ltr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BAGHDAD GPL - FAMILY METAL</title>
-<link rel="stylesheet" href="style.css">
-<script src="main.js" defer></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0f766e">
+    <title>BAGHDAD GPL — Gestion de l'atelier</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="main.js" defer></script>
 </head>
 <body>
+    <div id="app" class="app-shell">
+        <aside class="sidebar" id="sidebar" aria-label="Navigation principale">
+            <div class="brand">
+                <div class="brand-mark"><img src="img/logo.png" alt="Logo BAGHDAD GPL"></div>
+                <div class="brand-copy">
+                    <strong>BAGHDAD GPL</strong>
+                    <span>FAMILY METAL</span>
+                </div>
+            </div>
 
-<header>
-    <div class="logo">
-        <img src="img/logo.png" alt="BAGHDAD GPL - FAMILY METAL" />
+            <div class="sidebar-label">Espace de travail</div>
+            <nav class="main-nav">
+                <a href="#home" class="nav-link" data-view="home"><i class="fa-solid fa-house" aria-hidden="true"></i><span>Accueil</span></a>
+                <a href="#clients" class="nav-link" data-view="clients"><i class="fa-solid fa-users" aria-hidden="true"></i><span>Clients &amp; Opérations</span></a>
+                <a href="#operations" class="nav-link" data-view="operations"><i class="fa-solid fa-list-check" aria-hidden="true"></i><span>Opérations</span></a>
+            </nav>
+
+            <div class="sidebar-label sidebar-label-settings">Configuration</div>
+            <nav class="main-nav">
+                <a href="#settings" class="nav-link" data-view="settings"><i class="fa-solid fa-sliders" aria-hidden="true"></i><span>Paramètres</span></a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="secure-note"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i><span>Données conservées localement</span></div>
+                <small>© 2026 Family Metal</small>
+            </div>
+        </aside>
+
+        <div class="content-shell">
+            <header class="topbar">
+                <button class="mobile-menu-button icon-button" id="mobileMenuButton" type="button" aria-label="Ouvrir le menu" aria-expanded="false"><i class="fa-solid fa-bars" aria-hidden="true"></i></button>
+                <div class="breadcrumb" id="breadcrumb" aria-live="polite"></div>
+                <div class="topbar-actions">
+                    <button class="icon-button notification-button" id="notificationButton" type="button" aria-label="Notifications" aria-expanded="false">
+                        <i class="fa-regular fa-bell" aria-hidden="true"></i>
+                        <span class="notification-badge is-hidden" id="notificationBadge" aria-label="Notifications non lues">0</span>
+                    </button>
+                    <div class="notification-panel is-hidden" id="notificationPanel" role="status" aria-live="polite"></div>
+                    <div class="topbar-separator" aria-hidden="true"></div>
+                    <div class="user-chip"><span class="user-avatar">FM</span><span class="user-name">Atelier</span></div>
+                </div>
+            </header>
+
+            <main class="main-content" id="mainContent" tabindex="-1"></main>
+        </div>
     </div>
-    <h1>BAGHDAD GPL - FAMILY METAL</h1>
-    <p>Email: <a href="mailto:familymetal_1@hotmail.com">familymetal_1@hotmail.com</a> | Website: <a href="https://www.familymetaldz.com" target="_blank">www.familymetaldz.com</a></p>
-</header>
 
-<div class="container">
-
-    <section class="contact-section">
-        <h2>📞 الاتصال السريع - WhatsApp</h2>
-        <div class="branch">
-            <div><i class="fab fa-whatsapp"></i>Chlef: <a href="https://wa.me/213557985364" target="_blank">اضغط هنا</a></div>
-            <div><i class="fas fa-map-marker-alt"></i><a href="https://maps.app.goo.gl/QpTY7QFyVcwsT8169" target="_blank">الموقع على الخريطة</a></div>
-        </div>
-        <div class="branch">
-            <div><i class="fab fa-whatsapp"></i>Oran: <a href="https://wa.me/213550141155" target="_blank">اضغط هنا</a></div>
-            <div><i class="fas fa-map-marker-alt"></i><a href="https://maps.app.goo.gl/6fL25SSXCcastyTk8" target="_blank">الموقع على الخريطة</a></div>
-        </div>
-        <div class="branch">
-            <div><i class="fab fa-whatsapp"></i>Boumerdès: <a href="https://wa.me/213561950760" target="_blank">اضغط هنا</a></div>
-            <div><i class="fas fa-map-marker-alt"></i><a href="https://maps.app.goo.gl/emjmatB9XgC5V1T98" target="_blank">الموقع على الخريطة</a></div>
-        </div>
-    </section>
-
-    <section class="social-section">
-        <h2>🌐 وسائل التواصل الاجتماعي</h2>
-        <div class="branch"><i class="fab fa-facebook"></i>Facebook Chlef: <a href="https://www.facebook.com/meghitbaghdad02" target="_blank">اضغط هنا</a></div>
-        <div class="branch"><i class="fab fa-facebook"></i>Facebook Oran: <a href="https://www.facebook.com/baghdadmeghitmohammed" target="_blank">اضغط هنا</a></div>
-        <div class="branch"><i class="fab fa-facebook"></i>Facebook Boumerdès: <a href="https://www.facebook.com/profile.php?id=61556587512621" target="_blank">اضغط هنا</a></div>
-        <div class="branch"><i class="fab fa-tiktok"></i>TikTok: <a href="https://www.tiktok.com/@family.mtl.gpl?is_from_webapp=1&sender_device=pc" target="_blank">اضغط هنا</a></div>
-    </section>
-
-</div>
-
-<footer>
-    &copy; 2026 BAGHDAD GPL - FAMILY METAL | جميع الحقوق محفوظة
-</footer>
-
+    <div id="modalRoot"></div>
+    <input type="file" id="logoFileInput" accept="image/png,image/jpeg,image/webp" hidden>
+    <div id="toastRegion" class="toast-region" aria-live="polite" aria-atomic="true"></div>
 </body>
 </html>
