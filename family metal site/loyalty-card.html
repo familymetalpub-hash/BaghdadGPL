@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#1e3d59">
+<title>BAGHDAD GPL — Loyalty Card | بطاقة الولاء</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* =====================================================================
+   BAGHDAD GPL — Loyalty Card  ·  Design system
+   ===================================================================== */
+:root{
+  --navy:#1e3d59; --navy-2:#153048; --navy-3:#0f2438;
+  --accent:#f39c12; --accent-2:#e67e22;
+  --gold:#c9961a; --gold-2:#f5d67a; --silver:#7c8794; --silver-2:#d9dee5;
+  --bg:#f1f4f8; --card:#ffffff; --text:#1f2937; --muted:#6b7280; --line:#e4e9f0;
+  --ok:#16a34a; --ok-bg:#e8f7ee; --warn:#d97706; --warn-bg:#fff4e0; --danger:#dc2626; --danger-bg:#fdecec; --info:#2563eb; --info-bg:#e8efff;
+  --radius:14px; --radius-sm:10px; --shadow:0 4px 18px rgba(30,61,89,.08); --shadow-lg:0 18px 50px rgba(15,36,56,.25);
+  --font:'Cairo','Segoe UI',Tahoma,system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.55;font-size:15px;-webkit-font-smoothing:antialiased}
+a{color:var(--info);text-decoration:none}
+button,input,select,textarea{font-family:inherit;font-size:inherit}
+h1,h2,h3,h4{margin:0;line-height:1.3}
+.muted{color:var(--muted)}
+.ltr{direction:ltr;unicode-bidi:isolate}
+.nowrap{white-space:nowrap}
+.hidden{display:none!important}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.3px}
+
+/* ---------- Top bar ---------- */
+.topbar{position:sticky;top:0;z-index:50;background:linear-gradient(135deg,var(--navy) 0%,var(--navy-2) 60%,var(--navy-3) 100%);color:#fff;box-shadow:0 6px 24px rgba(15,36,56,.25)}
+.topbar-inner{max-width:1240px;margin:0 auto;padding:10px 18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}
+.brand-logo{width:48px;height:48px;border-radius:12px;background:#fff;display:grid;place-items:center;overflow:hidden;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.brand-logo img{width:100%;height:100%;object-fit:contain}
+.brand-logo .fallback{font-weight:800;color:var(--navy);font-size:15px;letter-spacing:1px}
+.brand-title{font-size:19px;font-weight:800;letter-spacing:.5px;white-space:nowrap}
+.brand-sub{font-size:12px;opacity:.8;margin-top:-2px}
+.topbar-spacer{flex:1}
+.worker-chip{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:6px 12px;border-radius:999px;cursor:pointer;transition:.2s;max-width:260px}
+.worker-chip:hover{background:rgba(255,255,255,.2)}
+.worker-chip .avatar{width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-weight:800;font-size:13px;flex-shrink:0}
+.worker-chip .lbl{font-size:11px;opacity:.75;line-height:1}
+.worker-chip .name{font-weight:700;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:150px}
+.topnav{max-width:1240px;margin:0 auto;padding:0 18px;display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+.topnav::-webkit-scrollbar{display:none}
+.topnav button{background:transparent;border:0;color:rgba(255,255,255,.75);padding:10px 16px;border-radius:10px 10px 0 0;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px;white-space:nowrap;border-bottom:3px solid transparent;transition:.2s}
+.topnav button:hover{color:#fff;background:rgba(255,255,255,.08)}
+.topnav button.active{color:#fff;border-bottom-color:var(--accent);background:rgba(255,255,255,.1)}
+.topnav .badge-count{background:var(--accent);color:#fff;border-radius:999px;font-size:11px;padding:1px 7px;font-weight:800}
+
+/* ---------- Layout ---------- */
+main{max-width:1240px;margin:0 auto;padding:22px 18px 90px}
+.view{display:none;animation:fade .25s ease}
+.view.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+.page-head h2{font-size:22px;font-weight:800;color:var(--navy)}
+.page-head p{margin:2px 0 0;color:var(--muted);font-size:13px}
+.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;border:1px solid rgba(228,233,240,.7)}
+.card + .card{margin-top:18px}
+.card-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+.card-title h3{font-size:16px;font-weight:800;color:var(--navy);display:flex;align-items:center;gap:8px}
+.grid{display:grid;gap:18px}
+.grid-2{grid-template-columns:repeat(2,1fr)}
+.grid-3{grid-template-columns:repeat(3,1fr)}
+@media (max-width:960px){.grid-3{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:640px){.grid-2,.grid-3{grid-template-columns:1fr}}
+
+/* ---------- Stats ---------- */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:18px}
+.stat{background:var(--card);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow);display:flex;align-items:center;gap:14px;border:1px solid rgba(228,233,240,.7);position:relative;overflow:hidden}
+.stat .ic{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-size:22px;flex-shrink:0}
+.stat .v{font-size:24px;font-weight:800;line-height:1.1;color:var(--navy)}
+.stat .l{font-size:12px;color:var(--muted);font-weight:600}
+.stat.navy .ic{background:#e6edf5;color:var(--navy)}
+.stat.silver .ic{background:#eceff3;color:var(--silver)}
+.stat.gold .ic{background:#fdf3d6;color:var(--gold)}
+.stat.ok .ic{background:var(--ok-bg);color:var(--ok)}
+.stat.warn .ic{background:var(--warn-bg);color:var(--warn)}
+.stat.danger .ic{background:var(--danger-bg);color:var(--danger)}
+.stat.info .ic{background:var(--info-bg);color:var(--info)}
+.stat.clickable{cursor:pointer;transition:.2s}
+.stat.clickable:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(30,61,89,.14)}
+
+/* ---------- Chart ---------- */
+.chart-wrap{width:100%;overflow:hidden}
+.chart-wrap svg{width:100%;height:auto;display:block;direction:ltr}
+.chart-legend{display:flex;gap:16px;font-size:12px;color:var(--muted);margin-top:6px;flex-wrap:wrap}
+.chart-legend i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-left:6px}
+
+/* ---------- Buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid transparent;border-radius:var(--radius-sm);padding:9px 16px;font-weight:700;cursor:pointer;transition:.18s;background:#fff;color:var(--navy);border-color:var(--line);line-height:1.2;white-space:nowrap;text-decoration:none}
+.btn:hover{background:#f7f9fc;border-color:#cfd7e1}
+.btn:active{transform:translateY(1px)}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.btn-primary{background:var(--navy);color:#fff;border-color:var(--navy)}
+.btn-primary:hover{background:var(--navy-2);border-color:var(--navy-2)}
+.btn-accent{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn-accent:hover{background:var(--accent-2);border-color:var(--accent-2)}
+.btn-success{background:var(--ok);color:#fff;border-color:var(--ok)}
+.btn-success:hover{background:#12873c;border-color:#12873c}
+.btn-danger{background:#fff;color:var(--danger);border-color:#f3c2c2}
+.btn-danger:hover{background:var(--danger-bg);border-color:var(--danger)}
+.btn-whatsapp{background:#25d366;color:#fff;border-color:#25d366}
+.btn-whatsapp:hover{background:#1fb457;border-color:#1fb457}
+.btn-ghost{background:transparent;border-color:transparent;color:var(--navy)}
+.btn-ghost:hover{background:#eef2f7}
+.btn-sm{padding:6px 11px;font-size:13px;border-radius:8px}
+.btn-icon{width:36px;height:36px;padding:0;border-radius:9px;font-size:16px}
+.btn-block{width:100%}
+.btn-group{display:flex;gap:8px;flex-wrap:wrap}
+
+/* ---------- Forms ---------- */
+.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.form-grid .full{grid-column:1/-1}
+@media (max-width:640px){.form-grid{grid-template-columns:1fr}}
+.field label{display:block;font-weight:700;font-size:13px;margin-bottom:6px;color:#374151}
+.field label .req{color:var(--danger)}
+.field .hint{font-size:12px;color:var(--muted);margin-top:5px}
+.input,.select,.textarea{width:100%;border:1.5px solid var(--line);border-radius:var(--radius-sm);padding:10px 13px;background:#fff;color:var(--text);transition:.15s;outline:none;min-height:44px}
+.input:focus,.select:focus,.textarea:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(30,61,89,.12)}
+.input.invalid{border-color:var(--danger);box-shadow:0 0 0 3px rgba(220,38,38,.1)}
+.textarea{min-height:88px;resize:vertical}
+.select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='3'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:left 12px center;padding-left:34px}
+.input-icon{position:relative}
+.input-icon .input{padding-right:40px}
+.input-icon > span{position:absolute;right:13px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:16px;pointer-events:none}
+.switch{display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none}
+.switch input{position:absolute;opacity:0;width:0;height:0}
+.switch .track{width:44px;height:24px;border-radius:999px;background:#cbd5e1;position:relative;transition:.2s;flex-shrink:0}
+.switch .track::after{content:"";position:absolute;top:3px;right:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.switch input:checked + .track{background:var(--ok)}
+.switch input:checked + .track::after{transform:translateX(-20px)}
+.form-actions{display:flex;gap:10px;justify-content:flex-start;flex-wrap:wrap;margin-top:18px;padding-top:16px;border-top:1px dashed var(--line)}
+
+/* ---------- Toolbar / Search ---------- */
+.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+.toolbar .search{flex:1;min-width:220px}
+.toolbar .select{width:auto;min-width:150px}
+.result-count{font-size:13px;color:var(--muted);font-weight:600}
+
+/* ---------- Table ---------- */
+.table-wrap{overflow-x:auto;border-radius:var(--radius);border:1px solid var(--line);background:#fff}
+table.tbl{width:100%;border-collapse:collapse;min-width:820px}
+.tbl th{background:#f6f8fb;color:#374151;font-size:12.5px;text-transform:uppercase;letter-spacing:.4px;font-weight:800;padding:12px 14px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap;position:sticky;top:0;z-index:1}
+.tbl td{padding:12px 14px;border-bottom:1px solid #eef1f5;vertical-align:middle}
+.tbl tbody tr{transition:.15s}
+.tbl tbody tr:hover{background:#f9fbfd}
+.tbl tbody tr:last-child td{border-bottom:0}
+.tbl .name-cell strong{display:block;font-weight:800;color:var(--navy)}
+.tbl .name-cell small{color:var(--muted);font-size:12px}
+.tbl .actions{display:flex;gap:6px;justify-content:flex-end}
+.tbl.compact th,.tbl.compact td{padding:9px 10px}
+.empty{padding:50px 20px;text-align:center;color:var(--muted)}
+.empty .big{font-size:42px;margin-bottom:8px}
+.empty h4{color:var(--navy);margin-bottom:4px}
+
+/* ---------- Badges ---------- */
+.badge{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:3px 11px;font-size:12px;font-weight:800;letter-spacing:.4px;white-space:nowrap}
+.badge.silver{background:linear-gradient(135deg,#eceff3,#d5dbe3);color:#3f4a57;border:1px solid #c6cfda}
+.badge.gold{background:linear-gradient(135deg,#f9e7a8,#e5bd45);color:#5b4200;border:1px solid #d9b03c}
+.badge.ok{background:var(--ok-bg);color:var(--ok)}
+.badge.warn{background:var(--warn-bg);color:var(--warn)}
+.badge.danger{background:var(--danger-bg);color:var(--danger)}
+.badge.info{background:var(--info-bg);color:var(--info)}
+.badge.neutral{background:#eef2f7;color:#4b5563}
+.pct{font-weight:800;color:var(--navy)}
+.code-chip{font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:800;background:#eef2f7;color:var(--navy);padding:3px 9px;border-radius:7px;font-size:13px;direction:ltr;display:inline-block}
+
+/* ---------- Progress ---------- */
+.progress{height:10px;background:#e9edf3;border-radius:999px;overflow:hidden}
+.progress > i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--silver),#b3bcc8);transition:.4s}
+.progress.gold > i{background:linear-gradient(90deg,var(--gold),var(--gold-2))}
+.steps{display:flex;gap:8px;margin-top:8px}
+.steps span{flex:1;height:8px;border-radius:999px;background:#e5e9f0}
+.steps span.done{background:var(--navy)}
+
+/* ---------- Modals ---------- */
+.modal-bg{position:fixed;inset:0;background:rgba(15,36,56,.55);backdrop-filter:blur(3px);z-index:100;display:none;align-items:center;justify-content:center;padding:16px}
+.modal-bg.open{display:flex;animation:fade .2s}
+.modal{background:#fff;border-radius:18px;width:100%;max-width:760px;max-height:calc(100vh - 32px);overflow:auto;box-shadow:var(--shadow-lg);animation:pop .22s ease}
+.modal.sm{max-width:480px}
+.modal.lg{max-width:960px}
+@keyframes pop{from{transform:translateY(14px) scale(.98);opacity:0}to{transform:none;opacity:1}}
+.modal-head{position:sticky;top:0;background:#fff;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 20px;border-bottom:1px solid var(--line)}
+.modal-head h3{font-size:17px;font-weight:800;color:var(--navy);display:flex;align-items:center;gap:8px}
+.modal-body{padding:20px}
+.modal-foot{position:sticky;bottom:0;background:#fff;padding:14px 20px;border-top:1px solid var(--line);display:flex;gap:10px;justify-content:flex-start;flex-wrap:wrap}
+.close-x{width:36px;height:36px;border-radius:50%;border:0;background:#f1f4f8;cursor:pointer;font-size:18px;color:#374151}
+.close-x:hover{background:#e5e9f0}
+
+/* ---------- Customer profile ---------- */
+.profile-head{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.profile-avatar{width:60px;height:60px;border-radius:16px;display:grid;place-items:center;font-size:24px;font-weight:800;color:#fff;flex-shrink:0}
+.profile-avatar.silver{background:linear-gradient(135deg,#8e9aaf,#5d6b7d)}
+.profile-avatar.gold{background:linear-gradient(135deg,#e6bd4a,#b8860b)}
+.profile-head h3{font-size:20px;font-weight:800;color:var(--navy)}
+.kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-top:14px}
+.kv div{background:#f6f8fb;border-radius:10px;padding:10px 12px}
+.kv div b{display:block;font-size:11.5px;color:var(--muted);font-weight:700;margin-bottom:2px}
+.kv div span{font-weight:700;color:var(--text)}
+.member-box{border-radius:14px;padding:16px;color:#fff;margin-top:16px;position:relative;overflow:hidden}
+.member-box.silver{background:linear-gradient(135deg,#6f7c8c,#3d4a5a)}
+.member-box.gold{background:linear-gradient(135deg,#d4a017,#8a6508)}
+.member-box::after{content:"";position:absolute;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.08);left:-60px;bottom:-120px}
+.member-box .row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;position:relative;z-index:1}
+.member-box .big{font-size:30px;font-weight:800;line-height:1}
+.member-box small{opacity:.85;font-size:12.5px}
+.member-box .progress{background:rgba(255,255,255,.25);margin-top:10px}
+.member-box .progress > i{background:#fff}
+.section-title{font-size:14px;font-weight:800;color:var(--navy);margin:20px 0 10px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+
+/* ---------- Invoice preview ---------- */
+.invoice{background:#f6f8fb;border:1px dashed #cfd7e1;border-radius:12px;padding:14px 16px;margin-top:14px}
+.invoice .line{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #e5e9f0;font-size:14px}
+.invoice .line:last-child{border:0}
+.invoice .line b{font-weight:800}
+.invoice .total{font-size:18px;color:var(--ok);font-weight:800}
+.invoice .disc{color:var(--danger)}
+.note{border-radius:10px;padding:10px 14px;font-size:13px;display:flex;gap:8px;align-items:flex-start;margin-top:12px}
+.note.info{background:var(--info-bg);color:#1e40af}
+.note.warn{background:var(--warn-bg);color:#92400e}
+.note.ok{background:var(--ok-bg);color:#14532d}
+.note.gold{background:#fdf3d6;color:#5b4200}
+
+/* ---------- Loyalty card ---------- */
+.lcard-stage{display:flex;flex-direction:column;align-items:center;gap:20px;padding:10px 0}
+.lcard{width:340px;height:214px;border-radius:16px;position:relative;overflow:hidden;color:#fff;box-shadow:0 20px 40px rgba(0,0,0,.28);font-family:var(--font);direction:ltr;flex-shrink:0}
+.lcard.silver{background:linear-gradient(135deg,#dfe4ea 0%,#9aa5b3 45%,#5f6b7a 100%);color:#10202e}
+.lcard.gold{background:linear-gradient(135deg,#fbe7a1 0%,#d9a821 45%,#8a6508 100%);color:#2a1e02}
+.lcard::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 85% 15%,rgba(255,255,255,.45),transparent 40%),radial-gradient(circle at 10% 90%,rgba(255,255,255,.25),transparent 40%)}
+.lcard .deco{position:absolute;right:-40px;bottom:-60px;width:200px;height:200px;border-radius:50%;border:26px solid rgba(255,255,255,.12)}
+.lcard > *{position:relative;z-index:1}
+.lcard .top{display:flex;justify-content:space-between;align-items:flex-start;padding:16px 18px 0}
+.lcard .brand-t{font-weight:800;font-size:15px;letter-spacing:1px;line-height:1.1}
+.lcard .brand-t small{display:block;font-size:9px;letter-spacing:2px;opacity:.85;font-weight:700}
+.lcard .tier{font-weight:800;font-size:13px;letter-spacing:3px;padding:4px 10px;border-radius:6px;background:rgba(0,0,0,.18);color:#fff}
+.lcard .chip{width:40px;height:30px;border-radius:6px;background:linear-gradient(135deg,#f7e08a,#c79a17);margin:12px 18px 0;box-shadow:inset 0 0 0 1px rgba(0,0,0,.2)}
+.lcard .code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:19px;letter-spacing:3px;font-weight:700;padding:6px 18px 0}
+.lcard .bottom{position:absolute;left:0;right:0;bottom:0;padding:0 18px 14px;display:flex;justify-content:space-between;align-items:flex-end;gap:10px}
+.lcard .holder{font-weight:800;font-size:15px;line-height:1.2;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lcard .holder small,.lcard .meta small{display:block;font-size:9px;letter-spacing:1.5px;opacity:.8;font-weight:700}
+.lcard .meta{text-align:right;font-weight:700;font-size:12px}
+.lcard .card-disc{font-weight:800;font-size:13px}
+.lcard.back{background:#1e3d59;color:#fff;padding:16px 18px;direction:rtl}
+.lcard.back .stripe{position:absolute;left:0;right:0;top:16px;height:36px;background:#0b1a28}
+.lcard.back .rules{margin-top:48px;font-size:10.5px;line-height:1.55}
+.lcard.back .rules b{color:var(--gold-2)}
+.lcard.back .contact{position:absolute;bottom:12px;right:18px;left:18px;font-size:9.5px;opacity:.85;border-top:1px solid rgba(255,255,255,.2);padding-top:6px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px;direction:ltr}
+
+/* ---------- Toast ---------- */
+.toasts{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);z-index:200;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none}
+.toast{background:#111827;color:#fff;padding:11px 18px;border-radius:12px;font-weight:700;box-shadow:0 10px 30px rgba(0,0,0,.25);animation:pop .2s;display:flex;gap:10px;align-items:center;max-width:92vw;font-size:14px}
+.toast.ok{background:var(--ok)}.toast.err{background:var(--danger)}.toast.warn{background:var(--warn)}
+
+/* ---------- Lists ---------- */
+.list{display:flex;flex-direction:column;gap:8px}
+.list-item{display:flex;align-items:center;gap:12px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:#fff;transition:.15s}
+.list-item:hover{background:#f9fbfd}
+.list-item .grow{flex:1;min-width:0}
+.list-item .grow b{display:block;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.list-item .grow small{color:var(--muted);font-size:12px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:8px;background:#eef2f7;border-radius:999px;padding:5px 6px 5px 12px;font-weight:700;font-size:13px}
+.chip button{border:0;background:#fff;width:22px;height:22px;border-radius:50%;cursor:pointer;color:var(--danger);font-weight:800;line-height:1}
+.rules-list{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.rules-list li{display:flex;gap:10px;align-items:flex-start;background:#f6f8fb;border-radius:10px;padding:10px 12px;font-size:13.5px}
+.rules-list li .n{width:26px;height:26px;border-radius:8px;background:var(--navy);color:#fff;display:grid;place-items:center;font-weight:800;font-size:12px;flex-shrink:0}
+.history-item{border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:#fff}
+.history-item .h{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.history-item .h b{color:var(--navy);font-size:15px}
+.history-item .amounts{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px}
+.history-item .amounts div{background:#f6f8fb;border-radius:8px;padding:6px 8px;font-size:12px}
+.history-item .amounts div b{display:block;font-size:13.5px;color:var(--text)}
+.history-item .amounts div.final b{color:var(--ok)}
+.history-item .amounts div.disc b{color:var(--danger)}
+@media (max-width:560px){.history-item .amounts{grid-template-columns:repeat(2,1fr)}}
+
+/* ---------- Mobile bottom nav ---------- */
+.bottomnav{display:none;position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);z-index:60;box-shadow:0 -6px 20px rgba(15,36,56,.08);padding-bottom:env(safe-area-inset-bottom)}
+.bottomnav button{flex:1;border:0;background:transparent;padding:8px 4px 6px;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;font-weight:700;color:var(--muted);cursor:pointer}
+.bottomnav button span.ic{font-size:20px}
+.bottomnav button.active{color:var(--navy)}
+.fab{position:fixed;bottom:76px;left:16px;width:56px;height:56px;border-radius:50%;background:var(--accent);color:#fff;border:0;font-size:28px;box-shadow:0 10px 24px rgba(243,156,18,.45);cursor:pointer;z-index:55;display:none;align-items:center;justify-content:center}
+
+@media (max-width:820px){
+  .topnav{display:none}
+  .bottomnav{display:flex}
+  .fab{display:flex}
+  main{padding:16px 12px 100px}
+  .card{padding:16px}
+  .brand-title{font-size:16px}
+  .brand-sub{display:none}
+  .worker-chip .name{max-width:110px}
+  .page-head h2{font-size:19px}
+  /* responsive table -> cards */
+  table.tbl.responsive{min-width:0}
+  .tbl.responsive thead{display:none}
+  .tbl.responsive tbody tr{display:block;border-bottom:8px solid var(--bg);padding:8px 4px}
+  .tbl.responsive td{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 10px;border-bottom:1px dashed #eef1f5;text-align:left}
+  .tbl.responsive td::before{content:attr(data-label);font-weight:800;color:var(--muted);font-size:12px;text-align:right}
+  .tbl.responsive td.actions-cell{justify-content:flex-start}
+  .tbl.responsive td.actions-cell::before{display:none}
+  .tbl.responsive .actions{justify-content:flex-start;flex-wrap:wrap}
+  .modal{max-height:calc(100vh - 16px);border-radius:16px}
+  .modal-bg{padding:8px;align-items:flex-end}
+  .lcard{transform:scale(.92);transform-origin:top center}
+}
+@media print{ body *{visibility:hidden} }
+</style>
+</head>
+<body>
+
+<!-- ================= TOP BAR ================= -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <div class="brand-logo"><img src="img/logo.png" alt="BAGHDAD GPL" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'fallback',textContent:'GPL'}))"></div>
+      <div>
+        <div class="brand-title">BAGHDAD GPL <span style="opacity:.6;font-weight:600">—</span> Loyalty Card</div>
+        <div class="brand-sub">FAMILY METAL · نظام بطاقة الولاء SILVER / GOLD</div>
+      </div>
+    </div>
+    <div class="topbar-spacer"></div>
+    <div class="worker-chip" id="workerChip" title="تغيير اسم العامل">
+      <div class="avatar" id="workerAvatar">؟</div>
+      <div><div class="lbl">العامل الحالي</div><div class="name" id="workerName">غير محدد</div></div>
+      <span style="opacity:.7">▾</span>
+    </div>
+  </div>
+  <nav class="topnav" id="topnav">
+    <button data-view="dashboard" class="active">📊 لوحة التحكم</button>
+    <button data-view="customers">👥 الزبائن <span class="badge-count" id="navCount">0</span></button>
+    <button data-view="new">➕ زبون جديد</button>
+    <button data-view="settings">⚙️ الإعدادات</button>
+  </nav>
+</header>
+
+<main>
+  <!-- ================= DASHBOARD ================= -->
+  <section class="view active" id="view-dashboard">
+    <div class="page-head">
+      <div><h2>لوحة التحكم</h2><p id="dashDate"></p></div>
+      <div class="btn-group">
+        <button class="btn btn-primary" data-go="new">➕ زبون جديد</button>
+        <button class="btn" data-go="customers">👥 قائمة الزبائن</button>
+      </div>
+    </div>
+    <div class="stats" id="stats"></div>
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-title"><h3>📈 نمو الزبائن — آخر 6 أشهر</h3><span class="muted" style="font-size:12px" id="chartTotal"></span></div>
+        <div class="chart-wrap" id="chart"></div>
+        <div class="chart-legend"><span><i style="background:#1e3d59"></i>زبائن جدد (تركيب GPL)</span><span><i style="background:#f39c12"></i>عمليات صيانة</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title"><h3>🔧 الصيانة المستحقة</h3><button class="btn btn-sm" data-go="customers" data-filter="due">عرض الكل</button></div>
+        <div class="list" id="dueList"></div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:18px">
+      <div class="card-title"><h3>⭐ قواعد نظام الولاء SILVER / GOLD</h3></div>
+      <ul class="rules-list">
+        <li><span class="n">1</span><div>عند <b>أول تركيب GPL</b> يصبح الزبون تلقائياً عضو <span class="badge silver">SILVER</span> بخصم <b>3%</b>.</div></li>
+        <li><span class="n">2</span><div>بعد إتمام <b>3 عمليات صيانة</b> (لا يُحتسب التركيب الأصلي) تتم الترقية تلقائياً إلى <span class="badge gold">GOLD</span>.</div></li>
+        <li><span class="n">3</span><div>أول عملية بعد الترقية إلى GOLD بخصم <b>5%</b>، ثم يزيد الخصم <b>1%</b> مع كل عملية جديدة (6%، 7%، 8%…).</div></li>
+        <li><span class="n">4</span><div>نسبة الخصم تُحسب تلقائياً وتُحفظ بشكل دائم مع كل خدمة — الخدمات القديمة تحتفظ بنسبتها الأصلية.</div></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================= CUSTOMERS ================= -->
+  <section class="view" id="view-customers">
+    <div class="page-head">
+      <div><h2>الزبائن</h2><p>بحث، متابعة الصيانة، إضافة الخدمات وطباعة البطاقات</p></div>
+      <div class="btn-group">
+        <button class="btn" id="btnExportPdf">🖨️ تصدير قائمة الزبائن PDF</button>
+        <button class="btn btn-primary" data-go="new">➕ زبون جديد</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="toolbar">
+        <div class="input-icon search"><span>🔍</span><input class="input" id="searchInput" placeholder="بحث بالاسم، الهاتف، الكود أو نوع السيارة…" autocomplete="off"></div>
+        <select class="select" id="filterLevel"><option value="">كل الفئات</option><option value="SILVER">SILVER</option><option value="GOLD">GOLD</option></select>
+        <select class="select" id="filterMaint"><option value="">كل حالات الصيانة</option><option value="overdue">متأخرة</option><option value="soon">قريبة (15 يوم)</option><option value="due">مستحقة أو قريبة</option><option value="ok">منتظمة</option></select>
+        <select class="select" id="sortBy"><option value="newest">الأحدث أولاً</option><option value="name">الاسم</option><option value="code">الكود</option><option value="next">الصيانة القادمة</option><option value="services">عدد الخدمات</option></select>
+        <span class="result-count" id="resultCount"></span>
+      </div>
+      <div class="table-wrap">
+        <table class="tbl responsive" id="custTable">
+          <thead><tr>
+            <th>الكود</th><th>الزبون</th><th>السيارة</th><th>الفئة</th><th>تاريخ التركيب</th><th>الصيانة القادمة</th><th>الخدمات</th><th></th>
+          </tr></thead>
+          <tbody id="custBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= NEW CUSTOMER ================= -->
+  <section class="view" id="view-new">
+    <div class="page-head"><div><h2>زبون جديد — تركيب GPL</h2><p>يبدأ الزبون تلقائياً كعضو SILVER بخصم 3%</p></div></div>
+    <form class="card" id="newForm" novalidate>
+      <div class="form-grid">
+        <div class="field"><label>الاسم الكامل <span class="req">*</span></label><input class="input" name="name" required placeholder="مثال: محمد بن علي"></div>
+        <div class="field"><label>رقم الهاتف <span class="req">*</span></label><input class="input ltr" name="phone" required inputmode="tel" placeholder="05 XX XX XX XX"><div class="hint">يُستخدم لرسائل WhatsApp</div></div>
+        <div class="field"><label>نوع / ماركة السيارة <span class="req">*</span></label><input class="input" name="vehicle" required placeholder="مثال: Renault Symbol 2019" list="vehicleList"><datalist id="vehicleList"></datalist></div>
+        <div class="field"><label>تاريخ تركيب GPL <span class="req">*</span></label><input class="input ltr" type="date" name="installDate" required></div>
+        <div class="field"><label>الفرع</label><select class="select" name="branch" id="newBranch"></select></div>
+        <div class="field"><label>العامل (المُركِّب)</label><input class="input" name="worker" list="workerList" placeholder="اسم العامل"><datalist id="workerList"></datalist></div>
+        <div class="field"><label>مبلغ فاتورة التركيب (دج)</label><input class="input ltr" name="amount" inputmode="decimal" placeholder="0"><div class="hint" id="installDiscHint"></div></div>
+        <div class="field"><label>كود البطاقة</label><input class="input ltr code-input" name="code" placeholder="تلقائي" id="newCode"><div class="hint">يُولَّد تلقائياً — يمكنك تعديله</div></div>
+        <div class="field full"><label>ملاحظات</label><textarea class="textarea" name="notes" placeholder="ملاحظات إضافية (اختياري)"></textarea></div>
+      </div>
+      <div class="invoice hidden" id="newInvoice"></div>
+      <div class="form-actions">
+        <button class="btn btn-primary" type="submit">💾 حفظ الزبون وإنشاء البطاقة</button>
+        <button class="btn" type="reset">مسح الحقول</button>
+      </div>
+    </form>
+  </section>
+
+  <!-- ================= SETTINGS ================= -->
+  <section class="view" id="view-settings">
+    <div class="page-head"><div><h2>الإعدادات</h2><p>العمّال، الصيانة، النسخ الاحتياطي</p></div></div>
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-title"><h3>👷 العمّال</h3></div>
+        <div class="chips" id="workersChips"></div>
+        <div style="display:flex;gap:8px;margin-top:12px"><input class="input" id="newWorkerInput" placeholder="اسم عامل جديد"><button class="btn btn-primary" id="addWorkerBtn">إضافة</button></div>
+      </div>
+      <div class="card">
+        <div class="card-title"><h3>🔧 الصيانة والأكواد</h3></div>
+        <div class="form-grid">
+          <div class="field"><label>الفترة بين الصيانات (أشهر)</label><select class="select" id="setMonths"><option value="3">3 أشهر</option><option value="6">6 أشهر</option><option value="12">12 شهر</option></select></div>
+          <div class="field"><label>بادئة كود البطاقة</label><input class="input ltr" id="setPrefix" maxlength="6" placeholder="BG"></div>
+          <div class="field"><label>الفرع الافتراضي</label><select class="select" id="setBranch"></select></div>
+          <div class="field"><label>الخصم على فاتورة التركيب</label><label class="switch" style="margin-top:8px"><input type="checkbox" id="setDiscInstall"><span class="track"></span><span id="setDiscInstallLbl">تطبيق خصم SILVER 3% على التركيب</span></label></div>
+        </div>
+        <div class="form-actions" style="margin-top:12px"><button class="btn btn-primary" id="saveSettingsBtn">💾 حفظ الإعدادات</button></div>
+      </div>
+      <div class="card">
+        <div class="card-title"><h3>💾 النسخ الاحتياطي (تخزين محلي)</h3></div>
+        <p class="muted" style="margin:0 0 12px;font-size:13px">البيانات محفوظة في متصفح هذا الجهاز. ننصح بأخذ نسخة احتياطية بشكل دوري.</p>
+        <div class="btn-group">
+          <button class="btn" id="backupBtn">⬇️ تنزيل نسخة احتياطية (JSON)</button>
+          <label class="btn">⬆️ استرجاع نسخة <input type="file" id="restoreInput" accept="application/json,.json" hidden></label>
+        </div>
+        <div class="muted" style="font-size:12px;margin-top:10px" id="storageInfo"></div>
+      </div>
+      <div class="card">
+        <div class="card-title"><h3>⚠️ منطقة الخطر</h3></div>
+        <p class="muted" style="margin:0 0 12px;font-size:13px">حذف جميع الزبائن والخدمات نهائياً من هذا الجهاز.</p>
+        <button class="btn btn-danger" id="wipeBtn">🗑️ حذف جميع البيانات</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ================= MOBILE NAV ================= -->
+<nav class="bottomnav" id="bottomnav">
+  <button data-view="dashboard" class="active"><span class="ic">📊</span>الرئيسية</button>
+  <button data-view="customers"><span class="ic">👥</span>الزبائن</button>
+  <button data-view="new"><span class="ic">➕</span>جديد</button>
+  <button data-view="settings"><span class="ic">⚙️</span>الإعدادات</button>
+</nav>
+<button class="fab" id="fab" title="زبون جديد">+</button>
+
+<!-- ================= MODALS ================= -->
+<div class="modal-bg" id="modalCustomer"><div class="modal lg"><div class="modal-head"><h3>👤 ملف الزبون</h3><button class="close-x" data-close>✕</button></div><div class="modal-body" id="customerBody"></div></div></div>
+<div class="modal-bg" id="modalService"><div class="modal"><div class="modal-head"><h3>🔧 إضافة خدمة</h3><button class="close-x" data-close>✕</button></div><div class="modal-body" id="serviceBody"></div></div></div>
+<div class="modal-bg" id="modalEdit"><div class="modal"><div class="modal-head"><h3>✏️ تعديل بيانات الزبون</h3><button class="close-x" data-close>✕</button></div><div class="modal-body" id="editBody"></div></div></div>
+<div class="modal-bg" id="modalCard"><div class="modal"><div class="modal-head"><h3>🪪 معاينة بطاقة الولاء</h3><button class="close-x" data-close>✕</button></div><div class="modal-body" id="cardBody"></div></div></div>
+<div class="modal-bg" id="modalWorker"><div class="modal sm"><div class="modal-head"><h3>👷 اختيار العامل</h3><button class="close-x" data-close>✕</button></div><div class="modal-body" id="workerBody"></div></div></div>
+<div class="modal-bg" id="modalConfirm"><div class="modal sm"><div class="modal-body" id="confirmBody"></div></div></div>
+<div class="toasts" id="toasts"></div>
+
+<script>
+/* =====================================================================
+   BAGHDAD GPL — Loyalty Card · Application logic
+   ===================================================================== */
+(function(){
+'use strict';
+
+/* ------------------------------------------------------------------ */
+/*  Constants & rules                                                  */
+/* ------------------------------------------------------------------ */
+const KEYS = { customers:'bgpl_customers', settings:'bgpl_settings', worker:'bgpl_current_worker', migrated:'bgpl_migrated_from' };
+const LEGACY_KEYS = ['customers','clients','bgpl_clients','baghdad_customers','baghdadgpl_customers','loyaltyCustomers','loyalty_customers','gplCustomers','gpl_customers','baghdad_gpl_customers','BAGHDAD_GPL_CUSTOMERS'];
+const RULES = { SILVER_PCT:3, GOLD_START_PCT:5, GOLD_STEP:1, MAINT_FOR_GOLD:3 };
+const SERVICE_TYPES = { installation:'تركيب GPL', maintenance:'صيانة', repair:'إصلاح / خدمة أخرى' };
+const BRANCHES = {
+  'Chlef':      { phone:'213557985364', map:'https://maps.app.goo.gl/QpTY7QFyVcwsT8169' },
+  'Oran':       { phone:'213550141155', map:'https://maps.app.goo.gl/6fL25SSXCcastyTk8' },
+  'Boumerdès':  { phone:'213561950760', map:'https://maps.app.goo.gl/emjmatB9XgC5V1T98' }
+};
+const DEFAULT_SETTINGS = { maintenanceMonths:6, codePrefix:'BG', defaultBranch:'Chlef', discountOnInstall:true, workers:[] };
+
+/* ------------------------------------------------------------------ */
+/*  Utilities                                                          */
+/* ------------------------------------------------------------------ */
+const $  = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+const z  = n => String(n).padStart(2,'0');
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,7);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function toISO(d){ return `${d.getFullYear()}-${z(d.getMonth()+1)}-${z(d.getDate())}`; }
+function todayISO(){ return toISO(new Date()); }
+function parseISO(s){ if(!s) return null; const m=String(s).match(/^(\d{4})-(\d{2})-(\d{2})/); if(!m) return null; return new Date(+m[1], +m[2]-1, +m[3]); }
+function fmtDate(s){ const d=parseISO(s); return d ? `${z(d.getDate())}/${z(d.getMonth()+1)}/${d.getFullYear()}` : '—'; }
+function addMonths(iso, n){ const d=parseISO(iso); if(!d) return null; const day=d.getDate(); d.setMonth(d.getMonth()+n); if(d.getDate()!==day) d.setDate(0); return toISO(d); }
+function diffDays(fromISO, toISOs){ const a=parseISO(fromISO), b=parseISO(toISOs); if(!a||!b) return null; return Math.round((b-a)/86400000); }
+function round2(n){ return Math.round((+n + Number.EPSILON) * 100) / 100; }
+function parseAmount(v){ if(v==null) return 0; const n=parseFloat(String(v).replace(/\s/g,'').replace(',','.')); return isFinite(n) && n>=0 ? n : 0; }
+const nf = new Intl.NumberFormat('fr-FR',{minimumFractionDigits:0, maximumFractionDigits:2});
+function money(n){ return nf.format(+n||0).replace(/\u202f|\u00a0/g,' ') + ' دج'; }
+function normalizePhone(p){
+  let d=String(p||'').replace(/\D/g,'');
+  if(d.startsWith('00')) d=d.slice(2);
+  if(d.startsWith('213')) return d;
+  if(d.startsWith('0') && d.length===10) return '213'+d.slice(1);
+  if(d.length===9) return '213'+d;
+  return d;
+}
+function fmtPhone(p){ const d=String(p||'').replace(/\D/g,''); if(d.length===10) return d.replace(/(\d{4})(\d{2})(\d{2})(\d{2})/,'$1 $2 $3 $4'); return p||'—'; }
+function normDate(v){
+  if(!v) return '';
+  if(typeof v==='number') { const d=new Date(v); return isNaN(d)?'':toISO(d); }
+  const s=String(v).trim();
+  if(/^\d{4}-\d{2}-\d{2}/.test(s)) return s.slice(0,10);
+  let m=s.match(/^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{4})$/); if(m) return `${m[3]}-${z(m[2])}-${z(m[1])}`;
+  const d=new Date(s); return isNaN(d)?'':toISO(d);
+}
+function toast(msg, type='ok', ms=2600){
+  const t=document.createElement('div'); t.className='toast '+type; t.textContent=msg; $('#toasts').appendChild(t);
+  setTimeout(()=>{ t.style.opacity='0'; t.style.transition='.3s'; setTimeout(()=>t.remove(),300); }, ms);
+}
+function download(filename, content, mime='application/json'){
+  const blob=new Blob([content],{type:mime}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=filename; document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href); a.remove();},500);
+}
+function initials(name){ return String(name||'?').trim().split(/\s+/).slice(0,2).map(w=>w[0]).join('').toUpperCase() || '?'; }
+
+/* ------------------------------------------------------------------ */
+/*  Storage                                                            */
+/* ------------------------------------------------------------------ */
+let customers = [];
+let settings  = {...DEFAULT_SETTINGS};
+let currentWorker = '';
+
+function loadJSON(key, fallback){ try{ const v=localStorage.getItem(key); return v? JSON.parse(v) : fallback; }catch(e){ return fallback; } }
+function save(){ try{ localStorage.setItem(KEYS.customers, JSON.stringify(customers)); }catch(e){ toast('تعذر الحفظ في التخزين المحلي (المساحة ممتلئة؟)','err'); } }
+function saveSettings(){ localStorage.setItem(KEYS.settings, JSON.stringify(settings)); }
+
+/* ---- Legacy data migration (adapts old SILVER/GOLD records safely) ---- */
+function pick(o, ...keys){ for(const k of keys){ if(o && o[k]!=null && o[k]!=='') return o[k]; } return undefined; }
+function migrateService(s, idx){
+  if(!s || typeof s!=='object') return null;
+  const rawType = String(pick(s,'type','serviceType','kind','category','service') || '').toLowerCase();
+  let type = 'maintenance';
+  if(/instal|تركيب|pose/.test(rawType)) type='installation';
+  else if(/repair|إصلاح|reparation|réparation|other|autre|أخرى/.test(rawType)) type='repair';
+  const amount = parseAmount(pick(s,'amount','originalAmount','original','price','montant','total','invoice','cost'));
+  let pct = pick(s,'discountPct','discountPercent','discountPercentage','discount','remise','pct');
+  pct = pct==null ? null : parseAmount(pct);
+  const hasPct = pct!=null && !isNaN(pct);
+  const discountAmount = hasPct ? round2(amount*pct/100) : parseAmount(pick(s,'discountAmount','discountValue')) ;
+  const finalAmount = pick(s,'finalAmount','final','net','netAmount');
+  return {
+    id: pick(s,'id') || uid()+idx,
+    date: normDate(pick(s,'date','serviceDate','createdAt')) || '',
+    type,
+    description: String(pick(s,'description','desc','note','notes','details') || ''),
+    amount,
+    discountPct: hasPct ? pct : 0,
+    discountAmount: round2(discountAmount||0),
+    finalAmount: finalAmount!=null ? parseAmount(finalAmount) : round2(amount - (discountAmount||0)),
+    worker: String(pick(s,'worker','employee','technician','by') || ''),
+    level: String(pick(s,'level','membership','tier') || '').toUpperCase()==='GOLD' ? 'GOLD' : (pick(s,'level','membership','tier') ? 'SILVER' : ''),
+    legacy: !hasPct
+  };
+}
+function migrateCustomer(c, idx){
+  if(!c || typeof c!=='object') return null;
+  const name = pick(c,'name','fullName','fullname','nom','customerName','client');
+  if(!name) return null;
+  const oldLevel = String(pick(c,'level','membership','tier','status','category') || '').toUpperCase();
+  let services = pick(c,'services','history','operations','visits','maintenances','records');
+  services = Array.isArray(services) ? services.map(migrateService).filter(Boolean) : [];
+  const installDate = normDate(pick(c,'installDate','installationDate','dateInstallation','gplDate','install','installedAt','date'));
+  // Guarantee an installation record exists (does not count as maintenance)
+  if(!services.some(s=>s.type==='installation')){
+    services.unshift({ id:uid()+'i', date:installDate||'', type:'installation', description:'تركيب GPL (سجل مُرحَّل)', amount:parseAmount(pick(c,'installAmount','installationAmount','price')), discountPct:0, discountAmount:0, finalAmount:parseAmount(pick(c,'installAmount','installationAmount','price')), worker:String(pick(c,'worker','installer','employee')||''), level:'SILVER', legacy:true });
+  }
+  // Sort legacy services by date to replay history in order
+  services.sort((a,b)=> (a.date||'').localeCompare(b.date||''));
+  const maint = services.filter(s=>s.type==='maintenance').length;
+  return {
+    id: pick(c,'id') || uid()+idx,
+    code: String(pick(c,'code','cardCode','customerCode','loyaltyCode','cardNumber','number') || ''),
+    name: String(name).trim(),
+    phone: String(pick(c,'phone','tel','telephone','mobile','whatsapp') || '').trim(),
+    vehicle: String(pick(c,'vehicle','vehicleBrand','brand','car','carBrand','marque','voiture','model') || '').trim(),
+    installDate,
+    branch: String(pick(c,'branch','agence','site') || settings.defaultBranch),
+    notes: String(pick(c,'notes','note','remarks') || ''),
+    createdAt: normDate(pick(c,'createdAt','created','addedAt')) || installDate || todayISO(),
+    // If the old system already made the customer GOLD, keep it (never downgrade existing customers)
+    legacyGold: oldLevel==='GOLD' && maint < RULES.MAINT_FOR_GOLD,
+    services
+  };
+}
+function tryMigrateLegacy(){
+  if(localStorage.getItem(KEYS.customers)) return;
+  const candidates = [...LEGACY_KEYS];
+  for(let i=0;i<localStorage.length;i++){ const k=localStorage.key(i); if(!candidates.includes(k) && !Object.values(KEYS).includes(k)) candidates.push(k); }
+  for(const key of candidates){
+    let data = loadJSON(key, null);
+    if(data && !Array.isArray(data) && typeof data==='object') data = data.customers || data.clients || data.list || null;
+    if(!Array.isArray(data) || !data.length) continue;
+    const migrated = data.map(migrateCustomer).filter(Boolean);
+    if(!migrated.length) continue;
+    customers = migrated;
+    ensureCodes();
+    save();
+    localStorage.setItem(KEYS.migrated, key);   // legacy key is kept untouched as a backup
+    setTimeout(()=>toast(`تم ترحيل ${migrated.length} زبون من النظام القديم إلى النظام الجديد ✅`,'ok',5000),600);
+    return;
+  }
+}
+function ensureCodes(){
+  const seen=new Set();
+  customers.forEach(c=>{ if(c.code && !seen.has(c.code)) seen.add(c.code); else c.code=''; });
+  customers.forEach(c=>{ if(!c.code){ c.code=nextCode(); seen.add(c.code);} });
+}
+function nextCode(){
+  const prefix=(settings.codePrefix||'BG').toUpperCase();
+  let max=0; customers.forEach(c=>{ const m=String(c.code||'').match(/(\d+)\s*$/); if(m) max=Math.max(max, parseInt(m[1],10)); });
+  return `${prefix}-${String(max+1).padStart(4,'0')}`;
+}
+function load(){
+  settings = {...DEFAULT_SETTINGS, ...loadJSON(KEYS.settings, {})};
+  if(!Array.isArray(settings.workers)) settings.workers=[];
+  currentWorker = localStorage.getItem(KEYS.worker) || '';
+  tryMigrateLegacy();
+  customers = loadJSON(KEYS.customers, []);
+  if(!Array.isArray(customers)) customers=[];
+  // Normalise records from any earlier version of this app
+  customers = customers.map((c,i)=>{ c.services = Array.isArray(c.services)? c.services : []; if('plate' in c) delete c.plate; if('registration' in c) delete c.registration; if('matricule' in c) delete c.matricule; c.services.forEach(s=>{ delete s.plate; }); return c; });
+  ensureCodes();
+}
+
+/* ------------------------------------------------------------------ */
+/*  Membership engine — SILVER / GOLD                                  */
+/* ------------------------------------------------------------------ */
+/**
+ * Replays the customer's service history (in the order it happened) and returns:
+ *  level          : 'SILVER' | 'GOLD'
+ *  maint          : number of maintenance operations (installation excluded)
+ *  goldOps        : operations already performed while GOLD
+ *  nextPct        : discount % that will apply to the NEXT operation
+ *  remainingToGold: maintenance operations still needed to reach GOLD
+ */
+function membership(c){
+  let level = c.legacyGold ? 'GOLD' : 'SILVER';
+  let maint = 0, goldOps = 0, ops = 0;
+  for(const s of (c.services||[])){
+    const isInstall = s.type==='installation';
+    if(!isInstall){ ops++; if(level==='GOLD' && !s.legacy) goldOps++; }
+    if(s.type==='maintenance') maint++;
+    if(level==='SILVER' && maint>=RULES.MAINT_FOR_GOLD) level='GOLD';
+  }
+  const nextPct = level==='GOLD' ? RULES.GOLD_START_PCT + RULES.GOLD_STEP*goldOps : RULES.SILVER_PCT;
+  return { level, maint, goldOps, ops, nextPct, remainingToGold: Math.max(0, RULES.MAINT_FOR_GOLD - maint) };
+}
+/** Discount that applies to a new service of the given type, right now. */
+function discountForNew(c, type){
+  if(type==='installation' && !settings.discountOnInstall) return 0;
+  return membership(c).nextPct;
+}
+function calcInvoice(amount, pct){
+  amount = round2(amount); const discountAmount = round2(amount*pct/100);
+  return { amount, pct, discountAmount, finalAmount: round2(amount - discountAmount) };
+}
+function lastServiceDate(c){ let last=c.installDate||''; (c.services||[]).forEach(s=>{ if(s.date && s.date>last) last=s.date; }); return last; }
+function nextMaintenance(c){ const base=lastServiceDate(c); return base ? addMonths(base, +settings.maintenanceMonths||6) : null; }
+function maintStatus(c){
+  const next=nextMaintenance(c); if(!next) return {key:'none', label:'—', cls:'neutral', days:null, next};
+  const d=diffDays(todayISO(), next);
+  if(d<0)  return {key:'overdue', label:`متأخرة ${Math.abs(d)} يوم`, cls:'danger', days:d, next};
+  if(d<=15) return {key:'soon', label: d===0?'اليوم':`بعد ${d} يوم`, cls:'warn', days:d, next};
+  return {key:'ok', label:`بعد ${d} يوم`, cls:'ok', days:d, next};
+}
+const countServices = c => (c.services||[]).length;
+
+/* ------------------------------------------------------------------ */
+/*  Navigation                                                         */
+/* ------------------------------------------------------------------ */
+function showView(name, opts={}){
+  $$('.view').forEach(v=>v.classList.toggle('active', v.id==='view-'+name));
+  $$('[data-view]').forEach(b=>b.classList.toggle('active', b.dataset.view===name));
+  if(name==='dashboard') renderDashboard();
+  if(name==='customers'){ if(opts.filter==='due'){ $('#filterMaint').value='due'; } renderCustomers(); }
+  if(name==='new') prepareNewForm();
+  if(name==='settings') renderSettings();
+  window.scrollTo({top:0, behavior:'smooth'});
+  history.replaceState(null,'','#'+name);
+}
+document.addEventListener('click', e=>{
+  const nav=e.target.closest('[data-view]'); if(nav){ showView(nav.dataset.view); return; }
+  const go=e.target.closest('[data-go]'); if(go){ showView(go.dataset.go, {filter:go.dataset.filter}); return; }
+  const close=e.target.closest('[data-close]'); if(close){ closeModal(close.closest('.modal-bg')); return; }
+  if(e.target.classList.contains('modal-bg')) closeModal(e.target);
+});
+document.addEventListener('keydown', e=>{ if(e.key==='Escape'){ const open=$$('.modal-bg.open').pop(); if(open) closeModal(open); } });
+function openModal(id){ $(id).classList.add('open'); document.body.style.overflow='hidden'; }
+function closeModal(el){ el.classList.remove('open'); if(!$$('.modal-bg.open').length) document.body.style.overflow=''; }
+$('#fab').addEventListener('click', ()=>showView('new'));
+
+/* ------------------------------------------------------------------ */
+/*  Confirm dialog                                                     */
+/* ------------------------------------------------------------------ */
+function confirmDlg({title='تأكيد', text='', ok='تأكيد', danger=false}){
+  return new Promise(res=>{
+    $('#confirmBody').innerHTML = `<h3 style="color:var(--navy);font-weight:800;margin-bottom:8px">${esc(title)}</h3><p style="margin:0 0 18px;color:#374151">${text}</p><div class="btn-group" style="justify-content:flex-start"><button class="btn ${danger?'btn-danger':'btn-primary'}" id="cOk">${esc(ok)}</button><button class="btn" id="cCancel">إلغاء</button></div>`;
+    openModal('#modalConfirm');
+    $('#cOk').onclick=()=>{ closeModal($('#modalConfirm')); res(true); };
+    $('#cCancel').onclick=()=>{ closeModal($('#modalConfirm')); res(false); };
+  });
+}
+
+/* ------------------------------------------------------------------ */
+/*  Worker                                                             */
+/* ------------------------------------------------------------------ */
+function renderWorker(){
+  $('#workerName').textContent = currentWorker || 'غير محدد';
+  $('#workerAvatar').textContent = currentWorker ? initials(currentWorker) : '؟';
+  $('#workerList').innerHTML = settings.workers.map(w=>`<option value="${esc(w)}">`).join('');
+}
+$('#workerChip').addEventListener('click', ()=>{
+  $('#workerBody').innerHTML = `
+    <div class="list" style="margin-bottom:12px">${settings.workers.length? settings.workers.map(w=>`<button class="list-item" style="cursor:pointer;text-align:right;font-family:inherit" data-w="${esc(w)}"><span class="worker-chip" style="padding:0;border:0;background:none"><span class="avatar" style="background:var(--navy)">${esc(initials(w))}</span></span><div class="grow"><b>${esc(w)}</b></div>${w===currentWorker?'<span class="badge ok">الحالي</span>':''}</button>`).join('') : '<p class="muted" style="margin:0">لا يوجد عمّال محفوظون بعد — أضفهم من الإعدادات أو اكتب الاسم أدناه.</p>'}</div>
+    <div style="display:flex;gap:8px"><input class="input" id="wInput" placeholder="اسم العامل" value="${esc(currentWorker)}"><button class="btn btn-primary" id="wSave">اعتماد</button></div>`;
+  openModal('#modalWorker');
+  $$('#workerBody [data-w]').forEach(b=>b.onclick=()=>setWorker(b.dataset.w));
+  $('#wSave').onclick=()=>setWorker($('#wInput').value.trim());
+  $('#wInput').onkeydown=e=>{ if(e.key==='Enter') setWorker($('#wInput').value.trim()); };
+});
+function setWorker(name){
+  currentWorker=name; localStorage.setItem(KEYS.worker, name);
+  if(name && !settings.workers.includes(name)){ settings.workers.push(name); saveSettings(); }
+  renderWorker(); closeModal($('#modalWorker')); if(name) toast(`مرحباً ${name} 👋`);
+}
+
+/* ------------------------------------------------------------------ */
+/*  Dashboard                                                          */
+/* ------------------------------------------------------------------ */
+function renderDashboard(){
+  const now=new Date(); const ym=`${now.getFullYear()}-${z(now.getMonth()+1)}`;
+  $('#dashDate').textContent = now.toLocaleDateString('ar-DZ',{weekday:'long', year:'numeric', month:'long', day:'numeric'});
+  let silver=0, gold=0, svcMonth=0, revMonth=0, discTotal=0, overdue=0, soon=0;
+  customers.forEach(c=>{
+    const m=membership(c); m.level==='GOLD'? gold++ : silver++;
+    (c.services||[]).forEach(s=>{ discTotal += +s.discountAmount||0; if((s.date||'').startsWith(ym)){ svcMonth++; revMonth += +s.finalAmount||0; } });
+    const st=maintStatus(c); if(st.key==='overdue') overdue++; else if(st.key==='soon') soon++;
+  });
+  const stat=(cls,ic,v,l,extra='')=>`<div class="stat ${cls} ${extra?'clickable':''}" ${extra}><div class="ic">${ic}</div><div><div class="v">${v}</div><div class="l">${l}</div></div></div>`;
+  $('#stats').innerHTML =
+    stat('navy','👥',customers.length,'إجمالي الزبائن','data-go="customers"') +
+    stat('silver','🥈',silver,'أعضاء SILVER') +
+    stat('gold','🥇',gold,'أعضاء GOLD') +
+    stat('info','🔧',svcMonth,'خدمات هذا الشهر') +
+    stat('ok','💰',money(revMonth),'إيرادات هذا الشهر') +
+    stat('warn','🏷️',money(discTotal),'إجمالي الخصومات الممنوحة') +
+    stat('danger','⏰',overdue+soon,'صيانة مستحقة / قريبة','data-go="customers" data-filter="due"');
+  renderChart();
+  // Due list
+  const due = customers.map(c=>({c, st:maintStatus(c)})).filter(x=>x.st.key==='overdue'||x.st.key==='soon').sort((a,b)=>a.st.days-b.st.days).slice(0,8);
+  $('#dueList').innerHTML = due.length ? due.map(({c,st})=>`<div class="list-item"><div class="grow"><b>${esc(c.name)}</b><small>${esc(c.vehicle)} · ${fmtDate(st.next)}</small></div><span class="badge ${st.cls}">${st.label}</span><button class="btn btn-icon btn-whatsapp" title="تذكير WhatsApp" data-wa-remind="${c.id}">💬</button><button class="btn btn-icon" title="فتح الملف" data-open="${c.id}">👁️</button></div>`).join('') : '<div class="empty" style="padding:26px"><div class="big">✅</div>لا توجد صيانة مستحقة حالياً</div>';
+  $('#navCount').textContent = customers.length;
+}
+function renderChart(){
+  const months=[]; const now=new Date();
+  for(let i=5;i>=0;i--){ const d=new Date(now.getFullYear(), now.getMonth()-i, 1); months.push({ key:`${d.getFullYear()}-${z(d.getMonth()+1)}`, label:d.toLocaleDateString('fr-FR',{month:'short'}).replace('.',''), newC:0, maint:0 }); }
+  const idx=Object.fromEntries(months.map((m,i)=>[m.key,i]));
+  customers.forEach(c=>{
+    const k=(c.installDate||c.createdAt||'').slice(0,7); if(k in idx) months[idx[k]].newC++;
+    (c.services||[]).forEach(s=>{ if(s.type==='maintenance'){ const sk=(s.date||'').slice(0,7); if(sk in idx) months[idx[sk]].maint++; } });
+  });
+  const W=560, H=230, padL=34, padB=34, padT=14, gw=(W-padL-10)/6;
+  const max=Math.max(1, ...months.map(m=>Math.max(m.newC,m.maint)));
+  const yTicks=4; let svg=`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" font-family="Cairo,Segoe UI,sans-serif">`;
+  for(let i=0;i<=yTicks;i++){ const val=Math.round(max*i/yTicks); const y=padT+(H-padT-padB)*(1-i/yTicks); svg+=`<line x1="${padL}" x2="${W-6}" y1="${y}" y2="${y}" stroke="#e5e9f0" stroke-dasharray="3 3"/><text x="${padL-8}" y="${y+4}" font-size="11" fill="#6b7280" text-anchor="end">${val}</text>`; }
+  months.forEach((m,i)=>{
+    const x0=padL+i*gw; const bw=Math.min(26, gw/3); const base=H-padB; const hN=(H-padT-padB)*m.newC/max; const hM=(H-padT-padB)*m.maint/max;
+    svg+=`<rect x="${x0+gw/2-bw-2}" y="${base-hN}" width="${bw}" height="${hN}" rx="5" fill="#1e3d59"><title>${m.label}: ${m.newC} زبون جديد</title></rect>`;
+    svg+=`<rect x="${x0+gw/2+2}" y="${base-hM}" width="${bw}" height="${hM}" rx="5" fill="#f39c12"><title>${m.label}: ${m.maint} صيانة</title></rect>`;
+    if(m.newC) svg+=`<text x="${x0+gw/2-bw/2-2}" y="${base-hN-5}" font-size="11" font-weight="700" fill="#1e3d59" text-anchor="middle">${m.newC}</text>`;
+    if(m.maint) svg+=`<text x="${x0+gw/2+bw/2+2}" y="${base-hM-5}" font-size="11" font-weight="700" fill="#e67e22" text-anchor="middle">${m.maint}</text>`;
+    svg+=`<text x="${x0+gw/2}" y="${H-12}" font-size="12" fill="#374151" text-anchor="middle" font-weight="700">${m.label}</text>`;
+  });
+  svg+='</svg>';
+  $('#chart').innerHTML=svg;
+  $('#chartTotal').textContent = `${months.reduce((a,m)=>a+m.newC,0)} زبون جديد خلال 6 أشهر`;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Customers list                                                     */
+/* ------------------------------------------------------------------ */
+function filteredCustomers(){
+  const q=$('#searchInput').value.trim().toLowerCase(); const qd=q.replace(/\D/g,'');
+  const lvl=$('#filterLevel').value, mf=$('#filterMaint').value, sort=$('#sortBy').value;
+  let list=customers.filter(c=>{
+    if(q){ const hay=[c.name,c.code,c.vehicle,c.branch].join(' ').toLowerCase(); const ph=String(c.phone||'').replace(/\D/g,''); if(!hay.includes(q) && !(qd && ph.includes(qd))) return false; }
+    if(lvl && membership(c).level!==lvl) return false;
+    if(mf){ const k=maintStatus(c).key; if(mf==='due' ? !(k==='overdue'||k==='soon') : k!==mf) return false; }
+    return true;
+  });
+  const cmp={ newest:(a,b)=>(b.createdAt||'').localeCompare(a.createdAt||'') || (b.installDate||'').localeCompare(a.installDate||''), name:(a,b)=>a.name.localeCompare(b.name,'ar'), code:(a,b)=>String(a.code).localeCompare(String(b.code),undefined,{numeric:true}), next:(a,b)=>(nextMaintenance(a)||'9').localeCompare(nextMaintenance(b)||'9'), services:(a,b)=>countServices(b)-countServices(a) };
+  return list.sort(cmp[sort]||cmp.newest);
+}
+function renderCustomers(){
+  const list=filteredCustomers();
+  $('#resultCount').textContent = `${list.length} من ${customers.length} زبون`;
+  $('#navCount').textContent = customers.length;
+  if(!customers.length){ $('#custBody').innerHTML=`<tr><td colspan="8"><div class="empty"><div class="big">🪪</div><h4>لا يوجد زبائن بعد</h4><p>ابدأ بإضافة أول زبون بعد تركيب GPL</p><button class="btn btn-primary" data-go="new">➕ زبون جديد</button></div></td></tr>`; return; }
+  if(!list.length){ $('#custBody').innerHTML=`<tr><td colspan="8"><div class="empty"><div class="big">🔍</div><h4>لا توجد نتائج</h4><p>جرّب كلمة بحث أخرى أو غيّر الفلاتر</p></div></td></tr>`; return; }
+  $('#custBody').innerHTML = list.map(c=>{
+    const m=membership(c), st=maintStatus(c);
+    return `<tr>
+      <td data-label="الكود"><span class="code-chip">${esc(c.code)}</span></td>
+      <td data-label="الزبون" class="name-cell"><strong>${esc(c.name)}</strong><small class="ltr">${esc(fmtPhone(c.phone))}</small></td>
+      <td data-label="السيارة">${esc(c.vehicle||'—')}</td>
+      <td data-label="الفئة"><span class="badge ${m.level.toLowerCase()}">${m.level}</span> <span class="pct" style="font-size:12px">${m.nextPct}%</span></td>
+      <td data-label="تاريخ التركيب" class="nowrap">${fmtDate(c.installDate)}</td>
+      <td data-label="الصيانة القادمة"><div class="nowrap">${fmtDate(st.next)}</div><span class="badge ${st.cls}" style="font-size:11px">${st.label}</span></td>
+      <td data-label="الخدمات"><b>${countServices(c)}</b> <span class="muted" style="font-size:12px">(صيانة: ${m.maint})</span></td>
+      <td class="actions-cell"><div class="actions">
+        <button class="btn btn-icon" title="ملف الزبون" data-open="${c.id}">👁️</button>
+        <button class="btn btn-icon btn-primary" title="إضافة خدمة" data-add-service="${c.id}">🔧</button>
+        <button class="btn btn-icon" title="بطاقة الولاء" data-card="${c.id}">🪪</button>
+        <button class="btn btn-icon btn-whatsapp" title="WhatsApp" data-wa-welcome="${c.id}">💬</button>
+      </div></td></tr>`;
+  }).join('');
+}
+['searchInput','filterLevel','filterMaint','sortBy'].forEach(id=>$('#'+id).addEventListener('input', renderCustomers));
+
+/* Global delegated actions */
+document.addEventListener('click', e=>{
+  const t=e.target.closest('[data-open],[data-add-service],[data-card],[data-wa-welcome],[data-wa-remind],[data-wa-receipt],[data-edit],[data-delete],[data-print-card],[data-del-service]');
+  if(!t) return;
+  const d=t.dataset;
+  if(d.open) openCustomer(d.open);
+  else if(d.addService) openServiceForm(d.addService);
+  else if(d.card) openCard(d.card);
+  else if(d.printCard) printCard(d.printCard);
+  else if(d.waWelcome) sendWhatsApp(d.waWelcome,'welcome');
+  else if(d.waRemind) sendWhatsApp(d.waRemind,'reminder');
+  else if(d.waReceipt) sendWhatsApp(d.waReceipt.split('|')[0],'receipt', d.waReceipt.split('|')[1]);
+  else if(d.edit) openEdit(d.edit);
+  else if(d.delete) deleteCustomer(d.delete);
+  else if(d.delService) deleteService(d.delService.split('|')[0], d.delService.split('|')[1]);
+});
+const byId = id => customers.find(c=>c.id===id);
+
+/* ------------------------------------------------------------------ */
+/*  New customer                                                       */
+/* ------------------------------------------------------------------ */
+function fillBranchSelect(sel, value){ sel.innerHTML = Object.keys(BRANCHES).map(b=>`<option value="${b}" ${b===value?'selected':''}>${b}</option>`).join(''); }
+function prepareNewForm(){
+  const f=$('#newForm').elements;
+  if(!f.installDate.value) f.installDate.value=todayISO();
+  if(!f.worker.value) f.worker.value=currentWorker;
+  fillBranchSelect($('#newBranch'), settings.defaultBranch);
+  $('#newCode').placeholder = nextCode();
+  $('#vehicleList').innerHTML = [...new Set(customers.map(c=>c.vehicle).filter(Boolean))].slice(0,50).map(v=>`<option value="${esc(v)}">`).join('');
+  $('#installDiscHint').textContent = settings.discountOnInstall ? 'يُطبَّق خصم SILVER 3% تلقائياً على فاتورة التركيب' : 'لا يُطبَّق خصم على فاتورة التركيب (حسب الإعدادات)';
+  updateNewInvoice();
+}
+function updateNewInvoice(){
+  const amt=parseAmount($('#newForm').elements.amount.value); const box=$('#newInvoice');
+  if(!amt){ box.classList.add('hidden'); return; }
+  const pct = settings.discountOnInstall ? RULES.SILVER_PCT : 0; const inv=calcInvoice(amt,pct);
+  box.classList.remove('hidden'); box.innerHTML=invoiceHTML(inv,'SILVER');
+}
+function invoiceHTML(inv, level){
+  return `<div class="line"><span>المبلغ الأصلي للفاتورة</span><b>${money(inv.amount)}</b></div>
+  <div class="line"><span>نسبة الخصم <span class="badge ${level.toLowerCase()}">${level}</span></span><b class="pct">${inv.pct}%</b></div>
+  <div class="line"><span>قيمة الخصم</span><b class="disc">− ${money(inv.discountAmount)}</b></div>
+  <div class="line"><span><b>المبلغ النهائي</b></span><b class="total">${money(inv.finalAmount)}</b></div>`;
+}
+$('#newForm').elements.amount.addEventListener('input', updateNewInvoice);
+$('#newForm').addEventListener('reset', ()=>setTimeout(prepareNewForm,0));
+$('#newForm').addEventListener('submit', e=>{
+  e.preventDefault(); const form=e.target, f=form.elements; let ok=true;
+  ['name','phone','vehicle','installDate'].forEach(n=>{ const el=f[n]; const bad=!el.value.trim(); el.classList.toggle('invalid',bad); if(bad) ok=false; });
+  if(!ok){ toast('يرجى تعبئة الحقول الإلزامية','err'); return; }
+  const phoneDigits=f.phone.value.replace(/\D/g,''); if(phoneDigits.length<9){ f.phone.classList.add('invalid'); toast('رقم الهاتف غير صحيح','err'); return; }
+  let code=f.code.value.trim().toUpperCase() || nextCode();
+  if(customers.some(c=>c.code===code)){ f.code.classList.add('invalid'); toast('هذا الكود مستخدم من قبل','err'); return; }
+  if(customers.some(c=>String(c.phone).replace(/\D/g,'')===phoneDigits)){ if(!confirm('يوجد زبون بنفس رقم الهاتف. هل تريد المتابعة؟')) return; }
+  const worker=f.worker.value.trim()||currentWorker; if(worker && !settings.workers.includes(worker)){ settings.workers.push(worker); saveSettings(); }
+  const amount=parseAmount(f.amount.value); const pct=settings.discountOnInstall? RULES.SILVER_PCT : 0; const inv=calcInvoice(amount,pct);
+  const c={ id:uid(), code, name:f.name.value.trim(), phone:f.phone.value.trim(), vehicle:f.vehicle.value.trim(), installDate:f.installDate.value, branch:f.branch.value, notes:f.notes.value.trim(), createdAt:todayISO(), legacyGold:false,
+    services:[{ id:uid(), date:f.installDate.value, type:'installation', description:'تركيب GPL — بداية عضوية SILVER', amount:inv.amount, discountPct:inv.pct, discountAmount:inv.discountAmount, finalAmount:inv.finalAmount, worker, level:'SILVER', createdAt:new Date().toISOString() }] };
+  customers.push(c); save(); form.reset();
+  toast(`تم حفظ الزبون ${c.name} — بطاقة ${c.code} (SILVER) ✅`);
+  openCustomer(c.id); showView('customers');
+});
+
+/* ------------------------------------------------------------------ */
+/*  Customer profile                                                   */
+/* ------------------------------------------------------------------ */
+function openCustomer(id){
+  const c=byId(id); if(!c) return; const m=membership(c), st=maintStatus(c); const lvl=m.level.toLowerCase();
+  const services=[...(c.services||[])].reverse();
+  const totalPaid=c.services.reduce((a,s)=>a+(+s.finalAmount||0),0), totalDisc=c.services.reduce((a,s)=>a+(+s.discountAmount||0),0);
+  $('#customerBody').innerHTML = `
+    <div class="profile-head">
+      <div class="profile-avatar ${lvl}">${esc(initials(c.name))}</div>
+      <div style="flex:1;min-width:200px"><h3>${esc(c.name)}</h3><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:4px"><span class="code-chip">${esc(c.code)}</span><span class="badge ${lvl}">${m.level}</span><span class="badge ${st.cls}">🔧 ${st.label}</span></div></div>
+      <div class="btn-group">
+        <button class="btn btn-primary" data-add-service="${c.id}">🔧 إضافة خدمة</button>
+        <button class="btn" data-card="${c.id}">🪪 البطاقة</button>
+        <button class="btn btn-whatsapp" data-wa-welcome="${c.id}">💬 WhatsApp</button>
+        <button class="btn btn-icon" title="تعديل" data-edit="${c.id}">✏️</button>
+        <button class="btn btn-icon btn-danger" title="حذف الزبون" data-delete="${c.id}">🗑️</button>
+      </div>
+    </div>
+    <div class="kv">
+      <div><b>الهاتف</b><span class="ltr">${esc(fmtPhone(c.phone))}</span></div>
+      <div><b>السيارة</b><span>${esc(c.vehicle||'—')}</span></div>
+      <div><b>تاريخ تركيب GPL</b><span>${fmtDate(c.installDate)}</span></div>
+      <div><b>الصيانة القادمة</b><span>${fmtDate(st.next)}</span></div>
+      <div><b>الفرع</b><span>${esc(c.branch||'—')}</span></div>
+      <div><b>عدد الخدمات</b><span>${countServices(c)} (صيانة: ${m.maint})</span></div>
+      <div><b>إجمالي المدفوع</b><span>${money(totalPaid)}</span></div>
+      <div><b>إجمالي الخصومات</b><span>${money(totalDisc)}</span></div>
+    </div>
+    ${c.notes? `<div class="note info">📝 ${esc(c.notes)}</div>`:''}
+    <div class="member-box ${lvl}">
+      <div class="row"><div><small>الفئة الحالية</small><div class="big">${m.level}</div></div><div style="text-align:left"><small>خصم العملية القادمة</small><div class="big">${m.nextPct}%</div></div></div>
+      ${m.level==='SILVER'
+        ? `<div class="progress"><i style="width:${Math.min(100, m.maint/RULES.MAINT_FOR_GOLD*100)}%"></i></div><small style="display:block;margin-top:6px">${m.maint} / ${RULES.MAINT_FOR_GOLD} عمليات صيانة — ${m.remainingToGold===0?'سيتم الترقية إلى GOLD':`تبقّى ${m.remainingToGold} للترقية إلى GOLD (5% ثم +1% لكل عملية)`}</small>`
+        : `<small style="display:block;margin-top:8px">🥇 عضو GOLD${c.legacyGold?' (مُرحَّل من النظام القديم)':''} — ${m.goldOps} عملية بخصم GOLD حتى الآن · الخصم يزيد 1% مع كل عملية جديدة</small>`}
+    </div>
+    <div class="section-title"><span>📜 سجل الخدمات والخصومات</span><span class="muted" style="font-size:12px;font-weight:600">كل خدمة تحتفظ بنسبة الخصم المطبقة وقت تنفيذها</span></div>
+    <div class="list">${services.length? services.map(s=>`
+      <div class="history-item">
+        <div class="h"><div><b>${esc(SERVICE_TYPES[s.type]||s.type)}</b> <span class="muted" style="font-size:13px">· ${fmtDate(s.date)}</span> ${s.level?`<span class="badge ${String(s.level).toLowerCase()}" style="font-size:10px">${esc(s.level)}</span>`:''} ${s.legacy?'<span class="badge neutral" style="font-size:10px">سجل قديم</span>':''}</div>
+          <div style="display:flex;gap:6px;align-items:center"><span class="muted" style="font-size:12.5px">👷 ${esc(s.worker||'—')}</span>${(+s.amount)?`<button class="btn btn-sm btn-whatsapp" data-wa-receipt="${c.id}|${s.id}" title="إرسال الإيصال">💬</button>`:''}<button class="btn btn-sm btn-danger" data-del-service="${c.id}|${s.id}" title="حذف الخدمة">🗑️</button></div></div>
+        ${s.description? `<div class="muted" style="font-size:13px;margin-top:4px">${esc(s.description)}</div>`:''}
+        <div class="amounts"><div>المبلغ الأصلي<b>${money(s.amount)}</b></div><div>نسبة الخصم<b class="pct">${+s.discountPct||0}%</b></div><div class="disc">قيمة الخصم<b>− ${money(s.discountAmount)}</b></div><div class="final">المبلغ النهائي<b>${money(s.finalAmount)}</b></div></div>
+      </div>`).join('') : '<div class="empty" style="padding:20px">لا توجد خدمات مسجلة</div>'}</div>`;
+  openModal('#modalCustomer');
+}
+
+/* ------------------------------------------------------------------ */
+/*  Add service                                                        */
+/* ------------------------------------------------------------------ */
+function openServiceForm(id){
+  const c=byId(id); if(!c) return; const m=membership(c);
+  $('#serviceBody').innerHTML = `
+    <div class="note ${m.level==='GOLD'?'gold':'info'}" style="margin:0 0 14px">👤 <b>${esc(c.name)}</b> · <span class="code-chip">${esc(c.code)}</span> · الفئة <b>${m.level}</b> · الخصم الحالي <b>${m.nextPct}%</b></div>
+    <form id="serviceForm" class="form-grid" novalidate>
+      <div class="field"><label>نوع الخدمة <span class="req">*</span></label><select class="select" name="type">${Object.entries(SERVICE_TYPES).filter(([k])=>k!=='installation').map(([k,v])=>`<option value="${k}">${v}</option>`).join('')}</select></div>
+      <div class="field"><label>التاريخ <span class="req">*</span></label><input class="input ltr" type="date" name="date" value="${todayISO()}" required></div>
+      <div class="field"><label>مبلغ الفاتورة الأصلي (دج) <span class="req">*</span></label><input class="input ltr" name="amount" inputmode="decimal" placeholder="0" required autofocus></div>
+      <div class="field"><label>العامل</label><input class="input" name="worker" list="workerList" value="${esc(currentWorker)}" placeholder="اسم العامل"></div>
+      <div class="field full"><label>وصف الخدمة</label><input class="input" name="description" placeholder="مثال: صيانة دورية، تغيير الفلتر…"></div>
+    </form>
+    <div class="invoice" id="svcInvoice"></div>
+    <div id="svcHint"></div>
+    <div class="form-actions"><button class="btn btn-primary" id="svcSave">💾 حفظ الخدمة</button><button class="btn" data-close>إلغاء</button></div>`;
+  openModal('#modalService');
+  const f=$('#serviceForm').elements;
+  const refresh=()=>{
+    const type=f.type.value; const pct=discountForNew(c,type); const inv=calcInvoice(parseAmount(f.amount.value), pct);
+    $('#svcInvoice').innerHTML=invoiceHTML(inv, m.level);
+    let hint='';
+    if(m.level==='SILVER' && type==='maintenance' && m.remainingToGold===1) hint=`<div class="note gold">🥇 بعد حفظ هذه الصيانة (الثالثة) سيتم ترقية الزبون تلقائياً إلى <b>GOLD</b> — العملية القادمة بخصم 5%.</div>`;
+    else if(m.level==='SILVER' && type==='maintenance') hint=`<div class="note info">ℹ️ هذه الصيانة رقم ${m.maint+1} من ${RULES.MAINT_FOR_GOLD} المطلوبة للترقية إلى GOLD.</div>`;
+    else if(m.level==='SILVER') hint=`<div class="note warn">⚠️ خدمات "${SERVICE_TYPES[type]}" لا تُحتسب ضمن عمليات الصيانة الثلاث المطلوبة للترقية إلى GOLD.</div>`;
+    else hint=`<div class="note gold">🥇 عملية GOLD رقم ${m.goldOps+1} — خصم ${pct}%، والعملية القادمة ستكون بخصم ${pct+RULES.GOLD_STEP}%.</div>`;
+    $('#svcHint').innerHTML=hint;
+  };
+  $('#serviceForm').addEventListener('input', refresh); refresh();
+  setTimeout(()=>f.amount.focus(),50);
+  $('#svcSave').onclick=()=>{
+    const amount=parseAmount(f.amount.value);
+    if(!f.amount.value.trim()){ f.amount.classList.add('invalid'); toast('أدخل مبلغ الفاتورة','err'); return; }
+    if(!f.date.value){ toast('أدخل التاريخ','err'); return; }
+    const type=f.type.value; const pct=discountForNew(c,type); const inv=calcInvoice(amount,pct);
+    const worker=f.worker.value.trim()||currentWorker; if(worker && !settings.workers.includes(worker)){ settings.workers.push(worker); saveSettings(); }
+    const before=membership(c).level;
+    c.services.push({ id:uid(), date:f.date.value, type, description:f.description.value.trim(), amount:inv.amount, discountPct:inv.pct, discountAmount:inv.discountAmount, finalAmount:inv.finalAmount, worker, level:before, createdAt:new Date().toISOString() });
+    save();
+    const after=membership(c);
+    closeModal($('#modalService'));
+    if(before==='SILVER' && after.level==='GOLD') toast(`🥇 مبروك! تمت ترقية ${c.name} إلى GOLD — العملية القادمة بخصم ${after.nextPct}%`,'ok',5000);
+    else toast(`تم حفظ الخدمة بخصم ${inv.pct}% — المبلغ النهائي ${money(inv.finalAmount)} ✅`);
+    if($('#modalCustomer').classList.contains('open')) openCustomer(c.id);
+    renderCustomers(); renderDashboard();
+  };
+}
+async function deleteService(cid, sid){
+  const c=byId(cid); if(!c) return; const s=c.services.find(x=>x.id===sid); if(!s) return;
+  if(s.type==='installation' && c.services.filter(x=>x.type==='installation').length===1){ toast('لا يمكن حذف سجل التركيب الأصلي','err'); return; }
+  if(!await confirmDlg({title:'حذف الخدمة', text:`حذف <b>${esc(SERVICE_TYPES[s.type]||s.type)}</b> بتاريخ ${fmtDate(s.date)}؟ قد يؤثر ذلك على فئة الزبون الحالية.`, ok:'حذف', danger:true})) return;
+  c.services=c.services.filter(x=>x.id!==sid); save(); openCustomer(cid); renderCustomers(); renderDashboard(); toast('تم حذف الخدمة');
+}
+
+/* ------------------------------------------------------------------ */
+/*  Edit / delete customer                                             */
+/* ------------------------------------------------------------------ */
+function openEdit(id){
+  const c=byId(id); if(!c) return;
+  $('#editBody').innerHTML = `<form id="editForm" class="form-grid" novalidate>
+    <div class="field"><label>الاسم الكامل <span class="req">*</span></label><input class="input" name="name" value="${esc(c.name)}" required></div>
+    <div class="field"><label>رقم الهاتف <span class="req">*</span></label><input class="input ltr" name="phone" value="${esc(c.phone)}" required></div>
+    <div class="field"><label>نوع / ماركة السيارة <span class="req">*</span></label><input class="input" name="vehicle" value="${esc(c.vehicle)}" required></div>
+    <div class="field"><label>تاريخ تركيب GPL <span class="req">*</span></label><input class="input ltr" type="date" name="installDate" value="${esc(c.installDate)}" required></div>
+    <div class="field"><label>الفرع</label><select class="select" name="branch" id="editBranch"></select></div>
+    <div class="field"><label>كود البطاقة</label><input class="input ltr" name="code" value="${esc(c.code)}"></div>
+    <div class="field full"><label>ملاحظات</label><textarea class="textarea" name="notes">${esc(c.notes||'')}</textarea></div>
+    <div class="form-actions full" style="margin-top:4px"><button class="btn btn-primary" type="submit">💾 حفظ التعديلات</button><button class="btn" type="button" data-close>إلغاء</button></div>
+  </form>`;
+  fillBranchSelect($('#editBranch'), c.branch||settings.defaultBranch);
+  openModal('#modalEdit');
+  $('#editForm').onsubmit=e=>{
+    e.preventDefault(); const f=e.target.elements;
+    if(!f.name.value.trim()||!f.phone.value.trim()||!f.vehicle.value.trim()||!f.installDate.value){ toast('يرجى تعبئة الحقول الإلزامية','err'); return; }
+    const code=f.code.value.trim().toUpperCase()||c.code; if(customers.some(x=>x.id!==c.id && x.code===code)){ toast('هذا الكود مستخدم من قبل','err'); return; }
+    const oldInstall=c.installDate;
+    Object.assign(c,{ name:f.name.value.trim(), phone:f.phone.value.trim(), vehicle:f.vehicle.value.trim(), installDate:f.installDate.value, branch:f.branch.value, code, notes:f.notes.value.trim() });
+    const inst=c.services.find(s=>s.type==='installation'); if(inst && inst.date===oldInstall) inst.date=c.installDate;
+    save(); closeModal($('#modalEdit')); openCustomer(c.id); renderCustomers(); toast('تم حفظ التعديلات ✅');
+  };
+}
+async function deleteCustomer(id){
+  const c=byId(id); if(!c) return;
+  if(!await confirmDlg({title:'حذف الزبون', text:`سيتم حذف <b>${esc(c.name)}</b> (${esc(c.code)}) وجميع خدماته نهائياً.`, ok:'حذف نهائي', danger:true})) return;
+  customers=customers.filter(x=>x.id!==id); save(); closeModal($('#modalCustomer')); renderCustomers(); renderDashboard(); toast('تم حذف الزبون','warn');
+}
+
+/* ------------------------------------------------------------------ */
+/*  WhatsApp                                                           */
+/* ------------------------------------------------------------------ */
+function branchOf(c){ return BRANCHES[c.branch] ? c.branch : settings.defaultBranch; }
+function buildMessage(c, kind, sid){
+  const m=membership(c), st=maintStatus(c); const br=branchOf(c); const brInfo=BRANCHES[br]||{};
+  const sig=`\n\n— BAGHDAD GPL · FAMILY METAL (${br})\n📍 ${brInfo.map||''}\n🌐 www.familymetaldz.com`;
+  if(kind==='reminder'){
+    return `مرحباً ${c.name} 👋\n\nنذكّركم بموعد صيانة نظام GPL لسيارتكم ${c.vehicle}.\n📅 موعد الصيانة: ${fmtDate(st.next)} (${st.label})\n🪪 بطاقة الولاء: ${c.code} — ${m.level}\n🏷️ خصمكم على هذه العملية: ${m.nextPct}%${m.level==='SILVER'?`\n⭐ تبقّى ${m.remainingToGold} عمليات صيانة للترقية إلى GOLD`:''}\n\nيرجى التواصل معنا لتحديد الموعد.`+sig;
+  }
+  if(kind==='receipt'){
+    const s=c.services.find(x=>x.id===sid); if(!s) return '';
+    return `مرحباً ${c.name} 👋\n\nشكراً لزيارتكم — إيصال الخدمة:\n🔧 الخدمة: ${SERVICE_TYPES[s.type]||s.type}${s.description?` (${s.description})`:''}\n📅 التاريخ: ${fmtDate(s.date)}\n💵 المبلغ الأصلي: ${money(s.amount)}\n🏷️ الخصم (${s.level||m.level}): ${+s.discountPct||0}% = ${money(s.discountAmount)}\n✅ المبلغ النهائي: ${money(s.finalAmount)}\n👷 العامل: ${s.worker||'—'}\n\n🪪 بطاقتكم: ${c.code} — الفئة ${m.level} · خصم العملية القادمة ${m.nextPct}%\n📅 الصيانة القادمة: ${fmtDate(st.next)}`+sig;
+  }
+  return `مرحباً ${c.name} 👋\n\nشكراً لثقتكم في BAGHDAD GPL — FAMILY METAL.\n\n🪪 بطاقة الولاء: ${c.code}\n⭐ الفئة: ${m.level} — خصم ${m.nextPct}% على العملية القادمة\n🚗 السيارة: ${c.vehicle}\n🔧 تاريخ التركيب: ${fmtDate(c.installDate)}\n📅 الصيانة القادمة: ${fmtDate(st.next)}\n\n${m.level==='SILVER'?`بعد ${RULES.MAINT_FOR_GOLD} عمليات صيانة تتم ترقيتكم تلقائياً إلى GOLD بخصم يبدأ من 5% ويزيد 1% مع كل عملية.`:'أنتم عضو GOLD — خصمكم يزيد 1% مع كل عملية جديدة 🥇'}`+sig;
+}
+function sendWhatsApp(id, kind, sid){
+  const c=byId(id); if(!c) return; const phone=normalizePhone(c.phone);
+  if(phone.length<11){ toast('رقم الهاتف غير صالح لواتساب','err'); return; }
+  const msg=buildMessage(c, kind, sid); if(!msg) return;
+  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`,'_blank','noopener');
+}
+
+/* ------------------------------------------------------------------ */
+/*  Loyalty card                                                       */
+/* ------------------------------------------------------------------ */
+function cardHTML(c){
+  const m=membership(c); const lvl=m.level.toLowerCase(); const br=branchOf(c);
+  return `
+  <div class="lcard ${lvl}">
+    <div class="deco"></div>
+    <div class="top"><div class="brand-t">BAGHDAD GPL<small>FAMILY METAL · LOYALTY CARD</small></div><div class="tier">${m.level}</div></div>
+    <div class="chip"></div>
+    <div class="code">${esc(c.code)}</div>
+    <div class="bottom"><div class="holder"><small>CARD HOLDER</small>${esc(c.name)}</div><div class="meta"><small>MEMBER SINCE</small>${fmtDate(c.installDate)}<div class="card-disc">${esc(c.vehicle||'')}</div></div></div>
+  </div>
+  <div class="lcard back">
+    <div class="stripe"></div>
+    <div class="rules">
+      <b>SILVER</b> — خصم 3% منذ أول تركيب GPL.<br>
+      <b>GOLD</b> — بعد 3 عمليات صيانة: خصم يبدأ من 5% ويزيد 1% مع كل عملية جديدة.<br>
+      الخصم يُحسب تلقائياً عند كل زيارة · احتفظ بالبطاقة وقدّمها عند كل خدمة.
+    </div>
+    <div class="contact"><span>📞 +${BRANCHES[br]?.phone||''} (${br})</span><span>www.familymetaldz.com</span></div>
+  </div>`;
+}
+function openCard(id){
+  const c=byId(id); if(!c) return;
+  $('#cardBody').innerHTML = `<div class="lcard-stage">${cardHTML(c)}</div><div class="form-actions" style="justify-content:center"><button class="btn btn-primary" data-print-card="${c.id}">🖨️ طباعة البطاقة</button><button class="btn btn-whatsapp" data-wa-welcome="${c.id}">💬 إرسال بيانات البطاقة</button></div>`;
+  openModal('#modalCard');
+}
+function cardCSS(){ // reuse the page's card styles inside the print window
+  return Array.from(document.styleSheets[0].cssRules||[]).filter(r=>r.cssText && (r.cssText.startsWith('.lcard')||r.cssText.startsWith(':root')||r.cssText.startsWith('.badge'))).map(r=>r.cssText).join('\n');
+}
+function printCard(id){
+  const c=byId(id); if(!c) return;
+  const w=window.open('','_blank'); if(!w){ toast('يرجى السماح بالنوافذ المنبثقة للطباعة','err'); return; }
+  w.document.write(`<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>بطاقة الولاء — ${esc(c.code)}</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>${cardCSS()}
+  body{margin:0;font-family:'Cairo','Segoe UI',sans-serif;background:#eef1f5;display:flex;flex-direction:column;align-items:center;gap:20px;padding:24px}
+  .lcard{width:85.6mm;height:54mm;box-shadow:none;border:1px solid #ccc;page-break-inside:avoid;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .bar{display:flex;gap:10px} .bar button{font-family:inherit;font-weight:700;padding:10px 18px;border-radius:10px;border:0;background:#1e3d59;color:#fff;cursor:pointer}
+  @page{size:A4;margin:12mm} @media print{body{background:#fff;padding:0} .bar{display:none}}
+  </style></head><body><div class="bar"><button onclick="window.print()">🖨️ طباعة</button><button onclick="window.close()">إغلاق</button></div>${cardHTML(c)}<script>setTimeout(function(){window.print()},600)<\/script></body></html>`);
+  w.document.close();
+}
+
+/* ------------------------------------------------------------------ */
+/*  PDF export — customer list                                         */
+/* ------------------------------------------------------------------ */
+function reportHTML(list){
+  const now=new Date(); const gen=`${fmtDate(todayISO())} ${z(now.getHours())}:${z(now.getMinutes())}`;
+  let silver=0, gold=0; list.forEach(c=>membership(c).level==='GOLD'?gold++:silver++);
+  const rows=list.map((c,i)=>{ const m=membership(c); const next=nextMaintenance(c); const st=maintStatus(c);
+    return `<tr><td class="c">${i+1}</td><td class="mono">${esc(c.code)}</td><td dir="auto" class="b">${esc(c.name)}</td><td class="mono">${esc(fmtPhone(c.phone))}</td><td dir="auto">${esc(c.vehicle||'—')}</td><td class="c"><span class="tier ${m.level.toLowerCase()}">${m.level}</span><br><small>${m.nextPct}%</small></td><td class="c">${fmtDate(c.installDate)}</td><td class="c ${st.key==='overdue'?'late':''}">${fmtDate(next)}</td><td class="c">${countServices(c)}</td></tr>`; }).join('');
+  return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>BAGHDAD GPL — Customer List</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--navy:#1e3d59}
+    *{box-sizing:border-box} body{margin:0;font-family:'Cairo','Segoe UI',Tahoma,Arial,sans-serif;color:#1f2937;background:#e9edf2;font-size:11.5px}
+    .bar{position:sticky;top:0;background:var(--navy);color:#fff;padding:10px 16px;display:flex;gap:10px;align-items:center;z-index:9}
+    .bar button{font-family:inherit;font-weight:700;padding:8px 16px;border-radius:8px;border:0;cursor:pointer;background:#f39c12;color:#fff}
+    .bar button.alt{background:rgba(255,255,255,.15)} .bar span{opacity:.85;font-size:12px;margin-inline-start:auto}
+    #report{background:#fff;max-width:210mm;margin:16px auto;padding:14mm 12mm 16mm;min-height:297mm;box-shadow:0 8px 30px rgba(0,0,0,.12)}
+    .head{display:flex;justify-content:space-between;align-items:center;border-bottom:3px solid var(--navy);padding-bottom:10px;margin-bottom:12px}
+    .head h1{margin:0;font-size:20px;color:var(--navy);letter-spacing:.5px} .head h1 small{display:block;font-size:12px;color:#6b7280;font-weight:600;letter-spacing:0}
+    .head .meta{text-align:right;font-size:11px;color:#374151;line-height:1.6} .head .meta b{color:var(--navy)}
+    .logo{display:flex;align-items:center;gap:10px} .logo .sq{width:42px;height:42px;border-radius:10px;background:var(--navy);color:#fff;display:grid;place-items:center;font-weight:800;font-size:12px;letter-spacing:1px}
+    .summary{display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap} .summary div{flex:1;min-width:110px;background:#f3f6fa;border-radius:8px;padding:7px 10px;border:1px solid #e4e9f0} .summary b{display:block;font-size:15px;color:var(--navy)} .summary span{font-size:10.5px;color:#6b7280}
+    table{width:100%;border-collapse:collapse;page-break-inside:auto} thead{display:table-header-group} tr{page-break-inside:avoid;break-inside:avoid} tfoot{display:table-footer-group}
+    th{background:var(--navy);color:#fff;font-size:10.5px;padding:7px 6px;text-align:left;font-weight:700;letter-spacing:.3px;-webkit-print-color-adjust:exact;print-color-adjust:exact} th small{display:block;font-weight:600;opacity:.8;font-size:9.5px;font-family:'Cairo',sans-serif}
+    td{padding:6px 6px;border-bottom:1px solid #e4e9f0;vertical-align:middle;font-size:11px} tbody tr:nth-child(even) td{background:#f8fafc;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    td.c,th.c{text-align:center} td.b{font-weight:700} .mono{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:10.5px;white-space:nowrap} td small{color:#6b7280;font-size:9.5px}
+    .tier{display:inline-block;padding:1px 8px;border-radius:999px;font-weight:800;font-size:9.5px;letter-spacing:.5px;-webkit-print-color-adjust:exact;print-color-adjust:exact} .tier.silver{background:#e2e6ec;color:#3f4a57} .tier.gold{background:#f6de8f;color:#5b4200}
+    td.late{color:#dc2626;font-weight:700}
+    .foot{margin-top:14px;padding-top:8px;border-top:1px solid #e4e9f0;display:flex;justify-content:space-between;font-size:10px;color:#6b7280}
+    .runfoot{display:none}
+    @page{size:A4 portrait;margin:12mm 10mm 16mm}
+    @media print{ body{background:#fff;font-size:11px} .bar{display:none} #report{box-shadow:none;margin:0;padding:0;max-width:none;min-height:0} .runfoot{display:block;position:fixed;bottom:0;left:0;right:0;font-size:9.5px;color:#6b7280;border-top:1px solid #e4e9f0;padding-top:4px;text-align:center} }
+  </style></head><body>
+  <div class="bar"><button onclick="window.print()">🖨️ Print / Save as PDF — طباعة / حفظ PDF</button><button class="alt" onclick="downloadPDF()">⬇️ Download PDF</button><button class="alt" onclick="window.close()">✕</button><span>${list.length} customers · ${gen}</span></div>
+  <div id="report">
+    <div class="head">
+      <div class="logo"><div class="sq">GPL</div><h1>BAGHDAD GPL — Customer List<small>FAMILY METAL · قائمة الزبائن — بطاقة الولاء SILVER / GOLD</small></h1></div>
+      <div class="meta"><b>Report generated:</b> ${gen}<br><b>Prepared by:</b> <span dir="auto">${esc(currentWorker||'—')}</span><br><b>Total records:</b> ${list.length}</div>
+    </div>
+    <div class="summary"><div><b>${list.length}</b><span>Customers · الزبائن</span></div><div><b>${silver}</b><span>SILVER members</span></div><div><b>${gold}</b><span>GOLD members</span></div><div><b>${list.reduce((a,c)=>a+countServices(c),0)}</b><span>Total services · الخدمات</span></div><div><b>${list.filter(c=>maintStatus(c).key==='overdue').length}</b><span>Overdue maintenance · صيانة متأخرة</span></div></div>
+    <table>
+      <thead><tr><th class="c">#</th><th>Code<small>الكود</small></th><th>Full Name<small>الاسم الكامل</small></th><th>Phone<small>الهاتف</small></th><th>Vehicle<small>السيارة</small></th><th class="c">Membership<small>الفئة</small></th><th class="c">Installation Date<small>تاريخ التركيب</small></th><th class="c">Next Maintenance<small>الصيانة القادمة</small></th><th class="c">Services<small>عدد الخدمات</small></th></tr></thead>
+      <tbody>${rows||'<tr><td colspan="9" class="c" style="padding:20px">No customers</td></tr>'}</tbody>
+    </table>
+    <div class="foot"><span>BAGHDAD GPL — FAMILY METAL · www.familymetaldz.com · familymetal_1@hotmail.com</span><span>Generated ${gen}</span></div>
+  </div>
+  <div class="runfoot">BAGHDAD GPL — Customer List · ${gen} · www.familymetaldz.com</div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"><\/script>
+  <script>
+    function downloadPDF(){
+      if(!window.html2pdf){ window.print(); return; }
+      var el=document.getElementById('report'); el.style.boxShadow='none'; el.style.margin='0'; el.style.minHeight='0'; el.style.padding='6mm';
+      html2pdf().set({ margin:[8,6,10,6], filename:'BAGHDAD-GPL-Customer-List-${todayISO()}.pdf', image:{type:'jpeg',quality:0.96}, html2canvas:{scale:2,useCORS:true,letterRendering:true}, jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}, pagebreak:{mode:['css','legacy'],avoid:['tr','.head','.summary']} })
+        .from(el).save().catch(function(){ window.print(); });
+    }
+  <\/script></body></html>`;
+}
+$('#btnExportPdf').addEventListener('click', ()=>{
+  const list=filteredCustomers(); if(!list.length){ toast('لا يوجد زبائن للتصدير','err'); return; }
+  const w=window.open('','_blank'); if(!w){ toast('يرجى السماح بالنوافذ المنبثقة لتصدير PDF','err'); return; }
+  w.document.write(reportHTML(list)); w.document.close();
+});
+
+/* ------------------------------------------------------------------ */
+/*  Settings                                                           */
+/* ------------------------------------------------------------------ */
+function renderSettings(){
+  $('#workersChips').innerHTML = settings.workers.length ? settings.workers.map(w=>`<span class="chip">${esc(w)}<button title="حذف" data-rm-worker="${esc(w)}">×</button></span>`).join('') : '<span class="muted" style="font-size:13px">لا يوجد عمّال بعد</span>';
+  $('#setMonths').value=String(settings.maintenanceMonths);
+  $('#setPrefix').value=settings.codePrefix;
+  fillBranchSelect($('#setBranch'), settings.defaultBranch);
+  $('#setDiscInstall').checked=!!settings.discountOnInstall;
+  const size=(localStorage.getItem(KEYS.customers)||'').length;
+  const mig=localStorage.getItem(KEYS.migrated);
+  $('#storageInfo').textContent = `${customers.length} زبون · ${customers.reduce((a,c)=>a+countServices(c),0)} خدمة · حجم البيانات ≈ ${(size/1024).toFixed(1)} KB` + (mig? ` · تم الترحيل من "${mig}"`:'');
+}
+$('#workersChips').addEventListener('click', e=>{ const b=e.target.closest('[data-rm-worker]'); if(!b) return; settings.workers=settings.workers.filter(w=>w!==b.dataset.rmWorker); saveSettings(); renderSettings(); renderWorker(); });
+$('#addWorkerBtn').addEventListener('click', ()=>{ const v=$('#newWorkerInput').value.trim(); if(!v) return; if(!settings.workers.includes(v)) settings.workers.push(v); saveSettings(); $('#newWorkerInput').value=''; renderSettings(); renderWorker(); toast('تمت إضافة العامل'); });
+$('#newWorkerInput').addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); $('#addWorkerBtn').click(); } });
+$('#saveSettingsBtn').addEventListener('click', ()=>{
+  settings.maintenanceMonths=+$('#setMonths').value||6; settings.codePrefix=($('#setPrefix').value.trim()||'BG').toUpperCase(); settings.defaultBranch=$('#setBranch').value; settings.discountOnInstall=$('#setDiscInstall').checked;
+  saveSettings(); renderSettings(); toast('تم حفظ الإعدادات ✅');
+});
+$('#backupBtn').addEventListener('click', ()=>{ download(`BAGHDAD-GPL-backup-${todayISO()}.json`, JSON.stringify({app:'BAGHDAD GPL Loyalty Card', version:2, exportedAt:new Date().toISOString(), settings, customers}, null, 2)); toast('تم تنزيل النسخة الاحتياطية'); });
+$('#restoreInput').addEventListener('change', async e=>{
+  const file=e.target.files[0]; if(!file) return; e.target.value='';
+  try{
+    const data=JSON.parse(await file.text()); const list=Array.isArray(data)? data : (data.customers||[]);
+    if(!Array.isArray(list)||!list.length) throw new Error('empty');
+    const mode = await confirmDlg({title:'استرجاع النسخة', text:`الملف يحتوي على <b>${list.length}</b> زبون.<br>«دمج» يضيف الزبائن الجدد ويحدّث الموجودين حسب الكود، أو اختر إلغاء.`, ok:'دمج مع البيانات الحالية'});
+    if(!mode) return;
+    const incoming=list.map(migrateCustomer).filter(Boolean); let added=0, updated=0;
+    incoming.forEach(inc=>{ const ex=customers.find(c=>c.id===inc.id || (inc.code && c.code===inc.code)); if(ex){ Object.assign(ex, inc, {id:ex.id}); updated++; } else { customers.push(inc); added++; } });
+    if(data.settings && typeof data.settings==='object') settings={...settings, ...data.settings, workers:[...new Set([...(settings.workers||[]), ...(data.settings.workers||[])])]};
+    ensureCodes(); save(); saveSettings(); renderAll(); toast(`تم الاسترجاع: ${added} جديد · ${updated} محدّث ✅`,'ok',4000);
+  }catch(err){ toast('ملف غير صالح','err'); }
+});
+$('#wipeBtn').addEventListener('click', async ()=>{
+  if(!await confirmDlg({title:'حذف جميع البيانات', text:'سيتم حذف <b>جميع</b> الزبائن والخدمات من هذا الجهاز نهائياً. هل أنت متأكد؟', ok:'نعم، احذف الكل', danger:true})) return;
+  if(!await confirmDlg({title:'تأكيد أخير', text:'هذا الإجراء لا يمكن التراجع عنه. ننصح بتنزيل نسخة احتياطية أولاً.', ok:'حذف نهائي', danger:true})) return;
+  customers=[]; save(); renderAll(); toast('تم حذف جميع البيانات','warn');
+});
+
+/* ------------------------------------------------------------------ */
+/*  Init                                                               */
+/* ------------------------------------------------------------------ */
+function renderAll(){ renderWorker(); renderDashboard(); renderCustomers(); renderSettings(); $('#navCount').textContent=customers.length; }
+load();
+renderAll();
+const startView=(location.hash||'#dashboard').slice(1);
+showView(['dashboard','customers','new','settings'].includes(startView)? startView : 'dashboard');
+if(!currentWorker) setTimeout(()=>$('#workerChip').click(), 400);
+window.addEventListener('storage', e=>{ if(e.key===KEYS.customers){ load(); renderAll(); } });
+
+// Expose a tiny API for debugging / tests
+window.BGPL = { membership, calcInvoice, discountForNew, get customers(){ return customers; }, RULES };
+})();
+</script>
+</body>
+</html>
