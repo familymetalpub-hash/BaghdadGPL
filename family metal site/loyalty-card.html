@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="fr" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#1e3d59">
-<title>BAGHDAD GPL — Loyalty Card | بطاقة الولاء</title>
+<title>BAGHDAD GPL — Programme de fidélité</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 /* =====================================================================
-   BAGHDAD GPL — Loyalty Card  ·  Design system
+   BAGHDAD GPL — Programme de fidélité · Système de design
    ===================================================================== */
 :root{
   --navy:#1e3d59; --navy-2:#153048; --navy-3:#0f2438;
@@ -28,12 +28,12 @@ a{color:var(--info);text-decoration:none}
 button,input,select,textarea{font-family:inherit;font-size:inherit}
 h1,h2,h3,h4{margin:0;line-height:1.3}
 .muted{color:var(--muted)}
-.ltr{direction:ltr;unicode-bidi:isolate}
 .nowrap{white-space:nowrap}
 .hidden{display:none!important}
 .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.3px}
+.right{text-align:right}
 
-/* ---------- Top bar ---------- */
+/* ---------- Barre supérieure ---------- */
 .topbar{position:sticky;top:0;z-index:50;background:linear-gradient(135deg,var(--navy) 0%,var(--navy-2) 60%,var(--navy-3) 100%);color:#fff;box-shadow:0 6px 24px rgba(15,36,56,.25)}
 .topbar-inner{max-width:1240px;margin:0 auto;padding:10px 18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .brand{display:flex;align-items:center;gap:12px;min-width:0}
@@ -43,11 +43,11 @@ h1,h2,h3,h4{margin:0;line-height:1.3}
 .brand-title{font-size:19px;font-weight:800;letter-spacing:.5px;white-space:nowrap}
 .brand-sub{font-size:12px;opacity:.8;margin-top:-2px}
 .topbar-spacer{flex:1}
-.worker-chip{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:6px 12px;border-radius:999px;cursor:pointer;transition:.2s;max-width:260px}
-.worker-chip:hover{background:rgba(255,255,255,.2)}
-.worker-chip .avatar{width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-weight:800;font-size:13px;flex-shrink:0}
-.worker-chip .lbl{font-size:11px;opacity:.75;line-height:1}
-.worker-chip .name{font-weight:700;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:150px}
+.wilaya-chip{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:6px 14px 6px 8px;border-radius:999px;cursor:pointer;transition:.2s;max-width:280px}
+.wilaya-chip:hover{background:rgba(255,255,255,.2)}
+.wilaya-chip .avatar{width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-weight:800;font-size:15px;flex-shrink:0}
+.wilaya-chip .lbl{font-size:11px;opacity:.75;line-height:1}
+.wilaya-chip .name{font-weight:800;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:170px}
 .topnav{max-width:1240px;margin:0 auto;padding:0 18px;display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
 .topnav::-webkit-scrollbar{display:none}
 .topnav button{background:transparent;border:0;color:rgba(255,255,255,.75);padding:10px 16px;border-radius:10px 10px 0 0;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px;white-space:nowrap;border-bottom:3px solid transparent;transition:.2s}
@@ -55,7 +55,7 @@ h1,h2,h3,h4{margin:0;line-height:1.3}
 .topnav button.active{color:#fff;border-bottom-color:var(--accent);background:rgba(255,255,255,.1)}
 .topnav .badge-count{background:var(--accent);color:#fff;border-radius:999px;font-size:11px;padding:1px 7px;font-weight:800}
 
-/* ---------- Layout ---------- */
+/* ---------- Mise en page ---------- */
 main{max-width:1240px;margin:0 auto;padding:22px 18px 90px}
 .view{display:none;animation:fade .25s ease}
 .view.active{display:block}
@@ -65,7 +65,7 @@ main{max-width:1240px;margin:0 auto;padding:22px 18px 90px}
 .page-head p{margin:2px 0 0;color:var(--muted);font-size:13px}
 .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;border:1px solid rgba(228,233,240,.7)}
 .card + .card{margin-top:18px}
-.card-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+.card-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px;flex-wrap:wrap}
 .card-title h3{font-size:16px;font-weight:800;color:var(--navy);display:flex;align-items:center;gap:8px}
 .grid{display:grid;gap:18px}
 .grid-2{grid-template-columns:repeat(2,1fr)}
@@ -73,11 +73,11 @@ main{max-width:1240px;margin:0 auto;padding:22px 18px 90px}
 @media (max-width:960px){.grid-3{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:640px){.grid-2,.grid-3{grid-template-columns:1fr}}
 
-/* ---------- Stats ---------- */
+/* ---------- Statistiques ---------- */
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:18px}
 .stat{background:var(--card);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow);display:flex;align-items:center;gap:14px;border:1px solid rgba(228,233,240,.7);position:relative;overflow:hidden}
 .stat .ic{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-size:22px;flex-shrink:0}
-.stat .v{font-size:24px;font-weight:800;line-height:1.1;color:var(--navy)}
+.stat .v{font-size:22px;font-weight:800;line-height:1.1;color:var(--navy)}
 .stat .l{font-size:12px;color:var(--muted);font-weight:600}
 .stat.navy .ic{background:#e6edf5;color:var(--navy)}
 .stat.silver .ic{background:#eceff3;color:var(--silver)}
@@ -86,16 +86,14 @@ main{max-width:1240px;margin:0 auto;padding:22px 18px 90px}
 .stat.warn .ic{background:var(--warn-bg);color:var(--warn)}
 .stat.danger .ic{background:var(--danger-bg);color:var(--danger)}
 .stat.info .ic{background:var(--info-bg);color:var(--info)}
-.stat.clickable{cursor:pointer;transition:.2s}
-.stat.clickable:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(30,61,89,.14)}
 
-/* ---------- Chart ---------- */
+/* ---------- Graphique ---------- */
 .chart-wrap{width:100%;overflow:hidden}
-.chart-wrap svg{width:100%;height:auto;display:block;direction:ltr}
+.chart-wrap svg{width:100%;height:auto;display:block}
 .chart-legend{display:flex;gap:16px;font-size:12px;color:var(--muted);margin-top:6px;flex-wrap:wrap}
-.chart-legend i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-left:6px}
+.chart-legend i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:6px}
 
-/* ---------- Buttons ---------- */
+/* ---------- Boutons ---------- */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid transparent;border-radius:var(--radius-sm);padding:9px 16px;font-weight:700;cursor:pointer;transition:.18s;background:#fff;color:var(--navy);border-color:var(--line);line-height:1.2;white-space:nowrap;text-decoration:none}
 .btn:hover{background:#f7f9fc;border-color:#cfd7e1}
 .btn:active{transform:translateY(1px)}
@@ -108,8 +106,6 @@ main{max-width:1240px;margin:0 auto;padding:22px 18px 90px}
 .btn-success:hover{background:#12873c;border-color:#12873c}
 .btn-danger{background:#fff;color:var(--danger);border-color:#f3c2c2}
 .btn-danger:hover{background:var(--danger-bg);border-color:var(--danger)}
-.btn-whatsapp{background:#25d366;color:#fff;border-color:#25d366}
-.btn-whatsapp:hover{background:#1fb457;border-color:#1fb457}
 .btn-ghost{background:transparent;border-color:transparent;color:var(--navy)}
 .btn-ghost:hover{background:#eef2f7}
 .btn-sm{padding:6px 11px;font-size:13px;border-radius:8px}
@@ -117,47 +113,57 @@ main{max-width:1240px;margin:0 auto;padding:22px 18px 90px}
 .btn-block{width:100%}
 .btn-group{display:flex;gap:8px;flex-wrap:wrap}
 
-/* ---------- Forms ---------- */
+/* ---------- Formulaires ---------- */
 .form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.form-grid.cols-3{grid-template-columns:repeat(3,1fr)}
 .form-grid .full{grid-column:1/-1}
-@media (max-width:640px){.form-grid{grid-template-columns:1fr}}
+@media (max-width:760px){.form-grid.cols-3{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:640px){.form-grid,.form-grid.cols-3{grid-template-columns:1fr}}
 .field label{display:block;font-weight:700;font-size:13px;margin-bottom:6px;color:#374151}
 .field label .req{color:var(--danger)}
 .field .hint{font-size:12px;color:var(--muted);margin-top:5px}
 .input,.select,.textarea{width:100%;border:1.5px solid var(--line);border-radius:var(--radius-sm);padding:10px 13px;background:#fff;color:var(--text);transition:.15s;outline:none;min-height:44px}
 .input:focus,.select:focus,.textarea:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(30,61,89,.12)}
 .input.invalid{border-color:var(--danger);box-shadow:0 0 0 3px rgba(220,38,38,.1)}
+.input:disabled,.select:disabled{background:#f3f5f8;color:#6b7280}
 .textarea{min-height:88px;resize:vertical}
-.select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='3'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:left 12px center;padding-left:34px}
+.select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='3'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:34px}
 .input-icon{position:relative}
-.input-icon .input{padding-right:40px}
-.input-icon > span{position:absolute;right:13px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:16px;pointer-events:none}
-.switch{display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none}
+.input-icon .input{padding-left:40px}
+.input-icon > span{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:16px;pointer-events:none}
+.input-group{display:flex;gap:8px}
+.input-group .input{flex:1}
+.switch{display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;font-size:13px;font-weight:600}
 .switch input{position:absolute;opacity:0;width:0;height:0}
 .switch .track{width:44px;height:24px;border-radius:999px;background:#cbd5e1;position:relative;transition:.2s;flex-shrink:0}
-.switch .track::after{content:"";position:absolute;top:3px;right:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.switch .track::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
 .switch input:checked + .track{background:var(--ok)}
-.switch input:checked + .track::after{transform:translateX(-20px)}
+.switch input:checked + .track::after{transform:translateX(20px)}
 .form-actions{display:flex;gap:10px;justify-content:flex-start;flex-wrap:wrap;margin-top:18px;padding-top:16px;border-top:1px dashed var(--line)}
+.filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;align-items:end;margin-bottom:16px;background:#f6f8fb;border:1px solid var(--line);border-radius:12px;padding:12px}
+.filters .field label{font-size:12px;margin-bottom:4px}
+.filters .input,.filters .select{min-height:40px;padding:7px 11px;font-size:14px}
 
-/* ---------- Toolbar / Search ---------- */
+/* ---------- Barre d'outils ---------- */
 .toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
 .toolbar .search{flex:1;min-width:220px}
 .toolbar .select{width:auto;min-width:150px}
 .result-count{font-size:13px;color:var(--muted);font-weight:600}
 
-/* ---------- Table ---------- */
+/* ---------- Tableaux ---------- */
 .table-wrap{overflow-x:auto;border-radius:var(--radius);border:1px solid var(--line);background:#fff}
 table.tbl{width:100%;border-collapse:collapse;min-width:820px}
-.tbl th{background:#f6f8fb;color:#374151;font-size:12.5px;text-transform:uppercase;letter-spacing:.4px;font-weight:800;padding:12px 14px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap;position:sticky;top:0;z-index:1}
+.tbl th{background:#f6f8fb;color:#374151;font-size:12.5px;text-transform:uppercase;letter-spacing:.4px;font-weight:800;padding:12px 14px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap;position:sticky;top:0;z-index:1}
 .tbl td{padding:12px 14px;border-bottom:1px solid #eef1f5;vertical-align:middle}
+.tbl th.num,.tbl td.num{text-align:right;font-variant-numeric:tabular-nums}
 .tbl tbody tr{transition:.15s}
 .tbl tbody tr:hover{background:#f9fbfd}
 .tbl tbody tr:last-child td{border-bottom:0}
-.tbl .name-cell strong{display:block;font-weight:800;color:var(--navy)}
-.tbl .name-cell small{color:var(--muted);font-size:12px}
 .tbl .actions{display:flex;gap:6px;justify-content:flex-end}
-.tbl.compact th,.tbl.compact td{padding:9px 10px}
+.tbl.compact th,.tbl.compact td{padding:9px 10px;font-size:13.5px}
+.tbl tfoot td{background:#f6f8fb;font-weight:800;border-top:2px solid var(--line)}
+.code-link{background:none;border:0;padding:0;cursor:pointer;font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:800;color:var(--navy);font-size:14px;text-decoration:underline dotted;text-underline-offset:3px}
+.code-link:hover{color:var(--accent-2)}
 .empty{padding:50px 20px;text-align:center;color:var(--muted)}
 .empty .big{font-size:42px;margin-bottom:8px}
 .empty h4{color:var(--navy);margin-bottom:4px}
@@ -172,52 +178,47 @@ table.tbl{width:100%;border-collapse:collapse;min-width:820px}
 .badge.info{background:var(--info-bg);color:var(--info)}
 .badge.neutral{background:#eef2f7;color:#4b5563}
 .pct{font-weight:800;color:var(--navy)}
-.code-chip{font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:800;background:#eef2f7;color:var(--navy);padding:3px 9px;border-radius:7px;font-size:13px;direction:ltr;display:inline-block}
+.code-chip{font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:800;background:#eef2f7;color:var(--navy);padding:3px 9px;border-radius:7px;font-size:13px;display:inline-block}
 
-/* ---------- Progress ---------- */
+/* ---------- Progression ---------- */
 .progress{height:10px;background:#e9edf3;border-radius:999px;overflow:hidden}
 .progress > i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--silver),#b3bcc8);transition:.4s}
-.progress.gold > i{background:linear-gradient(90deg,var(--gold),var(--gold-2))}
-.steps{display:flex;gap:8px;margin-top:8px}
-.steps span{flex:1;height:8px;border-radius:999px;background:#e5e9f0}
-.steps span.done{background:var(--navy)}
 
-/* ---------- Modals ---------- */
+/* ---------- Modales ---------- */
 .modal-bg{position:fixed;inset:0;background:rgba(15,36,56,.55);backdrop-filter:blur(3px);z-index:100;display:none;align-items:center;justify-content:center;padding:16px}
 .modal-bg.open{display:flex;animation:fade .2s}
 .modal{background:#fff;border-radius:18px;width:100%;max-width:760px;max-height:calc(100vh - 32px);overflow:auto;box-shadow:var(--shadow-lg);animation:pop .22s ease}
 .modal.sm{max-width:480px}
-.modal.lg{max-width:960px}
+.modal.lg{max-width:1000px}
 @keyframes pop{from{transform:translateY(14px) scale(.98);opacity:0}to{transform:none;opacity:1}}
 .modal-head{position:sticky;top:0;background:#fff;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 20px;border-bottom:1px solid var(--line)}
 .modal-head h3{font-size:17px;font-weight:800;color:var(--navy);display:flex;align-items:center;gap:8px}
 .modal-body{padding:20px}
-.modal-foot{position:sticky;bottom:0;background:#fff;padding:14px 20px;border-top:1px solid var(--line);display:flex;gap:10px;justify-content:flex-start;flex-wrap:wrap}
 .close-x{width:36px;height:36px;border-radius:50%;border:0;background:#f1f4f8;cursor:pointer;font-size:18px;color:#374151}
 .close-x:hover{background:#e5e9f0}
 
-/* ---------- Customer profile ---------- */
+/* ---------- Fiche fidélité ---------- */
 .profile-head{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
-.profile-avatar{width:60px;height:60px;border-radius:16px;display:grid;place-items:center;font-size:24px;font-weight:800;color:#fff;flex-shrink:0}
+.profile-avatar{width:60px;height:60px;border-radius:16px;display:grid;place-items:center;font-size:22px;font-weight:800;color:#fff;flex-shrink:0}
 .profile-avatar.silver{background:linear-gradient(135deg,#8e9aaf,#5d6b7d)}
 .profile-avatar.gold{background:linear-gradient(135deg,#e6bd4a,#b8860b)}
 .profile-head h3{font-size:20px;font-weight:800;color:var(--navy)}
-.kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-top:14px}
+.kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-top:14px}
 .kv div{background:#f6f8fb;border-radius:10px;padding:10px 12px}
 .kv div b{display:block;font-size:11.5px;color:var(--muted);font-weight:700;margin-bottom:2px}
 .kv div span{font-weight:700;color:var(--text)}
 .member-box{border-radius:14px;padding:16px;color:#fff;margin-top:16px;position:relative;overflow:hidden}
 .member-box.silver{background:linear-gradient(135deg,#6f7c8c,#3d4a5a)}
 .member-box.gold{background:linear-gradient(135deg,#d4a017,#8a6508)}
-.member-box::after{content:"";position:absolute;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.08);left:-60px;bottom:-120px}
+.member-box::after{content:"";position:absolute;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.08);right:-60px;bottom:-120px}
 .member-box .row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;position:relative;z-index:1}
 .member-box .big{font-size:30px;font-weight:800;line-height:1}
 .member-box small{opacity:.85;font-size:12.5px}
 .member-box .progress{background:rgba(255,255,255,.25);margin-top:10px}
 .member-box .progress > i{background:#fff}
-.section-title{font-size:14px;font-weight:800;color:var(--navy);margin:20px 0 10px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.section-title{font-size:14px;font-weight:800;color:var(--navy);margin:20px 0 10px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
 
-/* ---------- Invoice preview ---------- */
+/* ---------- Aperçu facture ---------- */
 .invoice{background:#f6f8fb;border:1px dashed #cfd7e1;border-radius:12px;padding:14px 16px;margin-top:14px}
 .invoice .line{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #e5e9f0;font-size:14px}
 .invoice .line:last-child{border:0}
@@ -229,38 +230,41 @@ table.tbl{width:100%;border-collapse:collapse;min-width:820px}
 .note.warn{background:var(--warn-bg);color:#92400e}
 .note.ok{background:var(--ok-bg);color:#14532d}
 .note.gold{background:#fdf3d6;color:#5b4200}
+.status-box{border:1.5px solid var(--line);border-radius:12px;padding:14px;background:#fff}
+.status-box.silver{border-color:#c6cfda;background:linear-gradient(135deg,#fff,#f3f5f8)}
+.status-box.gold{border-color:#e5bd45;background:linear-gradient(135deg,#fff,#fdf6dc)}
+.status-box.new{border-color:#93c5fd;background:linear-gradient(135deg,#fff,#eef4ff)}
 
-/* ---------- Loyalty card ---------- */
+/* ---------- Carte de fidélité ---------- */
 .lcard-stage{display:flex;flex-direction:column;align-items:center;gap:20px;padding:10px 0}
-.lcard{width:340px;height:214px;border-radius:16px;position:relative;overflow:hidden;color:#fff;box-shadow:0 20px 40px rgba(0,0,0,.28);font-family:var(--font);direction:ltr;flex-shrink:0}
+.lcard{width:340px;height:214px;border-radius:16px;position:relative;overflow:hidden;color:#fff;box-shadow:0 20px 40px rgba(0,0,0,.28);font-family:var(--font);flex-shrink:0}
 .lcard.silver{background:linear-gradient(135deg,#dfe4ea 0%,#9aa5b3 45%,#5f6b7a 100%);color:#10202e}
 .lcard.gold{background:linear-gradient(135deg,#fbe7a1 0%,#d9a821 45%,#8a6508 100%);color:#2a1e02}
 .lcard::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 85% 15%,rgba(255,255,255,.45),transparent 40%),radial-gradient(circle at 10% 90%,rgba(255,255,255,.25),transparent 40%)}
 .lcard .deco{position:absolute;right:-40px;bottom:-60px;width:200px;height:200px;border-radius:50%;border:26px solid rgba(255,255,255,.12)}
 .lcard > *{position:relative;z-index:1}
 .lcard .top{display:flex;justify-content:space-between;align-items:flex-start;padding:16px 18px 0}
-.lcard .brand-t{font-weight:800;font-size:15px;letter-spacing:1px;line-height:1.1}
+.lcard .brand-t{font-weight:800;font-size:16px;letter-spacing:1px;line-height:1.1}
 .lcard .brand-t small{display:block;font-size:9px;letter-spacing:2px;opacity:.85;font-weight:700}
 .lcard .tier{font-weight:800;font-size:13px;letter-spacing:3px;padding:4px 10px;border-radius:6px;background:rgba(0,0,0,.18);color:#fff}
-.lcard .chip{width:40px;height:30px;border-radius:6px;background:linear-gradient(135deg,#f7e08a,#c79a17);margin:12px 18px 0;box-shadow:inset 0 0 0 1px rgba(0,0,0,.2)}
-.lcard .code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:19px;letter-spacing:3px;font-weight:700;padding:6px 18px 0}
+.lcard .chip{width:40px;height:30px;border-radius:6px;background:linear-gradient(135deg,#f7e08a,#c79a17);margin:14px 18px 0;box-shadow:inset 0 0 0 1px rgba(0,0,0,.2)}
+.lcard .code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:22px;letter-spacing:3px;font-weight:700;padding:8px 18px 0}
 .lcard .bottom{position:absolute;left:0;right:0;bottom:0;padding:0 18px 14px;display:flex;justify-content:space-between;align-items:flex-end;gap:10px}
-.lcard .holder{font-weight:800;font-size:15px;line-height:1.2;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lcard .holder{font-weight:800;font-size:14px;line-height:1.2}
 .lcard .holder small,.lcard .meta small{display:block;font-size:9px;letter-spacing:1.5px;opacity:.8;font-weight:700}
 .lcard .meta{text-align:right;font-weight:700;font-size:12px}
-.lcard .card-disc{font-weight:800;font-size:13px}
-.lcard.back{background:#1e3d59;color:#fff;padding:16px 18px;direction:rtl}
+.lcard.back{background:#1e3d59;color:#fff;padding:16px 18px}
 .lcard.back .stripe{position:absolute;left:0;right:0;top:16px;height:36px;background:#0b1a28}
 .lcard.back .rules{margin-top:48px;font-size:10.5px;line-height:1.55}
 .lcard.back .rules b{color:var(--gold-2)}
-.lcard.back .contact{position:absolute;bottom:12px;right:18px;left:18px;font-size:9.5px;opacity:.85;border-top:1px solid rgba(255,255,255,.2);padding-top:6px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px;direction:ltr}
+.lcard.back .contact{position:absolute;bottom:12px;right:18px;left:18px;font-size:9.5px;opacity:.85;border-top:1px solid rgba(255,255,255,.2);padding-top:6px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px}
 
-/* ---------- Toast ---------- */
+/* ---------- Notifications ---------- */
 .toasts{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);z-index:200;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none}
 .toast{background:#111827;color:#fff;padding:11px 18px;border-radius:12px;font-weight:700;box-shadow:0 10px 30px rgba(0,0,0,.25);animation:pop .2s;display:flex;gap:10px;align-items:center;max-width:92vw;font-size:14px}
 .toast.ok{background:var(--ok)}.toast.err{background:var(--danger)}.toast.warn{background:var(--warn)}
 
-/* ---------- Lists ---------- */
+/* ---------- Listes ---------- */
 .list{display:flex;flex-direction:column;gap:8px}
 .list-item{display:flex;align-items:center;gap:12px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:#fff;transition:.15s}
 .list-item:hover{background:#f9fbfd}
@@ -273,22 +277,20 @@ table.tbl{width:100%;border-collapse:collapse;min-width:820px}
 .rules-list{list-style:none;padding:0;margin:0;display:grid;gap:8px}
 .rules-list li{display:flex;gap:10px;align-items:flex-start;background:#f6f8fb;border-radius:10px;padding:10px 12px;font-size:13.5px}
 .rules-list li .n{width:26px;height:26px;border-radius:8px;background:var(--navy);color:#fff;display:grid;place-items:center;font-weight:800;font-size:12px;flex-shrink:0}
-.history-item{border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:#fff}
-.history-item .h{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-.history-item .h b{color:var(--navy);font-size:15px}
-.history-item .amounts{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px}
-.history-item .amounts div{background:#f6f8fb;border-radius:8px;padding:6px 8px;font-size:12px}
-.history-item .amounts div b{display:block;font-size:13.5px;color:var(--text)}
-.history-item .amounts div.final b{color:var(--ok)}
-.history-item .amounts div.disc b{color:var(--danger)}
-@media (max-width:560px){.history-item .amounts{grid-template-columns:repeat(2,1fr)}}
+.wilaya-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.wilaya-btn{border:2px solid var(--line);background:#fff;border-radius:14px;padding:18px 12px;cursor:pointer;font-weight:800;color:var(--navy);font-size:15px;display:flex;flex-direction:column;align-items:center;gap:6px;transition:.15s}
+.wilaya-btn:hover{border-color:var(--navy);background:#f6f8fb;transform:translateY(-2px)}
+.wilaya-btn.active{border-color:var(--accent);background:#fff8ec}
+.wilaya-btn .ic{font-size:26px}
+.wilaya-btn small{font-size:11.5px;color:var(--muted);font-weight:600}
+.types-table td{padding:8px 10px}
 
-/* ---------- Mobile bottom nav ---------- */
+/* ---------- Navigation mobile ---------- */
 .bottomnav{display:none;position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);z-index:60;box-shadow:0 -6px 20px rgba(15,36,56,.08);padding-bottom:env(safe-area-inset-bottom)}
 .bottomnav button{flex:1;border:0;background:transparent;padding:8px 4px 6px;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;font-weight:700;color:var(--muted);cursor:pointer}
 .bottomnav button span.ic{font-size:20px}
 .bottomnav button.active{color:var(--navy)}
-.fab{position:fixed;bottom:76px;left:16px;width:56px;height:56px;border-radius:50%;background:var(--accent);color:#fff;border:0;font-size:28px;box-shadow:0 10px 24px rgba(243,156,18,.45);cursor:pointer;z-index:55;display:none;align-items:center;justify-content:center}
+.fab{position:fixed;bottom:76px;right:16px;width:56px;height:56px;border-radius:50%;background:var(--accent);color:#fff;border:0;font-size:28px;box-shadow:0 10px 24px rgba(243,156,18,.45);cursor:pointer;z-index:55;display:none;align-items:center;justify-content:center}
 
 @media (max-width:820px){
   .topnav{display:none}
@@ -298,17 +300,16 @@ table.tbl{width:100%;border-collapse:collapse;min-width:820px}
   .card{padding:16px}
   .brand-title{font-size:16px}
   .brand-sub{display:none}
-  .worker-chip .name{max-width:110px}
+  .wilaya-chip .name{max-width:110px}
   .page-head h2{font-size:19px}
-  /* responsive table -> cards */
   table.tbl.responsive{min-width:0}
   .tbl.responsive thead{display:none}
   .tbl.responsive tbody tr{display:block;border-bottom:8px solid var(--bg);padding:8px 4px}
-  .tbl.responsive td{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 10px;border-bottom:1px dashed #eef1f5;text-align:left}
-  .tbl.responsive td::before{content:attr(data-label);font-weight:800;color:var(--muted);font-size:12px;text-align:right}
-  .tbl.responsive td.actions-cell{justify-content:flex-start}
+  .tbl.responsive td{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 10px;border-bottom:1px dashed #eef1f5;text-align:right}
+  .tbl.responsive td::before{content:attr(data-label);font-weight:800;color:var(--muted);font-size:12px;text-align:left}
+  .tbl.responsive td.actions-cell{justify-content:flex-end}
   .tbl.responsive td.actions-cell::before{display:none}
-  .tbl.responsive .actions{justify-content:flex-start;flex-wrap:wrap}
+  .tbl.responsive tfoot{display:none}
   .modal{max-height:calc(100vh - 16px);border-radius:16px}
   .modal-bg{padding:8px;align-items:flex-end}
   .lcard{transform:scale(.92);transform-origin:top center}
@@ -318,921 +319,1004 @@ table.tbl{width:100%;border-collapse:collapse;min-width:820px}
 </head>
 <body>
 
-<!-- ================= TOP BAR ================= -->
+<!-- ================= BARRE SUPÉRIEURE ================= -->
 <header class="topbar">
   <div class="topbar-inner">
     <div class="brand">
       <div class="brand-logo"><img src="img/logo.png" alt="BAGHDAD GPL" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'fallback',textContent:'GPL'}))"></div>
       <div>
-        <div class="brand-title">BAGHDAD GPL <span style="opacity:.6;font-weight:600">—</span> Loyalty Card</div>
-        <div class="brand-sub">FAMILY METAL · نظام بطاقة الولاء SILVER / GOLD</div>
+        <div class="brand-title">BAGHDAD GPL <span style="opacity:.6;font-weight:600">—</span> Programme de fidélité</div>
+        <div class="brand-sub">FAMILY METAL · Cartes SILVER / GOLD · Gestion par wilaya</div>
       </div>
     </div>
     <div class="topbar-spacer"></div>
-    <div class="worker-chip" id="workerChip" title="تغيير اسم العامل">
-      <div class="avatar" id="workerAvatar">؟</div>
-      <div><div class="lbl">العامل الحالي</div><div class="name" id="workerName">غير محدد</div></div>
+    <div class="wilaya-chip" id="wilayaChip" title="Changer de wilaya / agence">
+      <div class="avatar">📍</div>
+      <div><div class="lbl">Wilaya / Agence</div><div class="name" id="wilayaNom">—</div></div>
       <span style="opacity:.7">▾</span>
     </div>
   </div>
   <nav class="topnav" id="topnav">
-    <button data-view="dashboard" class="active">📊 لوحة التحكم</button>
-    <button data-view="customers">👥 الزبائن <span class="badge-count" id="navCount">0</span></button>
-    <button data-view="new">➕ زبون جديد</button>
-    <button data-view="settings">⚙️ الإعدادات</button>
+    <button data-vue="tableau" class="active">📊 Tableau de bord</button>
+    <button data-vue="operation">🧾 Nouvelle opération</button>
+    <button data-vue="clients">🪪 Clients fidélité <span class="badge-count" id="navCompteur">0</span></button>
+    <button data-vue="parametres">⚙️ Paramètres</button>
   </nav>
 </header>
 
 <main>
-  <!-- ================= DASHBOARD ================= -->
-  <section class="view active" id="view-dashboard">
+  <!-- ================= TABLEAU DE BORD ================= -->
+  <section class="view active" id="vue-tableau">
     <div class="page-head">
-      <div><h2>لوحة التحكم</h2><p id="dashDate"></p></div>
+      <div><h2>Tableau de bord</h2><p id="tableauDate"></p></div>
       <div class="btn-group">
-        <button class="btn btn-primary" data-go="new">➕ زبون جديد</button>
-        <button class="btn" data-go="customers">👥 قائمة الزبائن</button>
+        <button class="btn btn-primary" data-aller="operation">🧾 Nouvelle opération</button>
+        <button class="btn" id="btnRapportTableau">📄 Rapport PDF</button>
       </div>
+    </div>
+    <div class="filters" id="filtresTableau">
+      <div class="field"><label>Wilaya</label><select class="select" id="fWilaya"></select></div>
+      <div class="field"><label>Période</label><select class="select" id="fPeriode"><option value="tout">Toute la période</option><option value="mois">Ce mois</option><option value="mois-1">Mois dernier</option><option value="3mois">3 derniers mois</option><option value="annee">Cette année</option><option value="perso">Personnalisée</option></select></div>
+      <div class="field periode-perso hidden"><label>Du</label><input class="input" type="date" id="fDebut"></div>
+      <div class="field periode-perso hidden"><label>Au</label><input class="input" type="date" id="fFin"></div>
+      <div class="field"><label>Type de carte</label><select class="select" id="fCarte"><option value="">Toutes</option><option value="SILVER">SILVER</option><option value="GOLD">GOLD</option></select></div>
+      <div class="field"><label>Employé</label><select class="select" id="fEmploye"></select></div>
+      <div class="field"><label>Type d'opération</label><select class="select" id="fType"></select></div>
+      <div class="field"><label>&nbsp;</label><button class="btn btn-block" id="btnReinitFiltres">↺ Réinitialiser</button></div>
     </div>
     <div class="stats" id="stats"></div>
     <div class="grid grid-2">
       <div class="card">
-        <div class="card-title"><h3>📈 نمو الزبائن — آخر 6 أشهر</h3><span class="muted" style="font-size:12px" id="chartTotal"></span></div>
-        <div class="chart-wrap" id="chart"></div>
-        <div class="chart-legend"><span><i style="background:#1e3d59"></i>زبائن جدد (تركيب GPL)</span><span><i style="background:#f39c12"></i>عمليات صيانة</span></div>
+        <div class="card-title"><h3>📈 Opérations — 6 derniers mois</h3><span class="muted" style="font-size:12px" id="graphiqueTotal"></span></div>
+        <div class="chart-wrap" id="graphique"></div>
+        <div class="chart-legend"><span><i style="background:#1e3d59"></i>Opérations</span><span><i style="background:#f39c12"></i>dont Maintenances</span></div>
       </div>
       <div class="card">
-        <div class="card-title"><h3>🔧 الصيانة المستحقة</h3><button class="btn btn-sm" data-go="customers" data-filter="due">عرض الكل</button></div>
-        <div class="list" id="dueList"></div>
+        <div class="card-title"><h3>🕒 Dernières opérations</h3><button class="btn btn-sm" data-aller="clients">Voir les clients</button></div>
+        <div class="list" id="dernieresOperations"></div>
       </div>
     </div>
     <div class="card" style="margin-top:18px">
-      <div class="card-title"><h3>⭐ قواعد نظام الولاء SILVER / GOLD</h3></div>
-      <ul class="rules-list">
-        <li><span class="n">1</span><div>عند <b>أول تركيب GPL</b> يصبح الزبون تلقائياً عضو <span class="badge silver">SILVER</span> بخصم <b>3%</b>.</div></li>
-        <li><span class="n">2</span><div>بعد إتمام <b>3 عمليات صيانة</b> (لا يُحتسب التركيب الأصلي) تتم الترقية تلقائياً إلى <span class="badge gold">GOLD</span>.</div></li>
-        <li><span class="n">3</span><div>أول عملية بعد الترقية إلى GOLD بخصم <b>5%</b>، ثم يزيد الخصم <b>1%</b> مع كل عملية جديدة (6%، 7%، 8%…).</div></li>
-        <li><span class="n">4</span><div>نسبة الخصم تُحسب تلقائياً وتُحفظ بشكل دائم مع كل خدمة — الخدمات القديمة تحتفظ بنسبتها الأصلية.</div></li>
-      </ul>
+      <div class="card-title"><h3>⭐ Règles du programme de fidélité</h3><button class="btn btn-sm" data-aller="parametres">Modifier</button></div>
+      <ul class="rules-list" id="listeRegles"></ul>
     </div>
   </section>
 
-  <!-- ================= CUSTOMERS ================= -->
-  <section class="view" id="view-customers">
+  <!-- ================= NOUVELLE OPÉRATION ================= -->
+  <section class="view" id="vue-operation">
+    <div class="page-head"><div><h2>Nouvelle opération</h2><p>Wilaya → Employé → Code fidélité → Type d'opération → Montant → Remise calculée automatiquement</p></div></div>
+    <div class="grid grid-2">
+      <form class="card" id="formOperation" novalidate>
+        <div class="form-grid">
+          <div class="field"><label>1. Wilaya / Agence</label><input class="input" id="opWilaya" disabled><div class="hint">Changer via le bouton en haut de page</div></div>
+          <div class="field"><label>2. Nom de l'employé <span class="req">*</span></label><input class="input" name="employe" list="listeEmployes" placeholder="Nom de l'employé" autocomplete="off" required><datalist id="listeEmployes"></datalist></div>
+          <div class="field"><label>3. Code fidélité <span class="req">*</span></label><div class="input-group"><input class="input mono" name="code" list="listeCodes" placeholder="Ex. BG-0001" autocomplete="off" required style="text-transform:uppercase"><button class="btn" type="button" id="btnGenererCode" title="Générer un nouveau code">✨</button></div><datalist id="listeCodes"></datalist></div>
+          <div class="field" id="champTypeCarte"><label>4. Type de carte</label><select class="select" name="typeCarte"><option value="SILVER">SILVER</option><option value="GOLD">GOLD</option></select><div class="hint" id="typeCarteHint"></div></div>
+          <div class="field"><label>5. Type d'opération <span class="req">*</span></label><select class="select" name="type" id="opType"></select></div>
+          <div class="field"><label>Date <span class="req">*</span></label><input class="input" type="date" name="date" required></div>
+          <div class="field"><label>6. Montant total (DA) <span class="req">*</span></label><input class="input" name="montant" inputmode="decimal" placeholder="0" required></div>
+          <div class="field"><label>Note (optionnel)</label><input class="input" name="note" placeholder="Détail de l'opération"></div>
+        </div>
+        <div class="invoice" id="apercuFacture"></div>
+        <div id="opIndication"></div>
+        <div class="form-actions">
+          <button class="btn btn-primary" type="submit">💾 Enregistrer l'opération</button>
+          <button class="btn" type="reset">Effacer</button>
+        </div>
+      </form>
+      <div>
+        <div class="card"><div class="card-title"><h3>🔎 Statut du code fidélité</h3></div><div id="statutCode"></div></div>
+        <div class="card"><div class="card-title"><h3>🕒 Opérations récentes — <span id="recentWilaya"></span></h3></div><div class="list" id="operationsRecentes"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CLIENTS FIDÉLITÉ ================= -->
+  <section class="view" id="vue-clients">
     <div class="page-head">
-      <div><h2>الزبائن</h2><p>بحث، متابعة الصيانة، إضافة الخدمات وطباعة البطاقات</p></div>
+      <div><h2>Clients fidélité</h2><p>Cliquez sur un code pour ouvrir l'historique des opérations</p></div>
       <div class="btn-group">
-        <button class="btn" id="btnExportPdf">🖨️ تصدير قائمة الزبائن PDF</button>
-        <button class="btn btn-primary" data-go="new">➕ زبون جديد</button>
+        <button class="btn" id="btnRapportClients">📄 Rapport PDF</button>
+        <button class="btn btn-primary" data-aller="operation">🧾 Nouvelle opération</button>
       </div>
     </div>
     <div class="card">
       <div class="toolbar">
-        <div class="input-icon search"><span>🔍</span><input class="input" id="searchInput" placeholder="بحث بالاسم، الهاتف، الكود أو نوع السيارة…" autocomplete="off"></div>
-        <select class="select" id="filterLevel"><option value="">كل الفئات</option><option value="SILVER">SILVER</option><option value="GOLD">GOLD</option></select>
-        <select class="select" id="filterMaint"><option value="">كل حالات الصيانة</option><option value="overdue">متأخرة</option><option value="soon">قريبة (15 يوم)</option><option value="due">مستحقة أو قريبة</option><option value="ok">منتظمة</option></select>
-        <select class="select" id="sortBy"><option value="newest">الأحدث أولاً</option><option value="name">الاسم</option><option value="code">الكود</option><option value="next">الصيانة القادمة</option><option value="services">عدد الخدمات</option></select>
-        <span class="result-count" id="resultCount"></span>
+        <div class="input-icon search"><span>🔍</span><input class="input" id="rechercheCode" placeholder="Rechercher un code fidélité…" autocomplete="off"></div>
+        <select class="select" id="clientsCarte"><option value="">Toutes les cartes</option><option value="SILVER">SILVER</option><option value="GOLD">GOLD</option></select>
+        <select class="select" id="clientsTri"><option value="recent">Dernière opération</option><option value="code">Code</option><option value="operations">Nombre d'opérations</option><option value="montant">Montant total</option></select>
+        <span class="result-count" id="clientsCompteur"></span>
       </div>
       <div class="table-wrap">
-        <table class="tbl responsive" id="custTable">
+        <table class="tbl responsive" id="tableClients">
           <thead><tr>
-            <th>الكود</th><th>الزبون</th><th>السيارة</th><th>الفئة</th><th>تاريخ التركيب</th><th>الصيانة القادمة</th><th>الخدمات</th><th></th>
+            <th>Code</th><th>Type de carte</th><th>Wilaya</th><th class="num">Nb opérations</th><th class="num">Montant total</th><th class="num">Réduction totale</th><th class="num">Montant après réduction</th><th>Dernière opération</th><th></th>
           </tr></thead>
-          <tbody id="custBody"></tbody>
+          <tbody id="corpsClients"></tbody>
+          <tfoot id="piedClients"></tfoot>
         </table>
       </div>
     </div>
   </section>
 
-  <!-- ================= NEW CUSTOMER ================= -->
-  <section class="view" id="view-new">
-    <div class="page-head"><div><h2>زبون جديد — تركيب GPL</h2><p>يبدأ الزبون تلقائياً كعضو SILVER بخصم 3%</p></div></div>
-    <form class="card" id="newForm" novalidate>
-      <div class="form-grid">
-        <div class="field"><label>الاسم الكامل <span class="req">*</span></label><input class="input" name="name" required placeholder="مثال: محمد بن علي"></div>
-        <div class="field"><label>رقم الهاتف <span class="req">*</span></label><input class="input ltr" name="phone" required inputmode="tel" placeholder="05 XX XX XX XX"><div class="hint">يُستخدم لرسائل WhatsApp</div></div>
-        <div class="field"><label>نوع / ماركة السيارة <span class="req">*</span></label><input class="input" name="vehicle" required placeholder="مثال: Renault Symbol 2019" list="vehicleList"><datalist id="vehicleList"></datalist></div>
-        <div class="field"><label>تاريخ تركيب GPL <span class="req">*</span></label><input class="input ltr" type="date" name="installDate" required></div>
-        <div class="field"><label>الفرع</label><select class="select" name="branch" id="newBranch"></select></div>
-        <div class="field"><label>العامل (المُركِّب)</label><input class="input" name="worker" list="workerList" placeholder="اسم العامل"><datalist id="workerList"></datalist></div>
-        <div class="field"><label>مبلغ فاتورة التركيب (دج)</label><input class="input ltr" name="amount" inputmode="decimal" placeholder="0"><div class="hint" id="installDiscHint"></div></div>
-        <div class="field"><label>كود البطاقة</label><input class="input ltr code-input" name="code" placeholder="تلقائي" id="newCode"><div class="hint">يُولَّد تلقائياً — يمكنك تعديله</div></div>
-        <div class="field full"><label>ملاحظات</label><textarea class="textarea" name="notes" placeholder="ملاحظات إضافية (اختياري)"></textarea></div>
-      </div>
-      <div class="invoice hidden" id="newInvoice"></div>
-      <div class="form-actions">
-        <button class="btn btn-primary" type="submit">💾 حفظ الزبون وإنشاء البطاقة</button>
-        <button class="btn" type="reset">مسح الحقول</button>
-      </div>
-    </form>
-  </section>
-
-  <!-- ================= SETTINGS ================= -->
-  <section class="view" id="view-settings">
-    <div class="page-head"><div><h2>الإعدادات</h2><p>العمّال، الصيانة، النسخ الاحتياطي</p></div></div>
+  <!-- ================= PARAMÈTRES ================= -->
+  <section class="view" id="vue-parametres">
+    <div class="page-head"><div><h2>Paramètres</h2><p>Règles de fidélité, wilayas, types d'opération, employés, sauvegarde</p></div></div>
     <div class="grid grid-2">
       <div class="card">
-        <div class="card-title"><h3>👷 العمّال</h3></div>
-        <div class="chips" id="workersChips"></div>
-        <div style="display:flex;gap:8px;margin-top:12px"><input class="input" id="newWorkerInput" placeholder="اسم عامل جديد"><button class="btn btn-primary" id="addWorkerBtn">إضافة</button></div>
-      </div>
-      <div class="card">
-        <div class="card-title"><h3>🔧 الصيانة والأكواد</h3></div>
+        <div class="card-title"><h3>⭐ Règles de remise</h3></div>
         <div class="form-grid">
-          <div class="field"><label>الفترة بين الصيانات (أشهر)</label><select class="select" id="setMonths"><option value="3">3 أشهر</option><option value="6">6 أشهر</option><option value="12">12 شهر</option></select></div>
-          <div class="field"><label>بادئة كود البطاقة</label><input class="input ltr" id="setPrefix" maxlength="6" placeholder="BG"></div>
-          <div class="field"><label>الفرع الافتراضي</label><select class="select" id="setBranch"></select></div>
-          <div class="field"><label>الخصم على فاتورة التركيب</label><label class="switch" style="margin-top:8px"><input type="checkbox" id="setDiscInstall"><span class="track"></span><span id="setDiscInstallLbl">تطبيق خصم SILVER 3% على التركيب</span></label></div>
+          <div class="field"><label>Remise initiale SILVER (%)</label><input class="input" type="number" min="0" max="100" step="0.5" id="pRemiseSilver"></div>
+          <div class="field"><label>Remise initiale GOLD (%)</label><input class="input" type="number" min="0" max="100" step="0.5" id="pRemiseGold"></div>
+          <div class="field"><label>Augmentation GOLD après chaque opération (%)</label><input class="input" type="number" min="0" max="100" step="0.5" id="pIncrementGold"></div>
+          <div class="field"><label>Nombre de maintenances requises pour GOLD</label><input class="input" type="number" min="1" max="50" step="1" id="pMaintenancesGold"></div>
+          <div class="field"><label>Plafond de remise GOLD (%) — optionnel</label><input class="input" type="number" min="0" max="100" step="0.5" id="pPlafondGold" placeholder="Aucun"></div>
+          <div class="field"><label>Préfixe des codes générés</label><input class="input" id="pPrefixeCode" maxlength="8" placeholder="BG"></div>
         </div>
-        <div class="form-actions" style="margin-top:12px"><button class="btn btn-primary" id="saveSettingsBtn">💾 حفظ الإعدادات</button></div>
+        <div class="note info">ℹ️ Les nouveaux paramètres s'appliquent uniquement aux opérations futures. Les pourcentages déjà enregistrés dans l'historique ne sont jamais recalculés.</div>
+        <div class="form-actions" style="margin-top:12px"><button class="btn btn-primary" id="btnEnregistrerRegles">💾 Enregistrer les règles</button></div>
       </div>
       <div class="card">
-        <div class="card-title"><h3>💾 النسخ الاحتياطي (تخزين محلي)</h3></div>
-        <p class="muted" style="margin:0 0 12px;font-size:13px">البيانات محفوظة في متصفح هذا الجهاز. ننصح بأخذ نسخة احتياطية بشكل دوري.</p>
+        <div class="card-title"><h3>📍 Wilayas / Agences</h3></div>
+        <div class="chips" id="chipsWilayas"></div>
+        <div class="input-group" style="margin-top:12px"><input class="input" id="nouvelleWilaya" placeholder="Nouvelle wilaya / agence"><button class="btn btn-primary" id="btnAjouterWilaya">Ajouter</button></div>
+        <div class="hint" style="margin-top:8px;color:var(--muted);font-size:12px">Chaque wilaya dispose de son propre espace de données (clients, opérations, statistiques).</div>
+      </div>
+      <div class="card">
+        <div class="card-title"><h3>🔧 Types d'opération</h3></div>
+        <div class="table-wrap" style="border-radius:10px"><table class="tbl compact types-table" style="min-width:0"><thead><tr><th>Type</th><th>Compte pour GOLD</th><th>Remise appliquée</th><th></th></tr></thead><tbody id="corpsTypes"></tbody></table></div>
+        <div class="input-group" style="margin-top:12px"><input class="input" id="nouveauType" placeholder="Nouveau type d'opération"><button class="btn btn-primary" id="btnAjouterType">Ajouter</button></div>
+        <div class="hint" style="margin-top:8px;color:var(--muted);font-size:12px">« Compte pour GOLD » : l'opération est comptée parmi les maintenances requises pour passer GOLD.</div>
+      </div>
+      <div class="card">
+        <div class="card-title"><h3>👷 Employés</h3></div>
+        <div class="chips" id="chipsEmployes"></div>
+        <div class="input-group" style="margin-top:12px"><input class="input" id="nouvelEmploye" placeholder="Nom de l'employé"><button class="btn btn-primary" id="btnAjouterEmploye">Ajouter</button></div>
+      </div>
+      <div class="card">
+        <div class="card-title"><h3>💾 Sauvegarde (stockage local)</h3></div>
+        <p class="muted" style="margin:0 0 12px;font-size:13px">Les données sont enregistrées dans le navigateur de cet appareil. Effectuez régulièrement une sauvegarde.</p>
         <div class="btn-group">
-          <button class="btn" id="backupBtn">⬇️ تنزيل نسخة احتياطية (JSON)</button>
-          <label class="btn">⬆️ استرجاع نسخة <input type="file" id="restoreInput" accept="application/json,.json" hidden></label>
+          <button class="btn" id="btnSauvegarde">⬇️ Télécharger la sauvegarde (JSON)</button>
+          <label class="btn">⬆️ Restaurer une sauvegarde <input type="file" id="fichierRestauration" accept="application/json,.json" hidden></label>
         </div>
-        <div class="muted" style="font-size:12px;margin-top:10px" id="storageInfo"></div>
+        <div class="muted" style="font-size:12px;margin-top:10px" id="infoStockage"></div>
       </div>
       <div class="card">
-        <div class="card-title"><h3>⚠️ منطقة الخطر</h3></div>
-        <p class="muted" style="margin:0 0 12px;font-size:13px">حذف جميع الزبائن والخدمات نهائياً من هذا الجهاز.</p>
-        <button class="btn btn-danger" id="wipeBtn">🗑️ حذف جميع البيانات</button>
+        <div class="card-title"><h3>⚠️ Zone de danger</h3></div>
+        <p class="muted" style="margin:0 0 12px;font-size:13px">Supprimer définitivement les données de fidélité de cet appareil.</p>
+        <div class="btn-group"><button class="btn btn-danger" id="btnViderWilaya">🗑️ Vider la wilaya active</button><button class="btn btn-danger" id="btnViderTout">🗑️ Tout supprimer</button></div>
       </div>
     </div>
   </section>
 </main>
 
-<!-- ================= MOBILE NAV ================= -->
+<!-- ================= NAVIGATION MOBILE ================= -->
 <nav class="bottomnav" id="bottomnav">
-  <button data-view="dashboard" class="active"><span class="ic">📊</span>الرئيسية</button>
-  <button data-view="customers"><span class="ic">👥</span>الزبائن</button>
-  <button data-view="new"><span class="ic">➕</span>جديد</button>
-  <button data-view="settings"><span class="ic">⚙️</span>الإعدادات</button>
+  <button data-vue="tableau" class="active"><span class="ic">📊</span>Tableau</button>
+  <button data-vue="operation"><span class="ic">🧾</span>Opération</button>
+  <button data-vue="clients"><span class="ic">🪪</span>Clients</button>
+  <button data-vue="parametres"><span class="ic">⚙️</span>Réglages</button>
 </nav>
-<button class="fab" id="fab" title="زبون جديد">+</button>
+<button class="fab" id="fab" title="Nouvelle opération">+</button>
 
-<!-- ================= MODALS ================= -->
-<div class="modal-bg" id="modalCustomer"><div class="modal lg"><div class="modal-head"><h3>👤 ملف الزبون</h3><button class="close-x" data-close>✕</button></div><div class="modal-body" id="customerBody"></div></div></div>
-<div class="modal-bg" id="modalService"><div class="modal"><div class="modal-head"><h3>🔧 إضافة خدمة</h3><button class="close-x" data-close>✕</button></div><div class="modal-body" id="serviceBody"></div></div></div>
-<div class="modal-bg" id="modalEdit"><div class="modal"><div class="modal-head"><h3>✏️ تعديل بيانات الزبون</h3><button class="close-x" data-close>✕</button></div><div class="modal-body" id="editBody"></div></div></div>
-<div class="modal-bg" id="modalCard"><div class="modal"><div class="modal-head"><h3>🪪 معاينة بطاقة الولاء</h3><button class="close-x" data-close>✕</button></div><div class="modal-body" id="cardBody"></div></div></div>
-<div class="modal-bg" id="modalWorker"><div class="modal sm"><div class="modal-head"><h3>👷 اختيار العامل</h3><button class="close-x" data-close>✕</button></div><div class="modal-body" id="workerBody"></div></div></div>
-<div class="modal-bg" id="modalConfirm"><div class="modal sm"><div class="modal-body" id="confirmBody"></div></div></div>
-<div class="toasts" id="toasts"></div>
+<!-- ================= MODALES ================= -->
+<div class="modal-bg" id="modaleWilaya"><div class="modal"><div class="modal-head"><h3>📍 Sélectionner la wilaya / agence</h3><button class="close-x" data-fermer>✕</button></div><div class="modal-body" id="corpsWilaya"></div></div></div>
+<div class="modal-bg" id="modaleHistorique"><div class="modal lg"><div class="modal-head"><h3>📜 Historique des opérations</h3><button class="close-x" data-fermer>✕</button></div><div class="modal-body" id="corpsHistorique"></div></div></div>
+<div class="modal-bg" id="modaleCarte"><div class="modal"><div class="modal-head"><h3>🪪 Carte de fidélité</h3><button class="close-x" data-fermer>✕</button></div><div class="modal-body" id="corpsCarte"></div></div></div>
+<div class="modal-bg" id="modaleRapport"><div class="modal"><div class="modal-head"><h3>📄 Rapport PDF — Programme de fidélité</h3><button class="close-x" data-fermer>✕</button></div><div class="modal-body" id="corpsRapport"></div></div></div>
+<div class="modal-bg" id="modaleConfirmation"><div class="modal sm"><div class="modal-body" id="corpsConfirmation"></div></div></div>
+<div class="toasts" id="notifications"></div>
 
 <script>
 /* =====================================================================
-   BAGHDAD GPL — Loyalty Card · Application logic
+   BAGHDAD GPL — Programme de fidélité · Logique applicative
    ===================================================================== */
 (function(){
 'use strict';
 
 /* ------------------------------------------------------------------ */
-/*  Constants & rules                                                  */
+/*  Constantes                                                         */
 /* ------------------------------------------------------------------ */
-const KEYS = { customers:'bgpl_customers', settings:'bgpl_settings', worker:'bgpl_current_worker', migrated:'bgpl_migrated_from' };
-const LEGACY_KEYS = ['customers','clients','bgpl_clients','baghdad_customers','baghdadgpl_customers','loyaltyCustomers','loyalty_customers','gplCustomers','gpl_customers','baghdad_gpl_customers','BAGHDAD_GPL_CUSTOMERS'];
-const RULES = { SILVER_PCT:3, GOLD_START_PCT:5, GOLD_STEP:1, MAINT_FOR_GOLD:3 };
-const SERVICE_TYPES = { installation:'تركيب GPL', maintenance:'صيانة', repair:'إصلاح / خدمة أخرى' };
-const BRANCHES = {
-  'Chlef':      { phone:'213557985364', map:'https://maps.app.goo.gl/QpTY7QFyVcwsT8169' },
-  'Oran':       { phone:'213550141155', map:'https://maps.app.goo.gl/6fL25SSXCcastyTk8' },
-  'Boumerdès':  { phone:'213561950760', map:'https://maps.app.goo.gl/emjmatB9XgC5V1T98' }
+// Les clés de stockage sont conservées pour rester compatibles avec les données existantes.
+const CLES = {
+  clients:'bgpl_customers',
+  parametres:'bgpl_settings',
+  wilayaActive:'bgpl_wilaya_active',
+  dernierEmploye:'bgpl_current_worker',
+  sauvegardeMigration:'bgpl_sauvegarde_avant_migration_v3'
 };
-const DEFAULT_SETTINGS = { maintenanceMonths:6, codePrefix:'BG', defaultBranch:'Chlef', discountOnInstall:true, workers:[] };
+const CLES_ANCIENNES = ['customers','clients','bgpl_clients','baghdad_customers','baghdadgpl_customers','loyaltyCustomers','loyalty_customers','gplCustomers','gpl_customers','baghdad_gpl_customers'];
+const CONTACTS_AGENCES = {
+  'Chlef':     { telephone:'+213 557 98 53 64', carte:'https://maps.app.goo.gl/QpTY7QFyVcwsT8169' },
+  'Oran':      { telephone:'+213 550 14 11 55', carte:'https://maps.app.goo.gl/6fL25SSXCcastyTk8' },
+  'Boumerdès': { telephone:'+213 561 95 07 60', carte:'https://maps.app.goo.gl/emjmatB9XgC5V1T98' }
+};
+const PARAMETRES_DEFAUT = {
+  version:3,
+  wilayas:['Chlef','Oran','Boumerdès'],
+  employes:[],
+  typesOperation:[
+    { nom:'Installation', compteMaintenance:false, sansRemise:false },
+    { nom:'Maintenance',  compteMaintenance:true,  sansRemise:false },
+    { nom:'Contrôle',     compteMaintenance:false, sansRemise:false },
+    { nom:'Entretien',    compteMaintenance:false, sansRemise:false },
+    { nom:'Autre',        compteMaintenance:false, sansRemise:false }
+  ],
+  regles:{ remiseSilver:3, remiseGoldInitiale:5, incrementGold:1, maintenancesPourGold:3, plafondGold:null },
+  prefixeCode:'BG'
+};
 
 /* ------------------------------------------------------------------ */
-/*  Utilities                                                          */
+/*  Utilitaires                                                        */
 /* ------------------------------------------------------------------ */
 const $  = (s, r=document) => r.querySelector(s);
 const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
 const z  = n => String(n).padStart(2,'0');
-const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,7);
-const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-function toISO(d){ return `${d.getFullYear()}-${z(d.getMonth()+1)}-${z(d.getDate())}`; }
-function todayISO(){ return toISO(new Date()); }
-function parseISO(s){ if(!s) return null; const m=String(s).match(/^(\d{4})-(\d{2})-(\d{2})/); if(!m) return null; return new Date(+m[1], +m[2]-1, +m[3]); }
-function fmtDate(s){ const d=parseISO(s); return d ? `${z(d.getDate())}/${z(d.getMonth()+1)}/${d.getFullYear()}` : '—'; }
-function addMonths(iso, n){ const d=parseISO(iso); if(!d) return null; const day=d.getDate(); d.setMonth(d.getMonth()+n); if(d.getDate()!==day) d.setDate(0); return toISO(d); }
-function diffDays(fromISO, toISOs){ const a=parseISO(fromISO), b=parseISO(toISOs); if(!a||!b) return null; return Math.round((b-a)/86400000); }
-function round2(n){ return Math.round((+n + Number.EPSILON) * 100) / 100; }
-function parseAmount(v){ if(v==null) return 0; const n=parseFloat(String(v).replace(/\s/g,'').replace(',','.')); return isFinite(n) && n>=0 ? n : 0; }
-const nf = new Intl.NumberFormat('fr-FR',{minimumFractionDigits:0, maximumFractionDigits:2});
-function money(n){ return nf.format(+n||0).replace(/\u202f|\u00a0/g,' ') + ' دج'; }
-function normalizePhone(p){
-  let d=String(p||'').replace(/\D/g,'');
-  if(d.startsWith('00')) d=d.slice(2);
-  if(d.startsWith('213')) return d;
-  if(d.startsWith('0') && d.length===10) return '213'+d.slice(1);
-  if(d.length===9) return '213'+d;
-  return d;
-}
-function fmtPhone(p){ const d=String(p||'').replace(/\D/g,''); if(d.length===10) return d.replace(/(\d{4})(\d{2})(\d{2})(\d{2})/,'$1 $2 $3 $4'); return p||'—'; }
-function normDate(v){
+const identifiant = () => Date.now().toString(36) + Math.random().toString(36).slice(2,7);
+const echapper = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function versISO(d){ return `${d.getFullYear()}-${z(d.getMonth()+1)}-${z(d.getDate())}`; }
+function aujourdhuiISO(){ return versISO(new Date()); }
+function analyserISO(s){ if(!s) return null; const m=String(s).match(/^(\d{4})-(\d{2})-(\d{2})/); if(!m) return null; return new Date(+m[1], +m[2]-1, +m[3]); }
+function formaterDate(s){ const d=analyserISO(s); return d ? `${z(d.getDate())}/${z(d.getMonth()+1)}/${d.getFullYear()}` : '—'; }
+function arrondir2(n){ return Math.round((+n + Number.EPSILON) * 100) / 100; }
+function analyserMontant(v){ if(v==null) return 0; const n=parseFloat(String(v).replace(/\s/g,'').replace(',','.')); return isFinite(n) && n>=0 ? n : 0; }
+const formatNombre = new Intl.NumberFormat('fr-FR',{minimumFractionDigits:0, maximumFractionDigits:2});
+function formaterMontant(n){ return formatNombre.format(+n||0).replace(/\u202f|\u00a0/g,' ') + ' DA'; }
+function normaliserCode(c){ return String(c||'').trim().toUpperCase().replace(/\s+/g,''); }
+function normaliserDate(v){
   if(!v) return '';
-  if(typeof v==='number') { const d=new Date(v); return isNaN(d)?'':toISO(d); }
+  if(typeof v==='number'){ const d=new Date(v); return isNaN(d)?'':versISO(d); }
   const s=String(v).trim();
   if(/^\d{4}-\d{2}-\d{2}/.test(s)) return s.slice(0,10);
-  let m=s.match(/^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{4})$/); if(m) return `${m[3]}-${z(m[2])}-${z(m[1])}`;
-  const d=new Date(s); return isNaN(d)?'':toISO(d);
+  const m=s.match(/^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{4})$/); if(m) return `${m[3]}-${z(m[2])}-${z(m[1])}`;
+  const d=new Date(s); return isNaN(d)?'':versISO(d);
 }
-function toast(msg, type='ok', ms=2600){
-  const t=document.createElement('div'); t.className='toast '+type; t.textContent=msg; $('#toasts').appendChild(t);
-  setTimeout(()=>{ t.style.opacity='0'; t.style.transition='.3s'; setTimeout(()=>t.remove(),300); }, ms);
+function notifier(message, type='ok', duree=2800){
+  const t=document.createElement('div'); t.className='toast '+type; t.textContent=message; $('#notifications').appendChild(t);
+  setTimeout(()=>{ t.style.opacity='0'; t.style.transition='.3s'; setTimeout(()=>t.remove(),300); }, duree);
 }
-function download(filename, content, mime='application/json'){
-  const blob=new Blob([content],{type:mime}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=filename; document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href); a.remove();},500);
+function telecharger(nomFichier, contenu, mime='application/json'){
+  const blob=new Blob([contenu],{type:mime}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=nomFichier; document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href); a.remove();},500);
 }
-function initials(name){ return String(name||'?').trim().split(/\s+/).slice(0,2).map(w=>w[0]).join('').toUpperCase() || '?'; }
+const cloner = o => JSON.parse(JSON.stringify(o));
+function choisir(o, ...cles){ for(const k of cles){ if(o && o[k]!=null && o[k]!=='') return o[k]; } return undefined; }
 
 /* ------------------------------------------------------------------ */
-/*  Storage                                                            */
+/*  Stockage local                                                     */
 /* ------------------------------------------------------------------ */
-let customers = [];
-let settings  = {...DEFAULT_SETTINGS};
-let currentWorker = '';
+let clients = [];                       // tous les clients fidélité, toutes wilayas confondues
+let parametres = cloner(PARAMETRES_DEFAUT);
+let wilayaActive = '';
+let dernierEmploye = '';
 
-function loadJSON(key, fallback){ try{ const v=localStorage.getItem(key); return v? JSON.parse(v) : fallback; }catch(e){ return fallback; } }
-function save(){ try{ localStorage.setItem(KEYS.customers, JSON.stringify(customers)); }catch(e){ toast('تعذر الحفظ في التخزين المحلي (المساحة ممتلئة؟)','err'); } }
-function saveSettings(){ localStorage.setItem(KEYS.settings, JSON.stringify(settings)); }
+function chargerJSON(cle, defaut){ try{ const v=localStorage.getItem(cle); return v? JSON.parse(v) : defaut; }catch(e){ return defaut; } }
+function enregistrerClients(){ try{ localStorage.setItem(CLES.clients, JSON.stringify(clients)); }catch(e){ notifier('Enregistrement impossible (stockage local plein ?)','err'); } }
+function enregistrerParametres(){ localStorage.setItem(CLES.parametres, JSON.stringify(parametres)); }
 
-/* ---- Legacy data migration (adapts old SILVER/GOLD records safely) ---- */
-function pick(o, ...keys){ for(const k of keys){ if(o && o[k]!=null && o[k]!=='') return o[k]; } return undefined; }
-function migrateService(s, idx){
-  if(!s || typeof s!=='object') return null;
-  const rawType = String(pick(s,'type','serviceType','kind','category','service') || '').toLowerCase();
-  let type = 'maintenance';
-  if(/instal|تركيب|pose/.test(rawType)) type='installation';
-  else if(/repair|إصلاح|reparation|réparation|other|autre|أخرى/.test(rawType)) type='repair';
-  const amount = parseAmount(pick(s,'amount','originalAmount','original','price','montant','total','invoice','cost'));
-  let pct = pick(s,'discountPct','discountPercent','discountPercentage','discount','remise','pct');
-  pct = pct==null ? null : parseAmount(pct);
-  const hasPct = pct!=null && !isNaN(pct);
-  const discountAmount = hasPct ? round2(amount*pct/100) : parseAmount(pick(s,'discountAmount','discountValue')) ;
-  const finalAmount = pick(s,'finalAmount','final','net','netAmount');
+/* ---- Migration des paramètres (anciennes versions) ---- */
+function migrerParametres(brut){
+  const p = cloner(PARAMETRES_DEFAUT);
+  if(!brut || typeof brut!=='object') return p;
+  if(brut.version===3){
+    Object.assign(p, brut);
+    p.regles = {...PARAMETRES_DEFAUT.regles, ...(brut.regles||{})};
+    if(!Array.isArray(p.wilayas)||!p.wilayas.length) p.wilayas=[...PARAMETRES_DEFAUT.wilayas];
+    if(!Array.isArray(p.typesOperation)||!p.typesOperation.length) p.typesOperation=cloner(PARAMETRES_DEFAUT.typesOperation);
+    if(!Array.isArray(p.employes)) p.employes=[];
+    return p;
+  }
+  // Version précédente (workers / defaultBranch / discountOnInstall / codePrefix)
+  if(Array.isArray(brut.workers)) p.employes=[...brut.workers];
+  if(brut.codePrefix) p.prefixeCode=String(brut.codePrefix).toUpperCase();
+  if(brut.defaultBranch && !p.wilayas.includes(brut.defaultBranch)) p.wilayas.push(brut.defaultBranch);
+  if(brut.discountOnInstall===false){ const t=p.typesOperation.find(x=>x.nom==='Installation'); if(t) t.sansRemise=true; }
+  if(brut.defaultBranch) p._wilayaInitiale=brut.defaultBranch;
+  return p;
+}
+
+/* ---- Migration des clients (anciennes structures → structure fidélité) ---- */
+function traduireTypeOperation(brut){
+  const t=String(brut||'').toLowerCase();
+  if(/instal|تركيب|pose/.test(t)) return 'Installation';
+  if(/maint|صيانة/.test(t)) return 'Maintenance';
+  if(/contr[ôo]le|check/.test(t)) return 'Contrôle';
+  if(/entretien|service/.test(t)) return 'Entretien';
+  const existant=parametres.typesOperation.find(x=>x.nom.toLowerCase()===t); if(existant) return existant.nom;
+  return brut ? String(brut) : 'Autre';
+}
+function infoType(nom){
+  return parametres.typesOperation.find(t=>t.nom.toLowerCase()===String(nom||'').toLowerCase()) || { nom:String(nom||'Autre'), compteMaintenance:false, sansRemise:false };
+}
+function migrerOperation(brut, wilaya, index){
+  if(!brut || typeof brut!=='object') return null;
+  if(brut.montantTotal!=null && brut.tauxRemise!=null && brut.type){ // déjà au format v3
+    return { ...brut, wilaya: brut.wilaya||wilaya, compteMaintenance: brut.compteMaintenance ?? infoType(brut.type).compteMaintenance };
+  }
+  const type = traduireTypeOperation(choisir(brut,'type','serviceType','kind','category'));
+  const montant = analyserMontant(choisir(brut,'amount','originalAmount','montant','price','total'));
+  let taux = choisir(brut,'discountPct','discountPercent','discount','remise','taux');
+  const tauxConnu = taux!=null && !isNaN(parseFloat(taux));
+  taux = tauxConnu ? analyserMontant(taux) : 0;
+  const montantRemise = tauxConnu ? arrondir2(montant*taux/100) : analyserMontant(choisir(brut,'discountAmount','montantRemise'));
+  const montantFinal = choisir(brut,'finalAmount','montantFinal','net');
+  const niveauBrut = String(choisir(brut,'level','niveau','membership')||'').toUpperCase();
   return {
-    id: pick(s,'id') || uid()+idx,
-    date: normDate(pick(s,'date','serviceDate','createdAt')) || '',
+    id: choisir(brut,'id') || identifiant()+index,
+    date: normaliserDate(choisir(brut,'date','serviceDate','createdAt')) || '',
+    wilaya,
+    employe: String(choisir(brut,'worker','employe','employee','technician')||''),
     type,
-    description: String(pick(s,'description','desc','note','notes','details') || ''),
-    amount,
-    discountPct: hasPct ? pct : 0,
-    discountAmount: round2(discountAmount||0),
-    finalAmount: finalAmount!=null ? parseAmount(finalAmount) : round2(amount - (discountAmount||0)),
-    worker: String(pick(s,'worker','employee','technician','by') || ''),
-    level: String(pick(s,'level','membership','tier') || '').toUpperCase()==='GOLD' ? 'GOLD' : (pick(s,'level','membership','tier') ? 'SILVER' : ''),
-    legacy: !hasPct
+    compteMaintenance: infoType(type).compteMaintenance,
+    montantTotal: montant,
+    tauxRemise: taux,
+    montantRemise: arrondir2(montantRemise||0),
+    montantFinal: montantFinal!=null ? analyserMontant(montantFinal) : arrondir2(montant-(montantRemise||0)),
+    niveau: niveauBrut==='GOLD' ? 'GOLD' : (niveauBrut ? 'SILVER' : ''),
+    note: String(choisir(brut,'description','note','notes')||''),
+    horsCompteur: !tauxConnu || !!brut.legacy,   // opération d'un ancien système : ne compte pas comme opération GOLD
+    creeLe: brut.createdAt || ''
   };
 }
-function migrateCustomer(c, idx){
-  if(!c || typeof c!=='object') return null;
-  const name = pick(c,'name','fullName','fullname','nom','customerName','client');
-  if(!name) return null;
-  const oldLevel = String(pick(c,'level','membership','tier','status','category') || '').toUpperCase();
-  let services = pick(c,'services','history','operations','visits','maintenances','records');
-  services = Array.isArray(services) ? services.map(migrateService).filter(Boolean) : [];
-  const installDate = normDate(pick(c,'installDate','installationDate','dateInstallation','gplDate','install','installedAt','date'));
-  // Guarantee an installation record exists (does not count as maintenance)
-  if(!services.some(s=>s.type==='installation')){
-    services.unshift({ id:uid()+'i', date:installDate||'', type:'installation', description:'تركيب GPL (سجل مُرحَّل)', amount:parseAmount(pick(c,'installAmount','installationAmount','price')), discountPct:0, discountAmount:0, finalAmount:parseAmount(pick(c,'installAmount','installationAmount','price')), worker:String(pick(c,'worker','installer','employee')||''), level:'SILVER', legacy:true });
+function migrerClient(brut, index){
+  if(!brut || typeof brut!=='object') return null;
+  const wilaya = String(choisir(brut,'wilaya','branch','agence','site') || parametres._wilayaInitiale || parametres.wilayas[0]);
+  if(Array.isArray(brut.operations) && brut.typeCarteInitial){ // déjà au format v3
+    return { id:brut.id||identifiant()+index, code:normaliserCode(brut.code), wilaya, typeCarteInitial: brut.typeCarteInitial==='GOLD'?'GOLD':'SILVER', creeLe: brut.creeLe||aujourdhuiISO(), operations: brut.operations.map((o,i)=>migrerOperation(o,wilaya,i)).filter(Boolean) };
   }
-  // Sort legacy services by date to replay history in order
-  services.sort((a,b)=> (a.date||'').localeCompare(b.date||''));
-  const maint = services.filter(s=>s.type==='maintenance').length;
+  let operations = choisir(brut,'services','operations','history','visits','records');
+  operations = Array.isArray(operations) ? operations.map((o,i)=>migrerOperation(o,wilaya,i)).filter(Boolean) : [];
+  operations.sort((a,b)=>(a.date||'').localeCompare(b.date||''));
+  const ancienNiveau = String(choisir(brut,'level','membership','tier')||'').toUpperCase();
+  const code = normaliserCode(choisir(brut,'code','cardCode','customerCode','loyaltyCode'));
   return {
-    id: pick(c,'id') || uid()+idx,
-    code: String(pick(c,'code','cardCode','customerCode','loyaltyCode','cardNumber','number') || ''),
-    name: String(name).trim(),
-    phone: String(pick(c,'phone','tel','telephone','mobile','whatsapp') || '').trim(),
-    vehicle: String(pick(c,'vehicle','vehicleBrand','brand','car','carBrand','marque','voiture','model') || '').trim(),
-    installDate,
-    branch: String(pick(c,'branch','agence','site') || settings.defaultBranch),
-    notes: String(pick(c,'notes','note','remarks') || ''),
-    createdAt: normDate(pick(c,'createdAt','created','addedAt')) || installDate || todayISO(),
-    // If the old system already made the customer GOLD, keep it (never downgrade existing customers)
-    legacyGold: oldLevel==='GOLD' && maint < RULES.MAINT_FOR_GOLD,
-    services
+    id: choisir(brut,'id') || identifiant()+index,
+    code,
+    wilaya,
+    // Un client déjà GOLD dans l'ancien système reste GOLD (jamais de rétrogradation)
+    typeCarteInitial: (brut.legacyGold || ancienNiveau==='GOLD') ? 'GOLD' : 'SILVER',
+    creeLe: normaliserDate(choisir(brut,'createdAt','creeLe','installDate')) || aujourdhuiISO(),
+    operations
   };
 }
-function tryMigrateLegacy(){
-  if(localStorage.getItem(KEYS.customers)) return;
-  const candidates = [...LEGACY_KEYS];
-  for(let i=0;i<localStorage.length;i++){ const k=localStorage.key(i); if(!candidates.includes(k) && !Object.values(KEYS).includes(k)) candidates.push(k); }
-  for(const key of candidates){
-    let data = loadJSON(key, null);
-    if(data && !Array.isArray(data) && typeof data==='object') data = data.customers || data.clients || data.list || null;
-    if(!Array.isArray(data) || !data.length) continue;
-    const migrated = data.map(migrateCustomer).filter(Boolean);
-    if(!migrated.length) continue;
-    customers = migrated;
-    ensureCodes();
-    save();
-    localStorage.setItem(KEYS.migrated, key);   // legacy key is kept untouched as a backup
-    setTimeout(()=>toast(`تم ترحيل ${migrated.length} زبون من النظام القديم إلى النظام الجديد ✅`,'ok',5000),600);
-    return;
+function chargerDonnees(){
+  const parametresBruts = chargerJSON(CLES.parametres, null);
+  parametres = migrerParametres(parametresBruts);
+  dernierEmploye = localStorage.getItem(CLES.dernierEmploye) || '';
+  wilayaActive = localStorage.getItem(CLES.wilayaActive) || '';
+
+  let bruts = chargerJSON(CLES.clients, null);
+  let cleSource = CLES.clients;
+  if(!Array.isArray(bruts) || !bruts.length){
+    // Recherche d'une éventuelle base d'un ancien système
+    for(const cle of CLES_ANCIENNES){ let d=chargerJSON(cle,null); if(d && !Array.isArray(d) && typeof d==='object') d=d.customers||d.clients||d.list||null; if(Array.isArray(d)&&d.length){ bruts=d; cleSource=cle; break; } }
   }
-}
-function ensureCodes(){
-  const seen=new Set();
-  customers.forEach(c=>{ if(c.code && !seen.has(c.code)) seen.add(c.code); else c.code=''; });
-  customers.forEach(c=>{ if(!c.code){ c.code=nextCode(); seen.add(c.code);} });
-}
-function nextCode(){
-  const prefix=(settings.codePrefix||'BG').toUpperCase();
-  let max=0; customers.forEach(c=>{ const m=String(c.code||'').match(/(\d+)\s*$/); if(m) max=Math.max(max, parseInt(m[1],10)); });
-  return `${prefix}-${String(max+1).padStart(4,'0')}`;
-}
-function load(){
-  settings = {...DEFAULT_SETTINGS, ...loadJSON(KEYS.settings, {})};
-  if(!Array.isArray(settings.workers)) settings.workers=[];
-  currentWorker = localStorage.getItem(KEYS.worker) || '';
-  tryMigrateLegacy();
-  customers = loadJSON(KEYS.customers, []);
-  if(!Array.isArray(customers)) customers=[];
-  // Normalise records from any earlier version of this app
-  customers = customers.map((c,i)=>{ c.services = Array.isArray(c.services)? c.services : []; if('plate' in c) delete c.plate; if('registration' in c) delete c.registration; if('matricule' in c) delete c.matricule; c.services.forEach(s=>{ delete s.plate; }); return c; });
-  ensureCodes();
+  if(!Array.isArray(bruts)) bruts=[];
+  const dejaV3 = bruts.every(c=>c && Array.isArray(c.operations) && c.typeCarteInitial);
+  if(bruts.length && !dejaV3 && !localStorage.getItem(CLES.sauvegardeMigration)){
+    // Copie de sécurité des anciennes données avant transformation
+    try{ localStorage.setItem(CLES.sauvegardeMigration, JSON.stringify({source:cleSource, date:new Date().toISOString(), donnees:bruts})); }catch(e){}
+  }
+  clients = bruts.map(migrerClient).filter(c=>c && c.code);
+  // Fusion des doublons (même code dans la même wilaya)
+  const index=new Map();
+  clients = clients.filter(c=>{ const k=c.wilaya+'|'+c.code; if(index.has(k)){ index.get(k).operations.push(...c.operations); return false; } index.set(k,c); return true; });
+  // Toute wilaya présente dans les données doit exister dans les paramètres
+  clients.forEach(c=>{ if(!parametres.wilayas.includes(c.wilaya)) parametres.wilayas.push(c.wilaya); c.operations.forEach(o=>{ if(o.employe && !parametres.employes.includes(o.employe)) parametres.employes.push(o.employe); }); });
+  if(parametresBruts && parametresBruts.version!==3 && !dejaV3 && bruts.length) setTimeout(()=>notifier(`${clients.length} client(s) fidélité migré(s) vers la nouvelle structure ✅`,'ok',5000),600);
+  delete parametres._wilayaInitiale;
+  if(!parametres.wilayas.includes(wilayaActive)) wilayaActive='';
+  enregistrerParametres();
+  if(bruts.length || cleSource!==CLES.clients) enregistrerClients();
 }
 
 /* ------------------------------------------------------------------ */
-/*  Membership engine — SILVER / GOLD                                  */
+/*  Moteur de fidélité — SILVER / GOLD                                 */
 /* ------------------------------------------------------------------ */
 /**
- * Replays the customer's service history (in the order it happened) and returns:
- *  level          : 'SILVER' | 'GOLD'
- *  maint          : number of maintenance operations (installation excluded)
- *  goldOps        : operations already performed while GOLD
- *  nextPct        : discount % that will apply to the NEXT operation
- *  remainingToGold: maintenance operations still needed to reach GOLD
+ * Rejoue l'historique des opérations d'un client (dans l'ordre d'enregistrement) et renvoie :
+ *  niveau            : 'SILVER' | 'GOLD'
+ *  maintenances      : nombre d'opérations comptées comme maintenance
+ *  operationsGold    : opérations déjà réalisées au niveau GOLD
+ *  prochainTaux      : remise (%) qui s'appliquera à la PROCHAINE opération
+ *  restantPourGold   : maintenances restantes avant le passage GOLD
+ * Les règles actuelles (paramètres) servent uniquement à déterminer le niveau et le prochain taux :
+ * les taux déjà enregistrés dans les opérations ne sont jamais modifiés.
  */
-function membership(c){
-  let level = c.legacyGold ? 'GOLD' : 'SILVER';
-  let maint = 0, goldOps = 0, ops = 0;
-  for(const s of (c.services||[])){
-    const isInstall = s.type==='installation';
-    if(!isInstall){ ops++; if(level==='GOLD' && !s.legacy) goldOps++; }
-    if(s.type==='maintenance') maint++;
-    if(level==='SILVER' && maint>=RULES.MAINT_FOR_GOLD) level='GOLD';
+function statutFidelite(client){
+  const r=parametres.regles;
+  let niveau = client.typeCarteInitial==='GOLD' ? 'GOLD' : 'SILVER';
+  let maintenances=0, operationsGold=0;
+  for(const op of (client.operations||[])){
+    if(niveau==='GOLD' && !op.horsCompteur) operationsGold++;
+    if(op.compteMaintenance) maintenances++;
+    if(niveau==='SILVER' && maintenances>=r.maintenancesPourGold) niveau='GOLD';
   }
-  const nextPct = level==='GOLD' ? RULES.GOLD_START_PCT + RULES.GOLD_STEP*goldOps : RULES.SILVER_PCT;
-  return { level, maint, goldOps, ops, nextPct, remainingToGold: Math.max(0, RULES.MAINT_FOR_GOLD - maint) };
+  let prochainTaux = niveau==='GOLD' ? +r.remiseGoldInitiale + (+r.incrementGold)*operationsGold : +r.remiseSilver;
+  if(niveau==='GOLD' && r.plafondGold!=null && r.plafondGold!=='' && prochainTaux>+r.plafondGold) prochainTaux=+r.plafondGold;
+  prochainTaux=arrondir2(prochainTaux);
+  return { niveau, maintenances, operationsGold, prochainTaux, restantPourGold: Math.max(0, r.maintenancesPourGold - maintenances), nombreOperations:(client.operations||[]).length };
 }
-/** Discount that applies to a new service of the given type, right now. */
-function discountForNew(c, type){
-  if(type==='installation' && !settings.discountOnInstall) return 0;
-  return membership(c).nextPct;
+/** Taux applicable à une nouvelle opération d'un type donné (0 si le type est sans remise). */
+function tauxPourNouvelleOperation(client, typeNom){
+  if(infoType(typeNom).sansRemise) return 0;
+  return statutFidelite(client).prochainTaux;
 }
-function calcInvoice(amount, pct){
-  amount = round2(amount); const discountAmount = round2(amount*pct/100);
-  return { amount, pct, discountAmount, finalAmount: round2(amount - discountAmount) };
+function calculerFacture(montantTotal, taux){
+  montantTotal=arrondir2(montantTotal); const montantRemise=arrondir2(montantTotal*taux/100);
+  return { montantTotal, taux, montantRemise, montantFinal: arrondir2(montantTotal-montantRemise) };
 }
-function lastServiceDate(c){ let last=c.installDate||''; (c.services||[]).forEach(s=>{ if(s.date && s.date>last) last=s.date; }); return last; }
-function nextMaintenance(c){ const base=lastServiceDate(c); return base ? addMonths(base, +settings.maintenanceMonths||6) : null; }
-function maintStatus(c){
-  const next=nextMaintenance(c); if(!next) return {key:'none', label:'—', cls:'neutral', days:null, next};
-  const d=diffDays(todayISO(), next);
-  if(d<0)  return {key:'overdue', label:`متأخرة ${Math.abs(d)} يوم`, cls:'danger', days:d, next};
-  if(d<=15) return {key:'soon', label: d===0?'اليوم':`بعد ${d} يوم`, cls:'warn', days:d, next};
-  return {key:'ok', label:`بعد ${d} يوم`, cls:'ok', days:d, next};
+function totauxClient(client){
+  return client.operations.reduce((t,o)=>{ t.total+=+o.montantTotal||0; t.remise+=+o.montantRemise||0; t.final+=+o.montantFinal||0; return t; }, {total:0, remise:0, final:0});
 }
-const countServices = c => (c.services||[]).length;
+function derniereOperation(client){ return client.operations.reduce((d,o)=> (o.date>d? o.date : d), ''); }
+function clientsDeWilaya(w){ return clients.filter(c=> !w || c.wilaya===w); }
+function trouverClient(code, w=wilayaActive){ code=normaliserCode(code); return clients.find(c=>c.wilaya===w && c.code===code); }
+function genererCode(){
+  const prefixe=(parametres.prefixeCode||'BG').toUpperCase(); let max=0;
+  clients.forEach(c=>{ const m=String(c.code).match(new RegExp('^'+prefixe.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'-?(\\d+)$')); if(m) max=Math.max(max, parseInt(m[1],10)); });
+  return `${prefixe}-${String(max+1).padStart(4,'0')}`;
+}
 
 /* ------------------------------------------------------------------ */
-/*  Navigation                                                         */
+/*  Navigation & modales                                               */
 /* ------------------------------------------------------------------ */
-function showView(name, opts={}){
-  $$('.view').forEach(v=>v.classList.toggle('active', v.id==='view-'+name));
-  $$('[data-view]').forEach(b=>b.classList.toggle('active', b.dataset.view===name));
-  if(name==='dashboard') renderDashboard();
-  if(name==='customers'){ if(opts.filter==='due'){ $('#filterMaint').value='due'; } renderCustomers(); }
-  if(name==='new') prepareNewForm();
-  if(name==='settings') renderSettings();
+function afficherVue(nom){
+  $$('.view').forEach(v=>v.classList.toggle('active', v.id==='vue-'+nom));
+  $$('[data-vue]').forEach(b=>b.classList.toggle('active', b.dataset.vue===nom));
+  if(nom==='tableau') afficherTableauDeBord();
+  if(nom==='operation') preparerFormulaireOperation();
+  if(nom==='clients') afficherClients();
+  if(nom==='parametres') afficherParametres();
   window.scrollTo({top:0, behavior:'smooth'});
-  history.replaceState(null,'','#'+name);
+  history.replaceState(null,'','#'+nom);
 }
 document.addEventListener('click', e=>{
-  const nav=e.target.closest('[data-view]'); if(nav){ showView(nav.dataset.view); return; }
-  const go=e.target.closest('[data-go]'); if(go){ showView(go.dataset.go, {filter:go.dataset.filter}); return; }
-  const close=e.target.closest('[data-close]'); if(close){ closeModal(close.closest('.modal-bg')); return; }
-  if(e.target.classList.contains('modal-bg')) closeModal(e.target);
+  const nav=e.target.closest('[data-vue]'); if(nav){ afficherVue(nav.dataset.vue); return; }
+  const aller=e.target.closest('[data-aller]'); if(aller){ afficherVue(aller.dataset.aller); return; }
+  const fermer=e.target.closest('[data-fermer]'); if(fermer){ fermerModale(fermer.closest('.modal-bg')); return; }
+  if(e.target.classList.contains('modal-bg') && e.target.id!=='modaleWilaya') fermerModale(e.target);
 });
-document.addEventListener('keydown', e=>{ if(e.key==='Escape'){ const open=$$('.modal-bg.open').pop(); if(open) closeModal(open); } });
-function openModal(id){ $(id).classList.add('open'); document.body.style.overflow='hidden'; }
-function closeModal(el){ el.classList.remove('open'); if(!$$('.modal-bg.open').length) document.body.style.overflow=''; }
-$('#fab').addEventListener('click', ()=>showView('new'));
+document.addEventListener('keydown', e=>{ if(e.key==='Escape'){ const ouverte=$$('.modal-bg.open').pop(); if(ouverte && !(ouverte.id==='modaleWilaya' && !wilayaActive)) fermerModale(ouverte); } });
+function ouvrirModale(id){ $(id).classList.add('open'); document.body.style.overflow='hidden'; }
+function fermerModale(el){ el.classList.remove('open'); if(!$$('.modal-bg.open').length) document.body.style.overflow=''; }
+$('#fab').addEventListener('click', ()=>afficherVue('operation'));
 
-/* ------------------------------------------------------------------ */
-/*  Confirm dialog                                                     */
-/* ------------------------------------------------------------------ */
-function confirmDlg({title='تأكيد', text='', ok='تأكيد', danger=false}){
+function confirmer({titre='Confirmation', texte='', ok='Confirmer', danger=false}){
   return new Promise(res=>{
-    $('#confirmBody').innerHTML = `<h3 style="color:var(--navy);font-weight:800;margin-bottom:8px">${esc(title)}</h3><p style="margin:0 0 18px;color:#374151">${text}</p><div class="btn-group" style="justify-content:flex-start"><button class="btn ${danger?'btn-danger':'btn-primary'}" id="cOk">${esc(ok)}</button><button class="btn" id="cCancel">إلغاء</button></div>`;
-    openModal('#modalConfirm');
-    $('#cOk').onclick=()=>{ closeModal($('#modalConfirm')); res(true); };
-    $('#cCancel').onclick=()=>{ closeModal($('#modalConfirm')); res(false); };
+    $('#corpsConfirmation').innerHTML = `<h3 style="color:var(--navy);font-weight:800;margin-bottom:8px">${echapper(titre)}</h3><p style="margin:0 0 18px;color:#374151">${texte}</p><div class="btn-group"><button class="btn ${danger?'btn-danger':'btn-primary'}" id="confOk">${echapper(ok)}</button><button class="btn" id="confAnnuler">Annuler</button></div>`;
+    ouvrirModale('#modaleConfirmation');
+    $('#confOk').onclick=()=>{ fermerModale($('#modaleConfirmation')); res(true); };
+    $('#confAnnuler').onclick=()=>{ fermerModale($('#modaleConfirmation')); res(false); };
   });
 }
 
 /* ------------------------------------------------------------------ */
-/*  Worker                                                             */
+/*  Wilaya active                                                      */
 /* ------------------------------------------------------------------ */
-function renderWorker(){
-  $('#workerName').textContent = currentWorker || 'غير محدد';
-  $('#workerAvatar').textContent = currentWorker ? initials(currentWorker) : '؟';
-  $('#workerList').innerHTML = settings.workers.map(w=>`<option value="${esc(w)}">`).join('');
+function rafraichirEnteteWilaya(){
+  $('#wilayaNom').textContent = wilayaActive || 'Sélectionner…';
+  $('#navCompteur').textContent = clientsDeWilaya(wilayaActive).length;
 }
-$('#workerChip').addEventListener('click', ()=>{
-  $('#workerBody').innerHTML = `
-    <div class="list" style="margin-bottom:12px">${settings.workers.length? settings.workers.map(w=>`<button class="list-item" style="cursor:pointer;text-align:right;font-family:inherit" data-w="${esc(w)}"><span class="worker-chip" style="padding:0;border:0;background:none"><span class="avatar" style="background:var(--navy)">${esc(initials(w))}</span></span><div class="grow"><b>${esc(w)}</b></div>${w===currentWorker?'<span class="badge ok">الحالي</span>':''}</button>`).join('') : '<p class="muted" style="margin:0">لا يوجد عمّال محفوظون بعد — أضفهم من الإعدادات أو اكتب الاسم أدناه.</p>'}</div>
-    <div style="display:flex;gap:8px"><input class="input" id="wInput" placeholder="اسم العامل" value="${esc(currentWorker)}"><button class="btn btn-primary" id="wSave">اعتماد</button></div>`;
-  openModal('#modalWorker');
-  $$('#workerBody [data-w]').forEach(b=>b.onclick=()=>setWorker(b.dataset.w));
-  $('#wSave').onclick=()=>setWorker($('#wInput').value.trim());
-  $('#wInput').onkeydown=e=>{ if(e.key==='Enter') setWorker($('#wInput').value.trim()); };
-});
-function setWorker(name){
-  currentWorker=name; localStorage.setItem(KEYS.worker, name);
-  if(name && !settings.workers.includes(name)){ settings.workers.push(name); saveSettings(); }
-  renderWorker(); closeModal($('#modalWorker')); if(name) toast(`مرحباً ${name} 👋`);
+function afficherSelecteurWilaya(){
+  $('#corpsWilaya').innerHTML = `
+    <p class="muted" style="margin:0 0 14px;font-size:13.5px">Chaque wilaya / agence dispose de son propre espace : clients fidélité, opérations et statistiques sont indépendants.</p>
+    <div class="wilaya-grid">${parametres.wilayas.map(w=>{ const n=clientsDeWilaya(w).length; const ops=clientsDeWilaya(w).reduce((a,c)=>a+c.operations.length,0); return `<button class="wilaya-btn ${w===wilayaActive?'active':''}" data-wilaya="${echapper(w)}"><span class="ic">📍</span>${echapper(w)}<small>${n} client(s) · ${ops} opération(s)</small></button>`; }).join('')}</div>
+    <div class="note info" style="margin-top:16px">➕ Pour ajouter une wilaya / agence : <b>Paramètres → Wilayas / Agences</b>.</div>`;
+  ouvrirModale('#modaleWilaya');
+  $$('#corpsWilaya [data-wilaya]').forEach(b=>b.onclick=()=>definirWilaya(b.dataset.wilaya));
 }
+function definirWilaya(w){
+  wilayaActive=w; localStorage.setItem(CLES.wilayaActive, w);
+  rafraichirEnteteWilaya(); fermerModale($('#modaleWilaya'));
+  $('#fWilaya').value=w;
+  toutRafraichir(); notifier(`Espace de travail : ${w} 📍`);
+}
+$('#wilayaChip').addEventListener('click', afficherSelecteurWilaya);
 
 /* ------------------------------------------------------------------ */
-/*  Dashboard                                                          */
+/*  Filtres (tableau de bord & rapports)                               */
 /* ------------------------------------------------------------------ */
-function renderDashboard(){
-  const now=new Date(); const ym=`${now.getFullYear()}-${z(now.getMonth()+1)}`;
-  $('#dashDate').textContent = now.toLocaleDateString('ar-DZ',{weekday:'long', year:'numeric', month:'long', day:'numeric'});
-  let silver=0, gold=0, svcMonth=0, revMonth=0, discTotal=0, overdue=0, soon=0;
-  customers.forEach(c=>{
-    const m=membership(c); m.level==='GOLD'? gold++ : silver++;
-    (c.services||[]).forEach(s=>{ discTotal += +s.discountAmount||0; if((s.date||'').startsWith(ym)){ svcMonth++; revMonth += +s.finalAmount||0; } });
-    const st=maintStatus(c); if(st.key==='overdue') overdue++; else if(st.key==='soon') soon++;
+function bornesPeriode(periode, debut, fin){
+  const n=new Date(); const y=n.getFullYear(), m=n.getMonth();
+  switch(periode){
+    case 'mois':   return [versISO(new Date(y,m,1)), versISO(new Date(y,m+1,0))];
+    case 'mois-1': return [versISO(new Date(y,m-1,1)), versISO(new Date(y,m,0))];
+    case '3mois':  return [versISO(new Date(y,m-2,1)), aujourdhuiISO()];
+    case 'annee':  return [`${y}-01-01`, `${y}-12-31`];
+    case 'perso':  return [debut||'', fin||''];
+    default:       return ['',''];
+  }
+}
+/** Renvoie la liste des opérations (avec leur client) correspondant aux critères. */
+function filtrerOperations(criteres){
+  const res=[];
+  clients.forEach(c=>{
+    if(criteres.wilaya && c.wilaya!==criteres.wilaya) return;
+    if(criteres.carte && statutFidelite(c).niveau!==criteres.carte) return;
+    c.operations.forEach(o=>{
+      if(criteres.debut && o.date<criteres.debut) return;
+      if(criteres.fin && o.date>criteres.fin) return;
+      if(criteres.employe && o.employe!==criteres.employe) return;
+      if(criteres.type && o.type!==criteres.type) return;
+      res.push({client:c, op:o});
+    });
   });
-  const stat=(cls,ic,v,l,extra='')=>`<div class="stat ${cls} ${extra?'clickable':''}" ${extra}><div class="ic">${ic}</div><div><div class="v">${v}</div><div class="l">${l}</div></div></div>`;
+  return res.sort((a,b)=> (b.op.date||'').localeCompare(a.op.date||'') || String(b.op.creeLe||'').localeCompare(String(a.op.creeLe||'')));
+}
+function libellePeriode(criteres){
+  if(criteres.debut && criteres.fin) return `du ${formaterDate(criteres.debut)} au ${formaterDate(criteres.fin)}`;
+  if(criteres.debut) return `à partir du ${formaterDate(criteres.debut)}`;
+  if(criteres.fin) return `jusqu'au ${formaterDate(criteres.fin)}`;
+  return 'Toute la période';
+}
+function remplirSelectWilayas(sel, valeur, avecToutes){
+  sel.innerHTML = (avecToutes?'<option value="">Toutes les wilayas</option>':'') + parametres.wilayas.map(w=>`<option value="${echapper(w)}" ${w===valeur?'selected':''}>${echapper(w)}</option>`).join('');
+}
+function remplirSelectEmployes(sel, valeur){ sel.innerHTML='<option value="">Tous les employés</option>'+parametres.employes.map(e=>`<option ${e===valeur?'selected':''}>${echapper(e)}</option>`).join(''); }
+function remplirSelectTypes(sel, valeur, avecTous){ sel.innerHTML=(avecTous?'<option value="">Tous les types</option>':'')+parametres.typesOperation.map(t=>`<option ${t.nom===valeur?'selected':''}>${echapper(t.nom)}</option>`).join(''); }
+function criteresTableau(){
+  const periode=$('#fPeriode').value; const [debut,fin]=bornesPeriode(periode, $('#fDebut').value, $('#fFin').value);
+  return { wilaya:$('#fWilaya').value, periode, debut, fin, carte:$('#fCarte').value, employe:$('#fEmploye').value, type:$('#fType').value };
+}
+$('#fPeriode').addEventListener('change', ()=>{ $$('.periode-perso').forEach(el=>el.classList.toggle('hidden', $('#fPeriode').value!=='perso')); });
+['fWilaya','fPeriode','fDebut','fFin','fCarte','fEmploye','fType'].forEach(id=>$('#'+id).addEventListener('change', afficherTableauDeBord));
+$('#btnReinitFiltres').addEventListener('click', ()=>{ $('#fWilaya').value=wilayaActive; $('#fPeriode').value='tout'; $('#fDebut').value=''; $('#fFin').value=''; $('#fCarte').value=''; $('#fEmploye').value=''; $('#fType').value=''; $$('.periode-perso').forEach(el=>el.classList.add('hidden')); afficherTableauDeBord(); });
+
+/* ------------------------------------------------------------------ */
+/*  Tableau de bord                                                    */
+/* ------------------------------------------------------------------ */
+let filtresInitialises=false;
+function preparerFiltresTableau(){
+  // Au premier affichage, le filtre wilaya prend la wilaya active ; ensuite le choix de l'utilisateur est respecté
+  // (« Toutes les wilayas » = valeur vide).
+  const w=filtresInitialises ? $('#fWilaya').value : wilayaActive;
+  remplirSelectWilayas($('#fWilaya'), w, true); $('#fWilaya').value=w;
+  filtresInitialises=true;
+  remplirSelectEmployes($('#fEmploye'), $('#fEmploye').value); remplirSelectTypes($('#fType'), $('#fType').value, true);
+}
+function afficherTableauDeBord(){
+  preparerFiltresTableau();
+  const crit=criteresTableau(); const lignes=filtrerOperations(crit);
+  $('#tableauDate').textContent = new Date().toLocaleDateString('fr-FR',{weekday:'long', year:'numeric', month:'long', day:'numeric'}) + (crit.wilaya? ` · ${crit.wilaya}` : ' · Toutes les wilayas');
+  // Clients concernés : ceux de la wilaya (et du type de carte) ayant au moins une opération dans les filtres opérationnels
+  const filtreOps = !!(crit.debut||crit.fin||crit.employe||crit.type);
+  const clientsConcernes = filtreOps ? [...new Set(lignes.map(l=>l.client))] : clientsDeWilaya(crit.wilaya).filter(c=>!crit.carte || statutFidelite(c).niveau===crit.carte);
+  let silver=0, gold=0; clientsConcernes.forEach(c=> statutFidelite(c).niveau==='GOLD' ? gold++ : silver++);
+  const total=lignes.reduce((a,l)=>a+(+l.op.montantTotal||0),0), remise=lignes.reduce((a,l)=>a+(+l.op.montantRemise||0),0), final=lignes.reduce((a,l)=>a+(+l.op.montantFinal||0),0);
+  const stat=(cls,ic,v,l)=>`<div class="stat ${cls}"><div class="ic">${ic}</div><div><div class="v">${v}</div><div class="l">${l}</div></div></div>`;
   $('#stats').innerHTML =
-    stat('navy','👥',customers.length,'إجمالي الزبائن','data-go="customers"') +
-    stat('silver','🥈',silver,'أعضاء SILVER') +
-    stat('gold','🥇',gold,'أعضاء GOLD') +
-    stat('info','🔧',svcMonth,'خدمات هذا الشهر') +
-    stat('ok','💰',money(revMonth),'إيرادات هذا الشهر') +
-    stat('warn','🏷️',money(discTotal),'إجمالي الخصومات الممنوحة') +
-    stat('danger','⏰',overdue+soon,'صيانة مستحقة / قريبة','data-go="customers" data-filter="due"');
-  renderChart();
-  // Due list
-  const due = customers.map(c=>({c, st:maintStatus(c)})).filter(x=>x.st.key==='overdue'||x.st.key==='soon').sort((a,b)=>a.st.days-b.st.days).slice(0,8);
-  $('#dueList').innerHTML = due.length ? due.map(({c,st})=>`<div class="list-item"><div class="grow"><b>${esc(c.name)}</b><small>${esc(c.vehicle)} · ${fmtDate(st.next)}</small></div><span class="badge ${st.cls}">${st.label}</span><button class="btn btn-icon btn-whatsapp" title="تذكير WhatsApp" data-wa-remind="${c.id}">💬</button><button class="btn btn-icon" title="فتح الملف" data-open="${c.id}">👁️</button></div>`).join('') : '<div class="empty" style="padding:26px"><div class="big">✅</div>لا توجد صيانة مستحقة حالياً</div>';
-  $('#navCount').textContent = customers.length;
+    stat('navy','🪪',clientsConcernes.length,'Clients fidélité') +
+    stat('silver','🥈',silver,'Clients SILVER') +
+    stat('gold','🥇',gold,'Clients GOLD') +
+    stat('info','🧾',lignes.length,'Opérations') +
+    stat('navy','💵',formaterMontant(total),'Montant total') +
+    stat('warn','🏷️',formaterMontant(remise),'Réductions accordées') +
+    stat('ok','✅',formaterMontant(final),'Montant après réductions');
+  afficherGraphique(lignes);
+  $('#dernieresOperations').innerHTML = lignes.length ? lignes.slice(0,8).map(({client:c,op:o})=>`<div class="list-item"><div class="grow"><b><button class="code-link" data-historique="${c.id}">${echapper(c.code)}</button> · ${echapper(o.type)}</b><small>${formaterDate(o.date)} · ${echapper(o.employe||'—')} · ${echapper(o.wilaya||c.wilaya)}</small></div><div class="right"><div style="font-weight:800;color:var(--ok)">${formaterMontant(o.montantFinal)}</div><small class="muted">−${+o.tauxRemise||0}%</small></div></div>`).join('') : '<div class="empty" style="padding:26px"><div class="big">🧾</div>Aucune opération pour ces filtres</div>';
+  afficherRegles();
+  rafraichirEnteteWilaya();
 }
-function renderChart(){
-  const months=[]; const now=new Date();
-  for(let i=5;i>=0;i--){ const d=new Date(now.getFullYear(), now.getMonth()-i, 1); months.push({ key:`${d.getFullYear()}-${z(d.getMonth()+1)}`, label:d.toLocaleDateString('fr-FR',{month:'short'}).replace('.',''), newC:0, maint:0 }); }
-  const idx=Object.fromEntries(months.map((m,i)=>[m.key,i]));
-  customers.forEach(c=>{
-    const k=(c.installDate||c.createdAt||'').slice(0,7); if(k in idx) months[idx[k]].newC++;
-    (c.services||[]).forEach(s=>{ if(s.type==='maintenance'){ const sk=(s.date||'').slice(0,7); if(sk in idx) months[idx[sk]].maint++; } });
-  });
+function afficherRegles(){
+  const r=parametres.regles; const typesMaint=parametres.typesOperation.filter(t=>t.compteMaintenance).map(t=>t.nom).join(', ')||'—';
+  $('#listeRegles').innerHTML = `
+    <li><span class="n">1</span><div>Un nouveau code fidélité démarre en <span class="badge silver">SILVER</span> avec une remise de <b>${r.remiseSilver}%</b>.</div></li>
+    <li><span class="n">2</span><div>Après <b>${r.maintenancesPourGold}</b> opération(s) de type <b>${echapper(typesMaint)}</b> (l'installation n'est pas comptée), le client passe automatiquement <span class="badge gold">GOLD</span>.</div></li>
+    <li><span class="n">3</span><div>Première opération GOLD : <b>${r.remiseGoldInitiale}%</b>, puis <b>+${r.incrementGold}%</b> à chaque nouvelle opération${r.plafondGold!=null&&r.plafondGold!==''?` (plafond ${r.plafondGold}%)`:''}.</div></li>
+    <li><span class="n">4</span><div>Le pourcentage appliqué est enregistré définitivement avec chaque opération : l'historique n'est jamais recalculé.</div></li>`;
+}
+function afficherGraphique(lignes){
+  const mois=[]; const n=new Date();
+  for(let i=5;i>=0;i--){ const d=new Date(n.getFullYear(), n.getMonth()-i, 1); mois.push({ cle:`${d.getFullYear()}-${z(d.getMonth()+1)}`, libelle:d.toLocaleDateString('fr-FR',{month:'short'}).replace('.',''), ops:0, maint:0 }); }
+  const idx=Object.fromEntries(mois.map((m,i)=>[m.cle,i]));
+  lignes.forEach(({op})=>{ const k=(op.date||'').slice(0,7); if(k in idx){ mois[idx[k]].ops++; if(op.compteMaintenance) mois[idx[k]].maint++; } });
   const W=560, H=230, padL=34, padB=34, padT=14, gw=(W-padL-10)/6;
-  const max=Math.max(1, ...months.map(m=>Math.max(m.newC,m.maint)));
-  const yTicks=4; let svg=`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" font-family="Cairo,Segoe UI,sans-serif">`;
-  for(let i=0;i<=yTicks;i++){ const val=Math.round(max*i/yTicks); const y=padT+(H-padT-padB)*(1-i/yTicks); svg+=`<line x1="${padL}" x2="${W-6}" y1="${y}" y2="${y}" stroke="#e5e9f0" stroke-dasharray="3 3"/><text x="${padL-8}" y="${y+4}" font-size="11" fill="#6b7280" text-anchor="end">${val}</text>`; }
-  months.forEach((m,i)=>{
-    const x0=padL+i*gw; const bw=Math.min(26, gw/3); const base=H-padB; const hN=(H-padT-padB)*m.newC/max; const hM=(H-padT-padB)*m.maint/max;
-    svg+=`<rect x="${x0+gw/2-bw-2}" y="${base-hN}" width="${bw}" height="${hN}" rx="5" fill="#1e3d59"><title>${m.label}: ${m.newC} زبون جديد</title></rect>`;
-    svg+=`<rect x="${x0+gw/2+2}" y="${base-hM}" width="${bw}" height="${hM}" rx="5" fill="#f39c12"><title>${m.label}: ${m.maint} صيانة</title></rect>`;
-    if(m.newC) svg+=`<text x="${x0+gw/2-bw/2-2}" y="${base-hN-5}" font-size="11" font-weight="700" fill="#1e3d59" text-anchor="middle">${m.newC}</text>`;
+  const max=Math.max(1, ...mois.map(m=>m.ops));
+  let svg=`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" font-family="Cairo,Segoe UI,sans-serif">`;
+  for(let i=0;i<=4;i++){ const val=Math.round(max*i/4); const y=padT+(H-padT-padB)*(1-i/4); svg+=`<line x1="${padL}" x2="${W-6}" y1="${y}" y2="${y}" stroke="#e5e9f0" stroke-dasharray="3 3"/><text x="${padL-8}" y="${y+4}" font-size="11" fill="#6b7280" text-anchor="end">${val}</text>`; }
+  mois.forEach((m,i)=>{
+    const x0=padL+i*gw; const bw=Math.min(26, gw/3); const base=H-padB; const hO=(H-padT-padB)*m.ops/max; const hM=(H-padT-padB)*m.maint/max;
+    svg+=`<rect x="${x0+gw/2-bw-2}" y="${base-hO}" width="${bw}" height="${hO}" rx="5" fill="#1e3d59"><title>${m.libelle} : ${m.ops} opération(s)</title></rect>`;
+    svg+=`<rect x="${x0+gw/2+2}" y="${base-hM}" width="${bw}" height="${hM}" rx="5" fill="#f39c12"><title>${m.libelle} : ${m.maint} maintenance(s)</title></rect>`;
+    if(m.ops) svg+=`<text x="${x0+gw/2-bw/2-2}" y="${base-hO-5}" font-size="11" font-weight="700" fill="#1e3d59" text-anchor="middle">${m.ops}</text>`;
     if(m.maint) svg+=`<text x="${x0+gw/2+bw/2+2}" y="${base-hM-5}" font-size="11" font-weight="700" fill="#e67e22" text-anchor="middle">${m.maint}</text>`;
-    svg+=`<text x="${x0+gw/2}" y="${H-12}" font-size="12" fill="#374151" text-anchor="middle" font-weight="700">${m.label}</text>`;
+    svg+=`<text x="${x0+gw/2}" y="${H-12}" font-size="12" fill="#374151" text-anchor="middle" font-weight="700">${m.libelle}</text>`;
   });
   svg+='</svg>';
-  $('#chart').innerHTML=svg;
-  $('#chartTotal').textContent = `${months.reduce((a,m)=>a+m.newC,0)} زبون جديد خلال 6 أشهر`;
+  $('#graphique').innerHTML=svg;
+  $('#graphiqueTotal').textContent = `${mois.reduce((a,m)=>a+m.ops,0)} opération(s) sur 6 mois`;
 }
 
 /* ------------------------------------------------------------------ */
-/*  Customers list                                                     */
+/*  Nouvelle opération                                                 */
 /* ------------------------------------------------------------------ */
-function filteredCustomers(){
-  const q=$('#searchInput').value.trim().toLowerCase(); const qd=q.replace(/\D/g,'');
-  const lvl=$('#filterLevel').value, mf=$('#filterMaint').value, sort=$('#sortBy').value;
-  let list=customers.filter(c=>{
-    if(q){ const hay=[c.name,c.code,c.vehicle,c.branch].join(' ').toLowerCase(); const ph=String(c.phone||'').replace(/\D/g,''); if(!hay.includes(q) && !(qd && ph.includes(qd))) return false; }
-    if(lvl && membership(c).level!==lvl) return false;
-    if(mf){ const k=maintStatus(c).key; if(mf==='due' ? !(k==='overdue'||k==='soon') : k!==mf) return false; }
-    return true;
-  });
-  const cmp={ newest:(a,b)=>(b.createdAt||'').localeCompare(a.createdAt||'') || (b.installDate||'').localeCompare(a.installDate||''), name:(a,b)=>a.name.localeCompare(b.name,'ar'), code:(a,b)=>String(a.code).localeCompare(String(b.code),undefined,{numeric:true}), next:(a,b)=>(nextMaintenance(a)||'9').localeCompare(nextMaintenance(b)||'9'), services:(a,b)=>countServices(b)-countServices(a) };
-  return list.sort(cmp[sort]||cmp.newest);
+const formulaireOperation = $('#formOperation');
+const champs = formulaireOperation.elements;
+function preparerFormulaireOperation(){
+  $('#opWilaya').value = wilayaActive || '—';
+  if(!champs.date.value) champs.date.value=aujourdhuiISO();
+  if(!champs.employe.value) champs.employe.value=dernierEmploye;
+  $('#listeEmployes').innerHTML = parametres.employes.map(e=>`<option value="${echapper(e)}">`).join('');
+  $('#listeCodes').innerHTML = clientsDeWilaya(wilayaActive).map(c=>`<option value="${echapper(c.code)}">`).join('');
+  remplirSelectTypes($('#opType'), champs.type.value || parametres.typesOperation[0]?.nom, false);
+  $('#recentWilaya').textContent = wilayaActive || '—';
+  rafraichirStatutCode();
+  afficherOperationsRecentes();
 }
-function renderCustomers(){
-  const list=filteredCustomers();
-  $('#resultCount').textContent = `${list.length} من ${customers.length} زبون`;
-  $('#navCount').textContent = customers.length;
-  if(!customers.length){ $('#custBody').innerHTML=`<tr><td colspan="8"><div class="empty"><div class="big">🪪</div><h4>لا يوجد زبائن بعد</h4><p>ابدأ بإضافة أول زبون بعد تركيب GPL</p><button class="btn btn-primary" data-go="new">➕ زبون جديد</button></div></td></tr>`; return; }
-  if(!list.length){ $('#custBody').innerHTML=`<tr><td colspan="8"><div class="empty"><div class="big">🔍</div><h4>لا توجد نتائج</h4><p>جرّب كلمة بحث أخرى أو غيّر الفلاتر</p></div></td></tr>`; return; }
-  $('#custBody').innerHTML = list.map(c=>{
-    const m=membership(c), st=maintStatus(c);
+function afficherOperationsRecentes(){
+  const lignes=filtrerOperations({wilaya:wilayaActive}).slice(0,10);
+  $('#operationsRecentes').innerHTML = lignes.length ? lignes.map(({client:c,op:o})=>`<div class="list-item"><div class="grow"><b><button class="code-link" data-historique="${c.id}">${echapper(c.code)}</button> · ${echapper(o.type)}</b><small>${formaterDate(o.date)} · ${echapper(o.employe||'—')} · ${formaterMontant(o.montantTotal)} − ${+o.tauxRemise||0}%</small></div><div style="font-weight:800;color:var(--ok)">${formaterMontant(o.montantFinal)}</div><button class="btn btn-sm btn-danger" title="Supprimer (erreur de saisie)" data-supprimer-operation="${c.id}|${o.id}">🗑️</button></div>`).join('') : '<div class="empty" style="padding:20px">Aucune opération enregistrée dans cette wilaya</div>';
+}
+function rafraichirStatutCode(){
+  const code=normaliserCode(champs.code.value); const client=code? trouverClient(code) : null; const type=champs.type.value;
+  const boite=$('#statutCode'); const champCarte=$('#champTypeCarte');
+  let taux, niveauAffiche;
+  if(client){
+    const s=statutFidelite(client); const t=totauxClient(client);
+    champs.typeCarte.value=s.niveau; champs.typeCarte.disabled=true; $('#typeCarteHint').textContent='Déterminé automatiquement par l\'historique';
+    taux=tauxPourNouvelleOperation(client,type); niveauAffiche=s.niveau;
+    boite.innerHTML=`<div class="status-box ${s.niveau.toLowerCase()}"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><span class="code-chip" style="font-size:16px">${echapper(client.code)}</span><span class="badge ${s.niveau.toLowerCase()}">${s.niveau}</span></div>
+      <div class="kv" style="margin-top:10px"><div><b>Nombre d'opérations</b><span>${s.nombreOperations}</span></div><div><b>Maintenances</b><span>${s.maintenances}</span></div><div><b>Prochaine remise</b><span class="pct">${s.prochainTaux}%</span></div><div><b>Montant après réduction</b><span>${formaterMontant(t.final)}</span></div></div>
+      ${s.niveau==='SILVER' ? `<div class="progress" style="margin-top:12px"><i style="width:${Math.min(100, s.maintenances/parametres.regles.maintenancesPourGold*100)}%"></i></div><small class="muted">${s.maintenances} / ${parametres.regles.maintenancesPourGold} maintenance(s) — encore ${s.restantPourGold} avant GOLD</small>` : `<small class="muted" style="display:block;margin-top:10px">🥇 ${s.operationsGold} opération(s) GOLD réalisée(s) · la remise augmente de ${parametres.regles.incrementGold}% à chaque opération</small>`}
+      <div style="margin-top:10px"><button class="btn btn-sm" type="button" data-historique="${client.id}">📜 Historique</button> <button class="btn btn-sm" type="button" data-carte="${client.id}">🪪 Carte</button></div></div>`;
+  } else {
+    champs.typeCarte.disabled=false; $('#typeCarteHint').textContent='Nouveau code : SILVER par défaut (GOLD si le client était déjà GOLD dans l\'ancien système)';
+    niveauAffiche=champs.typeCarte.value;
+    const brouillon={ typeCarteInitial:niveauAffiche, operations:[] }; taux=tauxPourNouvelleOperation(brouillon,type);
+    boite.innerHTML = code ? `<div class="status-box new"><b style="color:var(--info)">🆕 Nouveau code fidélité</b><p class="muted" style="margin:6px 0 0;font-size:13px">Le code <span class="code-chip">${echapper(code)}</span> sera créé dans la wilaya <b>${echapper(wilayaActive)}</b> avec la carte <b>${niveauAffiche}</b>. La première opération bénéficiera de <b>${taux}%</b> de remise.</p></div>` : `<div class="empty" style="padding:24px"><div class="big">🪪</div>Saisissez un code fidélité pour afficher son statut</div>`;
+  }
+  const facture=calculerFacture(analyserMontant(champs.montant.value), taux);
+  $('#apercuFacture').innerHTML = `<div class="line"><span>Montant total</span><b>${formaterMontant(facture.montantTotal)}</b></div><div class="line"><span>Remise appliquée <span class="badge ${String(niveauAffiche).toLowerCase()}">${niveauAffiche}</span></span><b class="pct">${facture.taux}%</b></div><div class="line"><span>Montant de la réduction</span><b class="disc">− ${formaterMontant(facture.montantRemise)}</b></div><div class="line"><span><b>Montant après réduction</b></span><b class="total">${formaterMontant(facture.montantFinal)}</b></div>`;
+  let indication='';
+  const ti=infoType(type);
+  if(ti.sansRemise) indication=`<div class="note warn">⚠️ Le type « ${echapper(type)} » est configuré sans remise.</div>`;
+  else if(client){ const s=statutFidelite(client);
+    if(s.niveau==='SILVER' && ti.compteMaintenance && s.restantPourGold===1) indication=`<div class="note gold">🥇 Après cette opération, le client passera automatiquement <b>GOLD</b> (prochaine remise ${parametres.regles.remiseGoldInitiale}%).</div>`;
+    else if(s.niveau==='SILVER' && ti.compteMaintenance) indication=`<div class="note info">ℹ️ Maintenance n° ${s.maintenances+1} sur ${parametres.regles.maintenancesPourGold} requises pour GOLD.</div>`;
+    else if(s.niveau==='SILVER') indication=`<div class="note info">ℹ️ Le type « ${echapper(type)} » n'est pas compté parmi les maintenances requises pour GOLD.</div>`;
+    else indication=`<div class="note gold">🥇 Opération GOLD n° ${s.operationsGold+1} — remise ${taux}% ; la suivante sera à ${arrondir2(Math.min(taux+ +parametres.regles.incrementGold, parametres.regles.plafondGold!=null&&parametres.regles.plafondGold!==''?+parametres.regles.plafondGold:Infinity))}%.</div>`; }
+  $('#opIndication').innerHTML=indication;
+}
+formulaireOperation.addEventListener('input', rafraichirStatutCode);
+formulaireOperation.addEventListener('change', rafraichirStatutCode);
+formulaireOperation.addEventListener('reset', ()=>setTimeout(()=>{ champs.date.value=aujourdhuiISO(); champs.employe.value=dernierEmploye; rafraichirStatutCode(); },0));
+$('#btnGenererCode').addEventListener('click', ()=>{ champs.code.value=genererCode(); rafraichirStatutCode(); champs.montant.focus(); });
+formulaireOperation.addEventListener('submit', e=>{
+  e.preventDefault();
+  if(!wilayaActive){ afficherSelecteurWilaya(); notifier('Sélectionnez d\'abord la wilaya','err'); return; }
+  const employe=champs.employe.value.trim(), code=normaliserCode(champs.code.value), type=champs.type.value, date=champs.date.value, montant=analyserMontant(champs.montant.value);
+  let valide=true;
+  [['employe',employe],['code',code],['date',date],['montant',champs.montant.value.trim()]].forEach(([n,v])=>{ champs[n].classList.toggle('invalid',!v); if(!v) valide=false; });
+  if(!valide){ notifier('Veuillez remplir les champs obligatoires','err'); return; }
+  let client=trouverClient(code); let nouveau=false;
+  if(!client){
+    nouveau=true;
+    client={ id:identifiant(), code, wilaya:wilayaActive, typeCarteInitial: champs.typeCarte.value==='GOLD'?'GOLD':'SILVER', creeLe:aujourdhuiISO(), operations:[] };
+    clients.push(client);
+  }
+  const niveauAvant=statutFidelite(client).niveau;
+  const facture=calculerFacture(montant, tauxPourNouvelleOperation(client,type));
+  client.operations.push({ id:identifiant(), date, wilaya:wilayaActive, employe, type, compteMaintenance:!!infoType(type).compteMaintenance, montantTotal:facture.montantTotal, tauxRemise:facture.taux, montantRemise:facture.montantRemise, montantFinal:facture.montantFinal, niveau:niveauAvant, note:champs.note.value.trim(), creeLe:new Date().toISOString() });
+  if(employe && !parametres.employes.includes(employe)){ parametres.employes.push(employe); enregistrerParametres(); }
+  dernierEmploye=employe; localStorage.setItem(CLES.dernierEmploye, employe);
+  enregistrerClients();
+  const apres=statutFidelite(client);
+  if(niveauAvant==='SILVER' && apres.niveau==='GOLD') notifier(`🥇 Le client ${client.code} passe GOLD ! Prochaine remise : ${apres.prochainTaux}%`,'ok',5000);
+  else notifier(`Opération enregistrée — remise ${facture.taux}% · montant final ${formaterMontant(facture.montantFinal)} ✅`);
+  champs.code.value=''; champs.montant.value=''; champs.note.value=''; champs.typeCarte.value='SILVER';
+  preparerFormulaireOperation();
+  if(nouveau) ouvrirCarte(client.id);
+});
+
+/* ------------------------------------------------------------------ */
+/*  Clients fidélité                                                   */
+/* ------------------------------------------------------------------ */
+function afficherClients(){
+  const q=normaliserCode($('#rechercheCode').value), carte=$('#clientsCarte').value, tri=$('#clientsTri').value;
+  let liste=clientsDeWilaya(wilayaActive).filter(c=> (!q || c.code.includes(q)) && (!carte || statutFidelite(c).niveau===carte));
+  const cmp={ recent:(a,b)=>derniereOperation(b).localeCompare(derniereOperation(a)), code:(a,b)=>a.code.localeCompare(b.code,undefined,{numeric:true}), operations:(a,b)=>b.operations.length-a.operations.length, montant:(a,b)=>totauxClient(b).total-totauxClient(a).total };
+  liste.sort(cmp[tri]||cmp.recent);
+  $('#clientsCompteur').textContent=`${liste.length} / ${clientsDeWilaya(wilayaActive).length} client(s) · ${wilayaActive||'—'}`;
+  rafraichirEnteteWilaya();
+  if(!liste.length){ $('#corpsClients').innerHTML=`<tr><td colspan="9"><div class="empty"><div class="big">🪪</div><h4>Aucun client fidélité</h4><p>Enregistrez une première opération pour créer un code fidélité dans ${echapper(wilayaActive||'cette wilaya')}.</p><button class="btn btn-primary" data-aller="operation">🧾 Nouvelle opération</button></div></td></tr>`; $('#piedClients').innerHTML=''; return; }
+  const tot={total:0,remise:0,final:0,ops:0};
+  $('#corpsClients').innerHTML = liste.map(c=>{ const s=statutFidelite(c), t=totauxClient(c); tot.total+=t.total; tot.remise+=t.remise; tot.final+=t.final; tot.ops+=c.operations.length;
     return `<tr>
-      <td data-label="الكود"><span class="code-chip">${esc(c.code)}</span></td>
-      <td data-label="الزبون" class="name-cell"><strong>${esc(c.name)}</strong><small class="ltr">${esc(fmtPhone(c.phone))}</small></td>
-      <td data-label="السيارة">${esc(c.vehicle||'—')}</td>
-      <td data-label="الفئة"><span class="badge ${m.level.toLowerCase()}">${m.level}</span> <span class="pct" style="font-size:12px">${m.nextPct}%</span></td>
-      <td data-label="تاريخ التركيب" class="nowrap">${fmtDate(c.installDate)}</td>
-      <td data-label="الصيانة القادمة"><div class="nowrap">${fmtDate(st.next)}</div><span class="badge ${st.cls}" style="font-size:11px">${st.label}</span></td>
-      <td data-label="الخدمات"><b>${countServices(c)}</b> <span class="muted" style="font-size:12px">(صيانة: ${m.maint})</span></td>
-      <td class="actions-cell"><div class="actions">
-        <button class="btn btn-icon" title="ملف الزبون" data-open="${c.id}">👁️</button>
-        <button class="btn btn-icon btn-primary" title="إضافة خدمة" data-add-service="${c.id}">🔧</button>
-        <button class="btn btn-icon" title="بطاقة الولاء" data-card="${c.id}">🪪</button>
-        <button class="btn btn-icon btn-whatsapp" title="WhatsApp" data-wa-welcome="${c.id}">💬</button>
-      </div></td></tr>`;
-  }).join('');
+      <td data-label="Code"><button class="code-link" data-historique="${c.id}">${echapper(c.code)}</button></td>
+      <td data-label="Type de carte"><span class="badge ${s.niveau.toLowerCase()}">${s.niveau}</span> <span class="muted" style="font-size:12px">→ ${s.prochainTaux}%</span></td>
+      <td data-label="Wilaya">${echapper(c.wilaya)}</td>
+      <td data-label="Nb opérations" class="num"><b>${c.operations.length}</b></td>
+      <td data-label="Montant total" class="num">${formaterMontant(t.total)}</td>
+      <td data-label="Réduction totale" class="num" style="color:var(--danger)">− ${formaterMontant(t.remise)}</td>
+      <td data-label="Montant après réduction" class="num" style="font-weight:800;color:var(--ok)">${formaterMontant(t.final)}</td>
+      <td data-label="Dernière opération">${formaterDate(derniereOperation(c))}</td>
+      <td class="actions-cell"><div class="actions"><button class="btn btn-icon" title="Historique" data-historique="${c.id}">📜</button><button class="btn btn-icon" title="Carte de fidélité" data-carte="${c.id}">🪪</button><button class="btn btn-icon btn-primary" title="Nouvelle opération" data-nouvelle-operation="${c.id}">🧾</button></div></td></tr>`; }).join('');
+  $('#piedClients').innerHTML=`<tr><td colspan="3">Total (${liste.length} client(s))</td><td class="num">${tot.ops}</td><td class="num">${formaterMontant(tot.total)}</td><td class="num">− ${formaterMontant(tot.remise)}</td><td class="num">${formaterMontant(tot.final)}</td><td colspan="2"></td></tr>`;
 }
-['searchInput','filterLevel','filterMaint','sortBy'].forEach(id=>$('#'+id).addEventListener('input', renderCustomers));
+['rechercheCode','clientsCarte','clientsTri'].forEach(id=>$('#'+id).addEventListener('input', afficherClients));
 
-/* Global delegated actions */
+/* Actions déléguées */
 document.addEventListener('click', e=>{
-  const t=e.target.closest('[data-open],[data-add-service],[data-card],[data-wa-welcome],[data-wa-remind],[data-wa-receipt],[data-edit],[data-delete],[data-print-card],[data-del-service]');
-  if(!t) return;
-  const d=t.dataset;
-  if(d.open) openCustomer(d.open);
-  else if(d.addService) openServiceForm(d.addService);
-  else if(d.card) openCard(d.card);
-  else if(d.printCard) printCard(d.printCard);
-  else if(d.waWelcome) sendWhatsApp(d.waWelcome,'welcome');
-  else if(d.waRemind) sendWhatsApp(d.waRemind,'reminder');
-  else if(d.waReceipt) sendWhatsApp(d.waReceipt.split('|')[0],'receipt', d.waReceipt.split('|')[1]);
-  else if(d.edit) openEdit(d.edit);
-  else if(d.delete) deleteCustomer(d.delete);
-  else if(d.delService) deleteService(d.delService.split('|')[0], d.delService.split('|')[1]);
+  const t=e.target.closest('[data-historique],[data-carte],[data-imprimer-carte],[data-nouvelle-operation],[data-supprimer-operation],[data-supprimer-client]');
+  if(!t) return; const d=t.dataset;
+  if(d.historique) ouvrirHistorique(d.historique);
+  else if(d.carte) ouvrirCarte(d.carte);
+  else if(d.imprimerCarte) imprimerCarte(d.imprimerCarte);
+  else if(d.nouvelleOperation){ const c=clientParId(d.nouvelleOperation); if(c){ afficherVue('operation'); champs.code.value=c.code; rafraichirStatutCode(); champs.montant.focus(); } }
+  else if(d.supprimerOperation) supprimerOperation(...d.supprimerOperation.split('|'));
+  else if(d.supprimerClient) supprimerClient(d.supprimerClient);
 });
-const byId = id => customers.find(c=>c.id===id);
+const clientParId = id => clients.find(c=>c.id===id);
 
 /* ------------------------------------------------------------------ */
-/*  New customer                                                       */
+/*  Historique d'un code fidélité                                      */
 /* ------------------------------------------------------------------ */
-function fillBranchSelect(sel, value){ sel.innerHTML = Object.keys(BRANCHES).map(b=>`<option value="${b}" ${b===value?'selected':''}>${b}</option>`).join(''); }
-function prepareNewForm(){
-  const f=$('#newForm').elements;
-  if(!f.installDate.value) f.installDate.value=todayISO();
-  if(!f.worker.value) f.worker.value=currentWorker;
-  fillBranchSelect($('#newBranch'), settings.defaultBranch);
-  $('#newCode').placeholder = nextCode();
-  $('#vehicleList').innerHTML = [...new Set(customers.map(c=>c.vehicle).filter(Boolean))].slice(0,50).map(v=>`<option value="${esc(v)}">`).join('');
-  $('#installDiscHint').textContent = settings.discountOnInstall ? 'يُطبَّق خصم SILVER 3% تلقائياً على فاتورة التركيب' : 'لا يُطبَّق خصم على فاتورة التركيب (حسب الإعدادات)';
-  updateNewInvoice();
-}
-function updateNewInvoice(){
-  const amt=parseAmount($('#newForm').elements.amount.value); const box=$('#newInvoice');
-  if(!amt){ box.classList.add('hidden'); return; }
-  const pct = settings.discountOnInstall ? RULES.SILVER_PCT : 0; const inv=calcInvoice(amt,pct);
-  box.classList.remove('hidden'); box.innerHTML=invoiceHTML(inv,'SILVER');
-}
-function invoiceHTML(inv, level){
-  return `<div class="line"><span>المبلغ الأصلي للفاتورة</span><b>${money(inv.amount)}</b></div>
-  <div class="line"><span>نسبة الخصم <span class="badge ${level.toLowerCase()}">${level}</span></span><b class="pct">${inv.pct}%</b></div>
-  <div class="line"><span>قيمة الخصم</span><b class="disc">− ${money(inv.discountAmount)}</b></div>
-  <div class="line"><span><b>المبلغ النهائي</b></span><b class="total">${money(inv.finalAmount)}</b></div>`;
-}
-$('#newForm').elements.amount.addEventListener('input', updateNewInvoice);
-$('#newForm').addEventListener('reset', ()=>setTimeout(prepareNewForm,0));
-$('#newForm').addEventListener('submit', e=>{
-  e.preventDefault(); const form=e.target, f=form.elements; let ok=true;
-  ['name','phone','vehicle','installDate'].forEach(n=>{ const el=f[n]; const bad=!el.value.trim(); el.classList.toggle('invalid',bad); if(bad) ok=false; });
-  if(!ok){ toast('يرجى تعبئة الحقول الإلزامية','err'); return; }
-  const phoneDigits=f.phone.value.replace(/\D/g,''); if(phoneDigits.length<9){ f.phone.classList.add('invalid'); toast('رقم الهاتف غير صحيح','err'); return; }
-  let code=f.code.value.trim().toUpperCase() || nextCode();
-  if(customers.some(c=>c.code===code)){ f.code.classList.add('invalid'); toast('هذا الكود مستخدم من قبل','err'); return; }
-  if(customers.some(c=>String(c.phone).replace(/\D/g,'')===phoneDigits)){ if(!confirm('يوجد زبون بنفس رقم الهاتف. هل تريد المتابعة؟')) return; }
-  const worker=f.worker.value.trim()||currentWorker; if(worker && !settings.workers.includes(worker)){ settings.workers.push(worker); saveSettings(); }
-  const amount=parseAmount(f.amount.value); const pct=settings.discountOnInstall? RULES.SILVER_PCT : 0; const inv=calcInvoice(amount,pct);
-  const c={ id:uid(), code, name:f.name.value.trim(), phone:f.phone.value.trim(), vehicle:f.vehicle.value.trim(), installDate:f.installDate.value, branch:f.branch.value, notes:f.notes.value.trim(), createdAt:todayISO(), legacyGold:false,
-    services:[{ id:uid(), date:f.installDate.value, type:'installation', description:'تركيب GPL — بداية عضوية SILVER', amount:inv.amount, discountPct:inv.pct, discountAmount:inv.discountAmount, finalAmount:inv.finalAmount, worker, level:'SILVER', createdAt:new Date().toISOString() }] };
-  customers.push(c); save(); form.reset();
-  toast(`تم حفظ الزبون ${c.name} — بطاقة ${c.code} (SILVER) ✅`);
-  openCustomer(c.id); showView('customers');
-});
-
-/* ------------------------------------------------------------------ */
-/*  Customer profile                                                   */
-/* ------------------------------------------------------------------ */
-function openCustomer(id){
-  const c=byId(id); if(!c) return; const m=membership(c), st=maintStatus(c); const lvl=m.level.toLowerCase();
-  const services=[...(c.services||[])].reverse();
-  const totalPaid=c.services.reduce((a,s)=>a+(+s.finalAmount||0),0), totalDisc=c.services.reduce((a,s)=>a+(+s.discountAmount||0),0);
-  $('#customerBody').innerHTML = `
+function ouvrirHistorique(id){
+  const c=clientParId(id); if(!c) return; const s=statutFidelite(c), t=totauxClient(c); const n=s.niveau.toLowerCase();
+  const ops=[...c.operations].reverse();
+  $('#corpsHistorique').innerHTML=`
     <div class="profile-head">
-      <div class="profile-avatar ${lvl}">${esc(initials(c.name))}</div>
-      <div style="flex:1;min-width:200px"><h3>${esc(c.name)}</h3><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:4px"><span class="code-chip">${esc(c.code)}</span><span class="badge ${lvl}">${m.level}</span><span class="badge ${st.cls}">🔧 ${st.label}</span></div></div>
-      <div class="btn-group">
-        <button class="btn btn-primary" data-add-service="${c.id}">🔧 إضافة خدمة</button>
-        <button class="btn" data-card="${c.id}">🪪 البطاقة</button>
-        <button class="btn btn-whatsapp" data-wa-welcome="${c.id}">💬 WhatsApp</button>
-        <button class="btn btn-icon" title="تعديل" data-edit="${c.id}">✏️</button>
-        <button class="btn btn-icon btn-danger" title="حذف الزبون" data-delete="${c.id}">🗑️</button>
-      </div>
+      <div class="profile-avatar ${n}">${s.niveau==='GOLD'?'🥇':'🥈'}</div>
+      <div style="flex:1;min-width:200px"><h3 class="mono">${echapper(c.code)}</h3><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:4px"><span class="badge ${n}">${s.niveau}</span><span class="badge neutral">📍 ${echapper(c.wilaya)}</span><span class="badge info">Prochaine remise ${s.prochainTaux}%</span></div></div>
+      <div class="btn-group"><button class="btn btn-primary" data-nouvelle-operation="${c.id}" data-fermer>🧾 Nouvelle opération</button><button class="btn" data-carte="${c.id}">🪪 Carte</button><button class="btn btn-icon btn-danger" title="Supprimer ce code fidélité" data-supprimer-client="${c.id}">🗑️</button></div>
     </div>
     <div class="kv">
-      <div><b>الهاتف</b><span class="ltr">${esc(fmtPhone(c.phone))}</span></div>
-      <div><b>السيارة</b><span>${esc(c.vehicle||'—')}</span></div>
-      <div><b>تاريخ تركيب GPL</b><span>${fmtDate(c.installDate)}</span></div>
-      <div><b>الصيانة القادمة</b><span>${fmtDate(st.next)}</span></div>
-      <div><b>الفرع</b><span>${esc(c.branch||'—')}</span></div>
-      <div><b>عدد الخدمات</b><span>${countServices(c)} (صيانة: ${m.maint})</span></div>
-      <div><b>إجمالي المدفوع</b><span>${money(totalPaid)}</span></div>
-      <div><b>إجمالي الخصومات</b><span>${money(totalDisc)}</span></div>
+      <div><b>Nombre d'opérations</b><span>${c.operations.length}</span></div>
+      <div><b>Maintenances comptées</b><span>${s.maintenances}${s.niveau==='SILVER'?` / ${parametres.regles.maintenancesPourGold}`:''}</span></div>
+      <div><b>Montant total</b><span>${formaterMontant(t.total)}</span></div>
+      <div><b>Réduction totale</b><span style="color:var(--danger)">− ${formaterMontant(t.remise)}</span></div>
+      <div><b>Montant après réduction</b><span style="color:var(--ok)">${formaterMontant(t.final)}</span></div>
+      <div><b>Créé le</b><span>${formaterDate(c.creeLe)}</span></div>
     </div>
-    ${c.notes? `<div class="note info">📝 ${esc(c.notes)}</div>`:''}
-    <div class="member-box ${lvl}">
-      <div class="row"><div><small>الفئة الحالية</small><div class="big">${m.level}</div></div><div style="text-align:left"><small>خصم العملية القادمة</small><div class="big">${m.nextPct}%</div></div></div>
-      ${m.level==='SILVER'
-        ? `<div class="progress"><i style="width:${Math.min(100, m.maint/RULES.MAINT_FOR_GOLD*100)}%"></i></div><small style="display:block;margin-top:6px">${m.maint} / ${RULES.MAINT_FOR_GOLD} عمليات صيانة — ${m.remainingToGold===0?'سيتم الترقية إلى GOLD':`تبقّى ${m.remainingToGold} للترقية إلى GOLD (5% ثم +1% لكل عملية)`}</small>`
-        : `<small style="display:block;margin-top:8px">🥇 عضو GOLD${c.legacyGold?' (مُرحَّل من النظام القديم)':''} — ${m.goldOps} عملية بخصم GOLD حتى الآن · الخصم يزيد 1% مع كل عملية جديدة</small>`}
-    </div>
-    <div class="section-title"><span>📜 سجل الخدمات والخصومات</span><span class="muted" style="font-size:12px;font-weight:600">كل خدمة تحتفظ بنسبة الخصم المطبقة وقت تنفيذها</span></div>
-    <div class="list">${services.length? services.map(s=>`
-      <div class="history-item">
-        <div class="h"><div><b>${esc(SERVICE_TYPES[s.type]||s.type)}</b> <span class="muted" style="font-size:13px">· ${fmtDate(s.date)}</span> ${s.level?`<span class="badge ${String(s.level).toLowerCase()}" style="font-size:10px">${esc(s.level)}</span>`:''} ${s.legacy?'<span class="badge neutral" style="font-size:10px">سجل قديم</span>':''}</div>
-          <div style="display:flex;gap:6px;align-items:center"><span class="muted" style="font-size:12.5px">👷 ${esc(s.worker||'—')}</span>${(+s.amount)?`<button class="btn btn-sm btn-whatsapp" data-wa-receipt="${c.id}|${s.id}" title="إرسال الإيصال">💬</button>`:''}<button class="btn btn-sm btn-danger" data-del-service="${c.id}|${s.id}" title="حذف الخدمة">🗑️</button></div></div>
-        ${s.description? `<div class="muted" style="font-size:13px;margin-top:4px">${esc(s.description)}</div>`:''}
-        <div class="amounts"><div>المبلغ الأصلي<b>${money(s.amount)}</b></div><div>نسبة الخصم<b class="pct">${+s.discountPct||0}%</b></div><div class="disc">قيمة الخصم<b>− ${money(s.discountAmount)}</b></div><div class="final">المبلغ النهائي<b>${money(s.finalAmount)}</b></div></div>
-      </div>`).join('') : '<div class="empty" style="padding:20px">لا توجد خدمات مسجلة</div>'}</div>`;
-  openModal('#modalCustomer');
+    <div class="member-box ${n}"><div class="row"><div><small>Type de carte</small><div class="big">${s.niveau}</div></div><div class="right"><small>Remise de la prochaine opération</small><div class="big">${s.prochainTaux}%</div></div></div>
+      ${s.niveau==='SILVER' ? `<div class="progress"><i style="width:${Math.min(100, s.maintenances/parametres.regles.maintenancesPourGold*100)}%"></i></div><small style="display:block;margin-top:6px">${s.maintenances} / ${parametres.regles.maintenancesPourGold} maintenance(s) — encore ${s.restantPourGold} avant GOLD (${parametres.regles.remiseGoldInitiale}% puis +${parametres.regles.incrementGold}% par opération)</small>` : `<small style="display:block;margin-top:8px">🥇 ${s.operationsGold} opération(s) réalisée(s) au niveau GOLD${c.typeCarteInitial==='GOLD'?' · carte GOLD dès l\'origine':''}</small>`}</div>
+    <div class="section-title"><span>📜 Historique des opérations</span><span class="muted" style="font-size:12px;font-weight:600">Chaque ligne conserve le pourcentage appliqué à l'époque</span></div>
+    <div class="table-wrap"><table class="tbl compact" style="min-width:700px"><thead><tr><th>Date</th><th>Employé</th><th>Type d'opération</th><th class="num">Montant total</th><th class="num">Réduction %</th><th class="num">Montant de la réduction</th><th class="num">Montant final</th><th></th></tr></thead>
+    <tbody>${ops.length? ops.map(o=>`<tr><td class="nowrap">${formaterDate(o.date)}</td><td>${echapper(o.employe||'—')}</td><td>${echapper(o.type)}${o.compteMaintenance?' <span class="badge neutral" style="font-size:10px">GOLD +1</span>':''}${o.niveau?` <span class="badge ${String(o.niveau).toLowerCase()}" style="font-size:10px">${echapper(o.niveau)}</span>`:''}${o.horsCompteur?' <span class="badge neutral" style="font-size:10px">ancien</span>':''}${o.note?`<div class="muted" style="font-size:12px">${echapper(o.note)}</div>`:''}</td><td class="num">${formaterMontant(o.montantTotal)}</td><td class="num pct">${+o.tauxRemise||0}%</td><td class="num" style="color:var(--danger)">− ${formaterMontant(o.montantRemise)}</td><td class="num" style="font-weight:800;color:var(--ok)">${formaterMontant(o.montantFinal)}</td><td><button class="btn btn-sm btn-danger" title="Supprimer" data-supprimer-operation="${c.id}|${o.id}">🗑️</button></td></tr>`).join('') : '<tr><td colspan="8" class="empty">Aucune opération</td></tr>'}</tbody>
+    <tfoot><tr><td colspan="3">Total</td><td class="num">${formaterMontant(t.total)}</td><td></td><td class="num">− ${formaterMontant(t.remise)}</td><td class="num">${formaterMontant(t.final)}</td><td></td></tr></tfoot></table></div>`;
+  ouvrirModale('#modaleHistorique');
+}
+async function supprimerOperation(idClient, idOperation){
+  const c=clientParId(idClient); if(!c) return; const o=c.operations.find(x=>x.id===idOperation); if(!o) return;
+  if(!await confirmer({titre:'Supprimer l\'opération', texte:`Supprimer l'opération <b>${echapper(o.type)}</b> du ${formaterDate(o.date)} (${formaterMontant(o.montantTotal)}) ? Cette action peut modifier le niveau actuel du client.`, ok:'Supprimer', danger:true})) return;
+  c.operations=c.operations.filter(x=>x.id!==idOperation); enregistrerClients();
+  if($('#modaleHistorique').classList.contains('open')) ouvrirHistorique(idClient);
+  toutRafraichir(); notifier('Opération supprimée','warn');
+}
+async function supprimerClient(id){
+  const c=clientParId(id); if(!c) return;
+  if(!await confirmer({titre:'Supprimer le code fidélité', texte:`Le code <b>${echapper(c.code)}</b> (${echapper(c.wilaya)}) et ses ${c.operations.length} opération(s) seront supprimés définitivement.`, ok:'Supprimer définitivement', danger:true})) return;
+  clients=clients.filter(x=>x.id!==id); enregistrerClients(); fermerModale($('#modaleHistorique')); toutRafraichir(); notifier('Code fidélité supprimé','warn');
 }
 
 /* ------------------------------------------------------------------ */
-/*  Add service                                                        */
+/*  Carte de fidélité                                                  */
 /* ------------------------------------------------------------------ */
-function openServiceForm(id){
-  const c=byId(id); if(!c) return; const m=membership(c);
-  $('#serviceBody').innerHTML = `
-    <div class="note ${m.level==='GOLD'?'gold':'info'}" style="margin:0 0 14px">👤 <b>${esc(c.name)}</b> · <span class="code-chip">${esc(c.code)}</span> · الفئة <b>${m.level}</b> · الخصم الحالي <b>${m.nextPct}%</b></div>
-    <form id="serviceForm" class="form-grid" novalidate>
-      <div class="field"><label>نوع الخدمة <span class="req">*</span></label><select class="select" name="type">${Object.entries(SERVICE_TYPES).filter(([k])=>k!=='installation').map(([k,v])=>`<option value="${k}">${v}</option>`).join('')}</select></div>
-      <div class="field"><label>التاريخ <span class="req">*</span></label><input class="input ltr" type="date" name="date" value="${todayISO()}" required></div>
-      <div class="field"><label>مبلغ الفاتورة الأصلي (دج) <span class="req">*</span></label><input class="input ltr" name="amount" inputmode="decimal" placeholder="0" required autofocus></div>
-      <div class="field"><label>العامل</label><input class="input" name="worker" list="workerList" value="${esc(currentWorker)}" placeholder="اسم العامل"></div>
-      <div class="field full"><label>وصف الخدمة</label><input class="input" name="description" placeholder="مثال: صيانة دورية، تغيير الفلتر…"></div>
-    </form>
-    <div class="invoice" id="svcInvoice"></div>
-    <div id="svcHint"></div>
-    <div class="form-actions"><button class="btn btn-primary" id="svcSave">💾 حفظ الخدمة</button><button class="btn" data-close>إلغاء</button></div>`;
-  openModal('#modalService');
-  const f=$('#serviceForm').elements;
-  const refresh=()=>{
-    const type=f.type.value; const pct=discountForNew(c,type); const inv=calcInvoice(parseAmount(f.amount.value), pct);
-    $('#svcInvoice').innerHTML=invoiceHTML(inv, m.level);
-    let hint='';
-    if(m.level==='SILVER' && type==='maintenance' && m.remainingToGold===1) hint=`<div class="note gold">🥇 بعد حفظ هذه الصيانة (الثالثة) سيتم ترقية الزبون تلقائياً إلى <b>GOLD</b> — العملية القادمة بخصم 5%.</div>`;
-    else if(m.level==='SILVER' && type==='maintenance') hint=`<div class="note info">ℹ️ هذه الصيانة رقم ${m.maint+1} من ${RULES.MAINT_FOR_GOLD} المطلوبة للترقية إلى GOLD.</div>`;
-    else if(m.level==='SILVER') hint=`<div class="note warn">⚠️ خدمات "${SERVICE_TYPES[type]}" لا تُحتسب ضمن عمليات الصيانة الثلاث المطلوبة للترقية إلى GOLD.</div>`;
-    else hint=`<div class="note gold">🥇 عملية GOLD رقم ${m.goldOps+1} — خصم ${pct}%، والعملية القادمة ستكون بخصم ${pct+RULES.GOLD_STEP}%.</div>`;
-    $('#svcHint').innerHTML=hint;
-  };
-  $('#serviceForm').addEventListener('input', refresh); refresh();
-  setTimeout(()=>f.amount.focus(),50);
-  $('#svcSave').onclick=()=>{
-    const amount=parseAmount(f.amount.value);
-    if(!f.amount.value.trim()){ f.amount.classList.add('invalid'); toast('أدخل مبلغ الفاتورة','err'); return; }
-    if(!f.date.value){ toast('أدخل التاريخ','err'); return; }
-    const type=f.type.value; const pct=discountForNew(c,type); const inv=calcInvoice(amount,pct);
-    const worker=f.worker.value.trim()||currentWorker; if(worker && !settings.workers.includes(worker)){ settings.workers.push(worker); saveSettings(); }
-    const before=membership(c).level;
-    c.services.push({ id:uid(), date:f.date.value, type, description:f.description.value.trim(), amount:inv.amount, discountPct:inv.pct, discountAmount:inv.discountAmount, finalAmount:inv.finalAmount, worker, level:before, createdAt:new Date().toISOString() });
-    save();
-    const after=membership(c);
-    closeModal($('#modalService'));
-    if(before==='SILVER' && after.level==='GOLD') toast(`🥇 مبروك! تمت ترقية ${c.name} إلى GOLD — العملية القادمة بخصم ${after.nextPct}%`,'ok',5000);
-    else toast(`تم حفظ الخدمة بخصم ${inv.pct}% — المبلغ النهائي ${money(inv.finalAmount)} ✅`);
-    if($('#modalCustomer').classList.contains('open')) openCustomer(c.id);
-    renderCustomers(); renderDashboard();
-  };
-}
-async function deleteService(cid, sid){
-  const c=byId(cid); if(!c) return; const s=c.services.find(x=>x.id===sid); if(!s) return;
-  if(s.type==='installation' && c.services.filter(x=>x.type==='installation').length===1){ toast('لا يمكن حذف سجل التركيب الأصلي','err'); return; }
-  if(!await confirmDlg({title:'حذف الخدمة', text:`حذف <b>${esc(SERVICE_TYPES[s.type]||s.type)}</b> بتاريخ ${fmtDate(s.date)}؟ قد يؤثر ذلك على فئة الزبون الحالية.`, ok:'حذف', danger:true})) return;
-  c.services=c.services.filter(x=>x.id!==sid); save(); openCustomer(cid); renderCustomers(); renderDashboard(); toast('تم حذف الخدمة');
-}
-
-/* ------------------------------------------------------------------ */
-/*  Edit / delete customer                                             */
-/* ------------------------------------------------------------------ */
-function openEdit(id){
-  const c=byId(id); if(!c) return;
-  $('#editBody').innerHTML = `<form id="editForm" class="form-grid" novalidate>
-    <div class="field"><label>الاسم الكامل <span class="req">*</span></label><input class="input" name="name" value="${esc(c.name)}" required></div>
-    <div class="field"><label>رقم الهاتف <span class="req">*</span></label><input class="input ltr" name="phone" value="${esc(c.phone)}" required></div>
-    <div class="field"><label>نوع / ماركة السيارة <span class="req">*</span></label><input class="input" name="vehicle" value="${esc(c.vehicle)}" required></div>
-    <div class="field"><label>تاريخ تركيب GPL <span class="req">*</span></label><input class="input ltr" type="date" name="installDate" value="${esc(c.installDate)}" required></div>
-    <div class="field"><label>الفرع</label><select class="select" name="branch" id="editBranch"></select></div>
-    <div class="field"><label>كود البطاقة</label><input class="input ltr" name="code" value="${esc(c.code)}"></div>
-    <div class="field full"><label>ملاحظات</label><textarea class="textarea" name="notes">${esc(c.notes||'')}</textarea></div>
-    <div class="form-actions full" style="margin-top:4px"><button class="btn btn-primary" type="submit">💾 حفظ التعديلات</button><button class="btn" type="button" data-close>إلغاء</button></div>
-  </form>`;
-  fillBranchSelect($('#editBranch'), c.branch||settings.defaultBranch);
-  openModal('#modalEdit');
-  $('#editForm').onsubmit=e=>{
-    e.preventDefault(); const f=e.target.elements;
-    if(!f.name.value.trim()||!f.phone.value.trim()||!f.vehicle.value.trim()||!f.installDate.value){ toast('يرجى تعبئة الحقول الإلزامية','err'); return; }
-    const code=f.code.value.trim().toUpperCase()||c.code; if(customers.some(x=>x.id!==c.id && x.code===code)){ toast('هذا الكود مستخدم من قبل','err'); return; }
-    const oldInstall=c.installDate;
-    Object.assign(c,{ name:f.name.value.trim(), phone:f.phone.value.trim(), vehicle:f.vehicle.value.trim(), installDate:f.installDate.value, branch:f.branch.value, code, notes:f.notes.value.trim() });
-    const inst=c.services.find(s=>s.type==='installation'); if(inst && inst.date===oldInstall) inst.date=c.installDate;
-    save(); closeModal($('#modalEdit')); openCustomer(c.id); renderCustomers(); toast('تم حفظ التعديلات ✅');
-  };
-}
-async function deleteCustomer(id){
-  const c=byId(id); if(!c) return;
-  if(!await confirmDlg({title:'حذف الزبون', text:`سيتم حذف <b>${esc(c.name)}</b> (${esc(c.code)}) وجميع خدماته نهائياً.`, ok:'حذف نهائي', danger:true})) return;
-  customers=customers.filter(x=>x.id!==id); save(); closeModal($('#modalCustomer')); renderCustomers(); renderDashboard(); toast('تم حذف الزبون','warn');
-}
-
-/* ------------------------------------------------------------------ */
-/*  WhatsApp                                                           */
-/* ------------------------------------------------------------------ */
-function branchOf(c){ return BRANCHES[c.branch] ? c.branch : settings.defaultBranch; }
-function buildMessage(c, kind, sid){
-  const m=membership(c), st=maintStatus(c); const br=branchOf(c); const brInfo=BRANCHES[br]||{};
-  const sig=`\n\n— BAGHDAD GPL · FAMILY METAL (${br})\n📍 ${brInfo.map||''}\n🌐 www.familymetaldz.com`;
-  if(kind==='reminder'){
-    return `مرحباً ${c.name} 👋\n\nنذكّركم بموعد صيانة نظام GPL لسيارتكم ${c.vehicle}.\n📅 موعد الصيانة: ${fmtDate(st.next)} (${st.label})\n🪪 بطاقة الولاء: ${c.code} — ${m.level}\n🏷️ خصمكم على هذه العملية: ${m.nextPct}%${m.level==='SILVER'?`\n⭐ تبقّى ${m.remainingToGold} عمليات صيانة للترقية إلى GOLD`:''}\n\nيرجى التواصل معنا لتحديد الموعد.`+sig;
-  }
-  if(kind==='receipt'){
-    const s=c.services.find(x=>x.id===sid); if(!s) return '';
-    return `مرحباً ${c.name} 👋\n\nشكراً لزيارتكم — إيصال الخدمة:\n🔧 الخدمة: ${SERVICE_TYPES[s.type]||s.type}${s.description?` (${s.description})`:''}\n📅 التاريخ: ${fmtDate(s.date)}\n💵 المبلغ الأصلي: ${money(s.amount)}\n🏷️ الخصم (${s.level||m.level}): ${+s.discountPct||0}% = ${money(s.discountAmount)}\n✅ المبلغ النهائي: ${money(s.finalAmount)}\n👷 العامل: ${s.worker||'—'}\n\n🪪 بطاقتكم: ${c.code} — الفئة ${m.level} · خصم العملية القادمة ${m.nextPct}%\n📅 الصيانة القادمة: ${fmtDate(st.next)}`+sig;
-  }
-  return `مرحباً ${c.name} 👋\n\nشكراً لثقتكم في BAGHDAD GPL — FAMILY METAL.\n\n🪪 بطاقة الولاء: ${c.code}\n⭐ الفئة: ${m.level} — خصم ${m.nextPct}% على العملية القادمة\n🚗 السيارة: ${c.vehicle}\n🔧 تاريخ التركيب: ${fmtDate(c.installDate)}\n📅 الصيانة القادمة: ${fmtDate(st.next)}\n\n${m.level==='SILVER'?`بعد ${RULES.MAINT_FOR_GOLD} عمليات صيانة تتم ترقيتكم تلقائياً إلى GOLD بخصم يبدأ من 5% ويزيد 1% مع كل عملية.`:'أنتم عضو GOLD — خصمكم يزيد 1% مع كل عملية جديدة 🥇'}`+sig;
-}
-function sendWhatsApp(id, kind, sid){
-  const c=byId(id); if(!c) return; const phone=normalizePhone(c.phone);
-  if(phone.length<11){ toast('رقم الهاتف غير صالح لواتساب','err'); return; }
-  const msg=buildMessage(c, kind, sid); if(!msg) return;
-  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`,'_blank','noopener');
-}
-
-/* ------------------------------------------------------------------ */
-/*  Loyalty card                                                       */
-/* ------------------------------------------------------------------ */
-function cardHTML(c){
-  const m=membership(c); const lvl=m.level.toLowerCase(); const br=branchOf(c);
+function carteHTML(c){
+  const s=statutFidelite(c); const n=s.niveau.toLowerCase(); const r=parametres.regles; const contact=CONTACTS_AGENCES[c.wilaya];
   return `
-  <div class="lcard ${lvl}">
+  <div class="lcard ${n}">
     <div class="deco"></div>
-    <div class="top"><div class="brand-t">BAGHDAD GPL<small>FAMILY METAL · LOYALTY CARD</small></div><div class="tier">${m.level}</div></div>
+    <div class="top"><div class="brand-t">BAGHDAD GPL<small>FAMILY METAL · CARTE DE FIDÉLITÉ</small></div><div class="tier">${s.niveau}</div></div>
     <div class="chip"></div>
-    <div class="code">${esc(c.code)}</div>
-    <div class="bottom"><div class="holder"><small>CARD HOLDER</small>${esc(c.name)}</div><div class="meta"><small>MEMBER SINCE</small>${fmtDate(c.installDate)}<div class="card-disc">${esc(c.vehicle||'')}</div></div></div>
+    <div class="code">${echapper(c.code)}</div>
+    <div class="bottom"><div class="holder"><small>AGENCE</small>${echapper(c.wilaya)}</div><div class="meta"><small>MEMBRE DEPUIS</small>${formaterDate(c.operations[0]?.date || c.creeLe)}</div></div>
   </div>
   <div class="lcard back">
     <div class="stripe"></div>
     <div class="rules">
-      <b>SILVER</b> — خصم 3% منذ أول تركيب GPL.<br>
-      <b>GOLD</b> — بعد 3 عمليات صيانة: خصم يبدأ من 5% ويزيد 1% مع كل عملية جديدة.<br>
-      الخصم يُحسب تلقائياً عند كل زيارة · احتفظ بالبطاقة وقدّمها عند كل خدمة.
+      <b>SILVER</b> — ${r.remiseSilver}% de remise dès la première opération.<br>
+      <b>GOLD</b> — après ${r.maintenancesPourGold} maintenances : remise de ${r.remiseGoldInitiale}% puis +${r.incrementGold}% à chaque nouvelle opération.<br>
+      Présentez cette carte à chaque visite · Remise calculée automatiquement.
     </div>
-    <div class="contact"><span>📞 +${BRANCHES[br]?.phone||''} (${br})</span><span>www.familymetaldz.com</span></div>
+    <div class="contact"><span>📞 ${contact? contact.telephone : 'BAGHDAD GPL — '+echapper(c.wilaya)}</span><span>www.familymetaldz.com</span></div>
   </div>`;
 }
-function openCard(id){
-  const c=byId(id); if(!c) return;
-  $('#cardBody').innerHTML = `<div class="lcard-stage">${cardHTML(c)}</div><div class="form-actions" style="justify-content:center"><button class="btn btn-primary" data-print-card="${c.id}">🖨️ طباعة البطاقة</button><button class="btn btn-whatsapp" data-wa-welcome="${c.id}">💬 إرسال بيانات البطاقة</button></div>`;
-  openModal('#modalCard');
+function ouvrirCarte(id){
+  const c=clientParId(id); if(!c) return;
+  $('#corpsCarte').innerHTML=`<div class="lcard-stage">${carteHTML(c)}</div><div class="form-actions" style="justify-content:center"><button class="btn btn-primary" data-imprimer-carte="${c.id}">🖨️ Imprimer la carte</button><button class="btn" data-historique="${c.id}">📜 Historique</button></div>`;
+  ouvrirModale('#modaleCarte');
 }
-function cardCSS(){ // reuse the page's card styles inside the print window
-  return Array.from(document.styleSheets[0].cssRules||[]).filter(r=>r.cssText && (r.cssText.startsWith('.lcard')||r.cssText.startsWith(':root')||r.cssText.startsWith('.badge'))).map(r=>r.cssText).join('\n');
+function stylesCarte(){ // réutilise les styles de la page dans la fenêtre d'impression
+  return Array.from(document.styleSheets[0].cssRules||[]).filter(r=>r.cssText && (r.cssText.startsWith('.lcard')||r.cssText.startsWith(':root'))).map(r=>r.cssText).join('\n');
 }
-function printCard(id){
-  const c=byId(id); if(!c) return;
-  const w=window.open('','_blank'); if(!w){ toast('يرجى السماح بالنوافذ المنبثقة للطباعة','err'); return; }
-  w.document.write(`<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>بطاقة الولاء — ${esc(c.code)}</title>
+function imprimerCarte(id){
+  const c=clientParId(id); if(!c) return;
+  const w=window.open('','_blank'); if(!w){ notifier('Autorisez les fenêtres pop-up pour imprimer','err'); return; }
+  w.document.write(`<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><title>Carte de fidélité — ${echapper(c.code)}</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <style>${cardCSS()}
+  <style>${stylesCarte()}
   body{margin:0;font-family:'Cairo','Segoe UI',sans-serif;background:#eef1f5;display:flex;flex-direction:column;align-items:center;gap:20px;padding:24px}
   .lcard{width:85.6mm;height:54mm;box-shadow:none;border:1px solid #ccc;page-break-inside:avoid;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .bar{display:flex;gap:10px} .bar button{font-family:inherit;font-weight:700;padding:10px 18px;border-radius:10px;border:0;background:#1e3d59;color:#fff;cursor:pointer}
   @page{size:A4;margin:12mm} @media print{body{background:#fff;padding:0} .bar{display:none}}
-  </style></head><body><div class="bar"><button onclick="window.print()">🖨️ طباعة</button><button onclick="window.close()">إغلاق</button></div>${cardHTML(c)}<script>setTimeout(function(){window.print()},600)<\/script></body></html>`);
+  </style></head><body><div class="bar"><button onclick="window.print()">🖨️ Imprimer</button><button onclick="window.close()">Fermer</button></div>${carteHTML(c)}<script>setTimeout(function(){window.print()},600)<\/script></body></html>`);
   w.document.close();
 }
 
 /* ------------------------------------------------------------------ */
-/*  PDF export — customer list                                         */
+/*  Rapport PDF                                                        */
 /* ------------------------------------------------------------------ */
-function reportHTML(list){
-  const now=new Date(); const gen=`${fmtDate(todayISO())} ${z(now.getHours())}:${z(now.getMinutes())}`;
-  let silver=0, gold=0; list.forEach(c=>membership(c).level==='GOLD'?gold++:silver++);
-  const rows=list.map((c,i)=>{ const m=membership(c); const next=nextMaintenance(c); const st=maintStatus(c);
-    return `<tr><td class="c">${i+1}</td><td class="mono">${esc(c.code)}</td><td dir="auto" class="b">${esc(c.name)}</td><td class="mono">${esc(fmtPhone(c.phone))}</td><td dir="auto">${esc(c.vehicle||'—')}</td><td class="c"><span class="tier ${m.level.toLowerCase()}">${m.level}</span><br><small>${m.nextPct}%</small></td><td class="c">${fmtDate(c.installDate)}</td><td class="c ${st.key==='overdue'?'late':''}">${fmtDate(next)}</td><td class="c">${countServices(c)}</td></tr>`; }).join('');
-  return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>BAGHDAD GPL — Customer List</title>
+function ouvrirRapport(critInit={}){
+  $('#corpsRapport').innerHTML=`
+    <p class="muted" style="margin:0 0 14px;font-size:13.5px">Choisissez les filtres du rapport. Le document s'ouvre dans une nouvelle fenêtre : utilisez <b>Imprimer / Enregistrer en PDF</b> ou <b>Télécharger le PDF</b>.</p>
+    <div class="form-grid">
+      <div class="field"><label>Wilaya</label><select class="select" id="rWilaya"></select></div>
+      <div class="field"><label>Période</label><select class="select" id="rPeriode"><option value="tout">Toute la période</option><option value="mois">Ce mois</option><option value="mois-1">Mois dernier</option><option value="3mois">3 derniers mois</option><option value="annee">Cette année</option><option value="perso">Personnalisée</option></select></div>
+      <div class="field"><label>Du</label><input class="input" type="date" id="rDebut"></div>
+      <div class="field"><label>Au</label><input class="input" type="date" id="rFin"></div>
+      <div class="field"><label>Employé</label><select class="select" id="rEmploye"></select></div>
+      <div class="field"><label>Type de carte</label><select class="select" id="rCarte"><option value="">Toutes</option><option value="SILVER">SILVER</option><option value="GOLD">GOLD</option></select></div>
+      <div class="field"><label>Type d'opération</label><select class="select" id="rType"></select></div>
+      <div class="field"><label>Contenu</label><select class="select" id="rContenu"><option value="les-deux">Clients + détail des opérations</option><option value="clients">Clients fidélité uniquement</option><option value="operations">Détail des opérations uniquement</option></select></div>
+    </div>
+    <div class="note info" id="rApercu"></div>
+    <div class="form-actions"><button class="btn btn-primary" id="btnGenererRapport">📄 Générer le rapport PDF</button><button class="btn" data-fermer>Annuler</button></div>`;
+  remplirSelectWilayas($('#rWilaya'), critInit.wilaya ?? wilayaActive, true);
+  remplirSelectEmployes($('#rEmploye'), critInit.employe||''); remplirSelectTypes($('#rType'), critInit.type||'', true);
+  $('#rPeriode').value=critInit.periode||'tout'; $('#rDebut').value=critInit.periode==='perso'?(critInit.debut||''):''; $('#rFin').value=critInit.periode==='perso'?(critInit.fin||''):''; $('#rCarte').value=critInit.carte||'';
+  const lireCriteres=()=>{ const p=$('#rPeriode').value; const [debut,fin]= p==='perso' ? [$('#rDebut').value,$('#rFin').value] : bornesPeriode(p); return { wilaya:$('#rWilaya').value, periode:p, debut, fin, employe:$('#rEmploye').value, carte:$('#rCarte').value, type:$('#rType').value, contenu:$('#rContenu').value }; };
+  const apercu=()=>{ const cr=lireCriteres(); if(cr.periode!=='perso'){ $('#rDebut').value=cr.debut; $('#rFin').value=cr.fin; } const l=filtrerOperations(cr); $('#rApercu').innerHTML=`📊 ${new Set(l.map(x=>x.client)).size} client(s) · ${l.length} opération(s) · ${formaterMontant(l.reduce((a,x)=>a+(+x.op.montantFinal||0),0))} après réductions`; };
+  $('#corpsRapport').addEventListener('input', e=>{ if(e.target.id==='rDebut'||e.target.id==='rFin') $('#rPeriode').value='perso'; apercu(); }); apercu();
+  $('#btnGenererRapport').onclick=()=>{
+    const cr=lireCriteres(); const w=window.open('','_blank'); if(!w){ notifier('Autorisez les fenêtres pop-up pour générer le PDF','err'); return; }
+    w.document.write(genererRapportHTML(cr)); w.document.close(); fermerModale($('#modaleRapport'));
+  };
+  ouvrirModale('#modaleRapport');
+}
+$('#btnRapportTableau').addEventListener('click', ()=>ouvrirRapport(criteresTableau()));
+$('#btnRapportClients').addEventListener('click', ()=>ouvrirRapport({wilaya:wilayaActive, carte:$('#clientsCarte').value}));
+
+function genererRapportHTML(cr){
+  const maintenant=new Date(); const dateRapport=`${formaterDate(aujourdhuiISO())} ${z(maintenant.getHours())}:${z(maintenant.getMinutes())}`;
+  const lignes=filtrerOperations(cr).sort((a,b)=>(a.op.date||'').localeCompare(b.op.date||''));
+  const clientsRapport=[...new Set(lignes.map(l=>l.client))].sort((a,b)=>a.code.localeCompare(b.code,undefined,{numeric:true}));
+  let silver=0, gold=0; clientsRapport.forEach(c=>statutFidelite(c).niveau==='GOLD'?gold++:silver++);
+  const tot=lignes.reduce((t,l)=>{ t.total+=+l.op.montantTotal||0; t.remise+=+l.op.montantRemise||0; t.final+=+l.op.montantFinal||0; return t; },{total:0,remise:0,final:0});
+  // Totaux par client limités aux opérations filtrées
+  const parClient=new Map(); lignes.forEach(({client,op})=>{ const t=parClient.get(client)||{n:0,total:0,remise:0,final:0,derniere:''}; t.n++; t.total+=+op.montantTotal||0; t.remise+=+op.montantRemise||0; t.final+=+op.montantFinal||0; if(op.date>t.derniere) t.derniere=op.date; parClient.set(client,t); });
+  const fm=n=>formatNombre.format(+n||0).replace(/\u202f|\u00a0/g,' ');
+  const tableClients = `<h2>Clients fidélité (${clientsRapport.length})</h2><table><thead><tr><th>#</th><th>Code</th><th>Type de carte</th><th>Wilaya</th><th class="c">Nb opérations</th><th class="r">Montant total (DA)</th><th class="r">Réduction totale (DA)</th><th class="r">Montant après réduction (DA)</th><th class="c">Dernière opération</th></tr></thead><tbody>
+    ${clientsRapport.map((c,i)=>{ const s=statutFidelite(c), t=parClient.get(c); return `<tr><td class="c">${i+1}</td><td class="mono b">${echapper(c.code)}</td><td class="c"><span class="tier ${s.niveau.toLowerCase()}">${s.niveau}</span></td><td>${echapper(c.wilaya)}</td><td class="c">${t.n}</td><td class="r">${fm(t.total)}</td><td class="r">${fm(t.remise)}</td><td class="r b">${fm(t.final)}</td><td class="c">${formaterDate(t.derniere)}</td></tr>`; }).join('') || '<tr><td colspan="9" class="c">Aucun client</td></tr>'}
+    </tbody><tfoot><tr><td colspan="4">Total</td><td class="c">${lignes.length}</td><td class="r">${fm(tot.total)}</td><td class="r">${fm(tot.remise)}</td><td class="r">${fm(tot.final)}</td><td></td></tr></tfoot></table>`;
+  const tableOperations = `<h2>Détail des opérations (${lignes.length})</h2><table><thead><tr><th>Date</th><th>Code</th><th>Carte</th><th>Wilaya</th><th>Employé</th><th>Type d'opération</th><th class="r">Montant total (DA)</th><th class="c">Remise %</th><th class="r">Réduction (DA)</th><th class="r">Montant final (DA)</th></tr></thead><tbody>
+    ${lignes.map(({client:c,op:o})=>`<tr><td class="c">${formaterDate(o.date)}</td><td class="mono b">${echapper(c.code)}</td><td class="c"><span class="tier ${String(o.niveau||statutFidelite(c).niveau).toLowerCase()}">${echapper(o.niveau||statutFidelite(c).niveau)}</span></td><td>${echapper(o.wilaya||c.wilaya)}</td><td>${echapper(o.employe||'—')}</td><td>${echapper(o.type)}</td><td class="r">${fm(o.montantTotal)}</td><td class="c">${+o.tauxRemise||0}%</td><td class="r">${fm(o.montantRemise)}</td><td class="r b">${fm(o.montantFinal)}</td></tr>`).join('') || '<tr><td colspan="10" class="c">Aucune opération</td></tr>'}
+    </tbody><tfoot><tr><td colspan="6">Total</td><td class="r">${fm(tot.total)}</td><td></td><td class="r">${fm(tot.remise)}</td><td class="r">${fm(tot.final)}</td></tr></tfoot></table>`;
+  return `<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><title>BAGHDAD GPL — Programme de fidélité — Rapport</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root{--navy:#1e3d59}
     *{box-sizing:border-box} body{margin:0;font-family:'Cairo','Segoe UI',Tahoma,Arial,sans-serif;color:#1f2937;background:#e9edf2;font-size:11.5px}
-    .bar{position:sticky;top:0;background:var(--navy);color:#fff;padding:10px 16px;display:flex;gap:10px;align-items:center;z-index:9}
+    .bar{position:sticky;top:0;background:var(--navy);color:#fff;padding:10px 16px;display:flex;gap:10px;align-items:center;z-index:9;flex-wrap:wrap}
     .bar button{font-family:inherit;font-weight:700;padding:8px 16px;border-radius:8px;border:0;cursor:pointer;background:#f39c12;color:#fff}
-    .bar button.alt{background:rgba(255,255,255,.15)} .bar span{opacity:.85;font-size:12px;margin-inline-start:auto}
-    #report{background:#fff;max-width:210mm;margin:16px auto;padding:14mm 12mm 16mm;min-height:297mm;box-shadow:0 8px 30px rgba(0,0,0,.12)}
+    .bar button.alt{background:rgba(255,255,255,.15)} .bar span{opacity:.85;font-size:12px;margin-left:auto}
+    #rapport{background:#fff;max-width:297mm;margin:16px auto;padding:12mm 12mm 14mm;box-shadow:0 8px 30px rgba(0,0,0,.12)}
     .head{display:flex;justify-content:space-between;align-items:center;border-bottom:3px solid var(--navy);padding-bottom:10px;margin-bottom:12px}
-    .head h1{margin:0;font-size:20px;color:var(--navy);letter-spacing:.5px} .head h1 small{display:block;font-size:12px;color:#6b7280;font-weight:600;letter-spacing:0}
-    .head .meta{text-align:right;font-size:11px;color:#374151;line-height:1.6} .head .meta b{color:var(--navy)}
-    .logo{display:flex;align-items:center;gap:10px} .logo .sq{width:42px;height:42px;border-radius:10px;background:var(--navy);color:#fff;display:grid;place-items:center;font-weight:800;font-size:12px;letter-spacing:1px}
-    .summary{display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap} .summary div{flex:1;min-width:110px;background:#f3f6fa;border-radius:8px;padding:7px 10px;border:1px solid #e4e9f0} .summary b{display:block;font-size:15px;color:var(--navy)} .summary span{font-size:10.5px;color:#6b7280}
-    table{width:100%;border-collapse:collapse;page-break-inside:auto} thead{display:table-header-group} tr{page-break-inside:avoid;break-inside:avoid} tfoot{display:table-footer-group}
-    th{background:var(--navy);color:#fff;font-size:10.5px;padding:7px 6px;text-align:left;font-weight:700;letter-spacing:.3px;-webkit-print-color-adjust:exact;print-color-adjust:exact} th small{display:block;font-weight:600;opacity:.8;font-size:9.5px;font-family:'Cairo',sans-serif}
-    td{padding:6px 6px;border-bottom:1px solid #e4e9f0;vertical-align:middle;font-size:11px} tbody tr:nth-child(even) td{background:#f8fafc;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-    td.c,th.c{text-align:center} td.b{font-weight:700} .mono{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:10.5px;white-space:nowrap} td small{color:#6b7280;font-size:9.5px}
+    .head h1{margin:0;font-size:22px;color:var(--navy);letter-spacing:.5px;line-height:1.1} .head h1 small{display:block;font-size:13px;color:#6b7280;font-weight:700;letter-spacing:0;margin-top:2px}
+    .logo{display:flex;align-items:center;gap:12px} .logo .sq{width:46px;height:46px;border-radius:10px;background:var(--navy);color:#fff;display:grid;place-items:center;font-weight:800;font-size:12px;letter-spacing:1px}
+    .meta{display:grid;grid-template-columns:repeat(3,auto);gap:4px 22px;font-size:11px;color:#374151;text-align:left} .meta b{color:var(--navy);display:block;font-size:10px;text-transform:uppercase;letter-spacing:.4px}
+    .summary{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap} .summary div{flex:1;min-width:100px;background:#f3f6fa;border-radius:8px;padding:7px 10px;border:1px solid #e4e9f0} .summary b{display:block;font-size:14px;color:var(--navy)} .summary span{font-size:10px;color:#6b7280}
+    h2{font-size:13px;color:var(--navy);margin:14px 0 6px;padding-left:8px;border-left:4px solid #f39c12}
+    table{width:100%;border-collapse:collapse;page-break-inside:auto;margin-bottom:8px} thead{display:table-header-group} tfoot{display:table-footer-group} tr{page-break-inside:avoid;break-inside:avoid}
+    th{background:var(--navy);color:#fff;font-size:10px;padding:6px 6px;text-align:left;font-weight:700;letter-spacing:.3px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    td{padding:5px 6px;border-bottom:1px solid #e4e9f0;vertical-align:middle;font-size:10.5px} tbody tr:nth-child(even) td{background:#f8fafc;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    tfoot td{font-weight:800;background:#eef2f7;border-top:2px solid var(--navy)}
+    .c,th.c{text-align:center} .r,th.r{text-align:right;font-variant-numeric:tabular-nums} .b{font-weight:700} .mono{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:10.5px;white-space:nowrap}
     .tier{display:inline-block;padding:1px 8px;border-radius:999px;font-weight:800;font-size:9.5px;letter-spacing:.5px;-webkit-print-color-adjust:exact;print-color-adjust:exact} .tier.silver{background:#e2e6ec;color:#3f4a57} .tier.gold{background:#f6de8f;color:#5b4200}
-    td.late{color:#dc2626;font-weight:700}
-    .foot{margin-top:14px;padding-top:8px;border-top:1px solid #e4e9f0;display:flex;justify-content:space-between;font-size:10px;color:#6b7280}
+    .foot{margin-top:12px;padding-top:8px;border-top:1px solid #e4e9f0;display:flex;justify-content:space-between;font-size:10px;color:#6b7280}
     .runfoot{display:none}
-    @page{size:A4 portrait;margin:12mm 10mm 16mm}
-    @media print{ body{background:#fff;font-size:11px} .bar{display:none} #report{box-shadow:none;margin:0;padding:0;max-width:none;min-height:0} .runfoot{display:block;position:fixed;bottom:0;left:0;right:0;font-size:9.5px;color:#6b7280;border-top:1px solid #e4e9f0;padding-top:4px;text-align:center} }
+    @page{size:A4 landscape;margin:10mm 10mm 14mm}
+    @media print{ body{background:#fff;font-size:10.5px} .bar{display:none} #rapport{box-shadow:none;margin:0;padding:0;max-width:none} .runfoot{display:block;position:fixed;bottom:0;left:0;right:0;font-size:9.5px;color:#6b7280;border-top:1px solid #e4e9f0;padding-top:4px;text-align:center;background:#fff} }
   </style></head><body>
-  <div class="bar"><button onclick="window.print()">🖨️ Print / Save as PDF — طباعة / حفظ PDF</button><button class="alt" onclick="downloadPDF()">⬇️ Download PDF</button><button class="alt" onclick="window.close()">✕</button><span>${list.length} customers · ${gen}</span></div>
-  <div id="report">
+  <div class="bar"><button onclick="window.print()">🖨️ Imprimer / Enregistrer en PDF</button><button class="alt" onclick="telechargerPDF()">⬇️ Télécharger le PDF</button><button class="alt" onclick="window.close()">✕ Fermer</button><span>${clientsRapport.length} client(s) · ${lignes.length} opération(s) · ${dateRapport}</span></div>
+  <div id="rapport">
     <div class="head">
-      <div class="logo"><div class="sq">GPL</div><h1>BAGHDAD GPL — Customer List<small>FAMILY METAL · قائمة الزبائن — بطاقة الولاء SILVER / GOLD</small></h1></div>
-      <div class="meta"><b>Report generated:</b> ${gen}<br><b>Prepared by:</b> <span dir="auto">${esc(currentWorker||'—')}</span><br><b>Total records:</b> ${list.length}</div>
+      <div class="logo"><div class="sq">GPL</div><h1>BAGHDAD GPL<small>Programme de fidélité — Rapport</small></h1></div>
+      <div class="meta">
+        <div><b>Wilaya</b>${echapper(cr.wilaya||'Toutes les wilayas')}</div><div><b>Période</b>${libellePeriode(cr)}</div><div><b>Date du rapport</b>${dateRapport}</div>
+        <div><b>Employé</b>${echapper(cr.employe||'Tous')}</div><div><b>Type de carte</b>${echapper(cr.carte||'Toutes')}</div><div><b>Type d'opération</b>${echapper(cr.type||'Tous')}</div>
+      </div>
     </div>
-    <div class="summary"><div><b>${list.length}</b><span>Customers · الزبائن</span></div><div><b>${silver}</b><span>SILVER members</span></div><div><b>${gold}</b><span>GOLD members</span></div><div><b>${list.reduce((a,c)=>a+countServices(c),0)}</b><span>Total services · الخدمات</span></div><div><b>${list.filter(c=>maintStatus(c).key==='overdue').length}</b><span>Overdue maintenance · صيانة متأخرة</span></div></div>
-    <table>
-      <thead><tr><th class="c">#</th><th>Code<small>الكود</small></th><th>Full Name<small>الاسم الكامل</small></th><th>Phone<small>الهاتف</small></th><th>Vehicle<small>السيارة</small></th><th class="c">Membership<small>الفئة</small></th><th class="c">Installation Date<small>تاريخ التركيب</small></th><th class="c">Next Maintenance<small>الصيانة القادمة</small></th><th class="c">Services<small>عدد الخدمات</small></th></tr></thead>
-      <tbody>${rows||'<tr><td colspan="9" class="c" style="padding:20px">No customers</td></tr>'}</tbody>
-    </table>
-    <div class="foot"><span>BAGHDAD GPL — FAMILY METAL · www.familymetaldz.com · familymetal_1@hotmail.com</span><span>Generated ${gen}</span></div>
+    <div class="summary"><div><b>${clientsRapport.length}</b><span>Clients fidélité</span></div><div><b>${silver}</b><span>SILVER</span></div><div><b>${gold}</b><span>GOLD</span></div><div><b>${lignes.length}</b><span>Opérations</span></div><div><b>${fm(tot.total)} DA</b><span>Montant total</span></div><div><b>${fm(tot.remise)} DA</b><span>Réductions accordées</span></div><div><b>${fm(tot.final)} DA</b><span>Montant après réductions</span></div></div>
+    ${cr.contenu!=='operations' ? tableClients : ''}
+    ${cr.contenu!=='clients' ? tableOperations : ''}
+    <div class="foot"><span>BAGHDAD GPL — FAMILY METAL · www.familymetaldz.com · familymetal_1@hotmail.com</span><span>Règles en vigueur : SILVER ${parametres.regles.remiseSilver}% · GOLD ${parametres.regles.remiseGoldInitiale}% +${parametres.regles.incrementGold}%/opération après ${parametres.regles.maintenancesPourGold} maintenances</span></div>
   </div>
-  <div class="runfoot">BAGHDAD GPL — Customer List · ${gen} · www.familymetaldz.com</div>
+  <div class="runfoot">BAGHDAD GPL — Programme de fidélité · ${echapper(cr.wilaya||'Toutes les wilayas')} · ${dateRapport}</div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"><\/script>
   <script>
-    function downloadPDF(){
+    function telechargerPDF(){
       if(!window.html2pdf){ window.print(); return; }
-      var el=document.getElementById('report'); el.style.boxShadow='none'; el.style.margin='0'; el.style.minHeight='0'; el.style.padding='6mm';
-      html2pdf().set({ margin:[8,6,10,6], filename:'BAGHDAD-GPL-Customer-List-${todayISO()}.pdf', image:{type:'jpeg',quality:0.96}, html2canvas:{scale:2,useCORS:true,letterRendering:true}, jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}, pagebreak:{mode:['css','legacy'],avoid:['tr','.head','.summary']} })
+      var el=document.getElementById('rapport'); el.style.boxShadow='none'; el.style.margin='0'; el.style.padding='6mm';
+      html2pdf().set({ margin:[8,6,10,6], filename:'BAGHDAD-GPL-Fidelite-${(cr.wilaya||'Toutes').replace(/[^\w-]/g,'_')}-${aujourdhuiISO()}.pdf', image:{type:'jpeg',quality:0.96}, html2canvas:{scale:2,useCORS:true,letterRendering:true}, jsPDF:{unit:'mm',format:'a4',orientation:'landscape'}, pagebreak:{mode:['css','legacy'],avoid:['tr','.head','.summary']} })
         .from(el).save().catch(function(){ window.print(); });
     }
   <\/script></body></html>`;
 }
-$('#btnExportPdf').addEventListener('click', ()=>{
-  const list=filteredCustomers(); if(!list.length){ toast('لا يوجد زبائن للتصدير','err'); return; }
-  const w=window.open('','_blank'); if(!w){ toast('يرجى السماح بالنوافذ المنبثقة لتصدير PDF','err'); return; }
-  w.document.write(reportHTML(list)); w.document.close();
-});
 
 /* ------------------------------------------------------------------ */
-/*  Settings                                                           */
+/*  Paramètres                                                         */
 /* ------------------------------------------------------------------ */
-function renderSettings(){
-  $('#workersChips').innerHTML = settings.workers.length ? settings.workers.map(w=>`<span class="chip">${esc(w)}<button title="حذف" data-rm-worker="${esc(w)}">×</button></span>`).join('') : '<span class="muted" style="font-size:13px">لا يوجد عمّال بعد</span>';
-  $('#setMonths').value=String(settings.maintenanceMonths);
-  $('#setPrefix').value=settings.codePrefix;
-  fillBranchSelect($('#setBranch'), settings.defaultBranch);
-  $('#setDiscInstall').checked=!!settings.discountOnInstall;
-  const size=(localStorage.getItem(KEYS.customers)||'').length;
-  const mig=localStorage.getItem(KEYS.migrated);
-  $('#storageInfo').textContent = `${customers.length} زبون · ${customers.reduce((a,c)=>a+countServices(c),0)} خدمة · حجم البيانات ≈ ${(size/1024).toFixed(1)} KB` + (mig? ` · تم الترحيل من "${mig}"`:'');
+function afficherParametres(){
+  const r=parametres.regles;
+  $('#pRemiseSilver').value=r.remiseSilver; $('#pRemiseGold').value=r.remiseGoldInitiale; $('#pIncrementGold').value=r.incrementGold; $('#pMaintenancesGold').value=r.maintenancesPourGold; $('#pPlafondGold').value=r.plafondGold ?? ''; $('#pPrefixeCode').value=parametres.prefixeCode;
+  $('#chipsWilayas').innerHTML=parametres.wilayas.map(w=>`<span class="chip">${w===wilayaActive?'📍 ':''}${echapper(w)} <small class="muted">(${clientsDeWilaya(w).length})</small><button title="Supprimer" data-supprimer-wilaya="${echapper(w)}">×</button></span>`).join('');
+  $('#corpsTypes').innerHTML=parametres.typesOperation.map((t,i)=>`<tr><td><b>${echapper(t.nom)}</b></td><td><label class="switch"><input type="checkbox" data-type-maint="${i}" ${t.compteMaintenance?'checked':''}><span class="track"></span></label></td><td><label class="switch"><input type="checkbox" data-type-remise="${i}" ${!t.sansRemise?'checked':''}><span class="track"></span></label></td><td><button class="btn btn-sm btn-danger" data-supprimer-type="${i}" title="Supprimer">×</button></td></tr>`).join('');
+  $('#chipsEmployes').innerHTML=parametres.employes.length? parametres.employes.map(e=>`<span class="chip">${echapper(e)}<button title="Supprimer" data-supprimer-employe="${echapper(e)}">×</button></span>`).join('') : '<span class="muted" style="font-size:13px">Aucun employé enregistré — les noms saisis lors des opérations sont ajoutés automatiquement.</span>';
+  const taille=(localStorage.getItem(CLES.clients)||'').length;
+  $('#infoStockage').textContent=`${clients.length} client(s) fidélité · ${clients.reduce((a,c)=>a+c.operations.length,0)} opération(s) · ${parametres.wilayas.length} wilaya(s) · données ≈ ${(taille/1024).toFixed(1)} Ko` + (localStorage.getItem(CLES.sauvegardeMigration)? ' · copie des anciennes données conservée' : '');
 }
-$('#workersChips').addEventListener('click', e=>{ const b=e.target.closest('[data-rm-worker]'); if(!b) return; settings.workers=settings.workers.filter(w=>w!==b.dataset.rmWorker); saveSettings(); renderSettings(); renderWorker(); });
-$('#addWorkerBtn').addEventListener('click', ()=>{ const v=$('#newWorkerInput').value.trim(); if(!v) return; if(!settings.workers.includes(v)) settings.workers.push(v); saveSettings(); $('#newWorkerInput').value=''; renderSettings(); renderWorker(); toast('تمت إضافة العامل'); });
-$('#newWorkerInput').addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); $('#addWorkerBtn').click(); } });
-$('#saveSettingsBtn').addEventListener('click', ()=>{
-  settings.maintenanceMonths=+$('#setMonths').value||6; settings.codePrefix=($('#setPrefix').value.trim()||'BG').toUpperCase(); settings.defaultBranch=$('#setBranch').value; settings.discountOnInstall=$('#setDiscInstall').checked;
-  saveSettings(); renderSettings(); toast('تم حفظ الإعدادات ✅');
+$('#btnEnregistrerRegles').addEventListener('click', ()=>{
+  const lire=(id,defaut)=>{ const v=parseFloat($(id).value); return isFinite(v)&&v>=0 ? v : defaut; };
+  parametres.regles={ remiseSilver:lire('#pRemiseSilver',3), remiseGoldInitiale:lire('#pRemiseGold',5), incrementGold:lire('#pIncrementGold',1), maintenancesPourGold:Math.max(1, Math.round(lire('#pMaintenancesGold',3))), plafondGold: $('#pPlafondGold').value.trim()===''? null : lire('#pPlafondGold',null) };
+  parametres.prefixeCode=($('#pPrefixeCode').value.trim()||'BG').toUpperCase();
+  enregistrerParametres(); afficherParametres(); afficherRegles(); notifier('Règles enregistrées — appliquées aux prochaines opérations ✅');
 });
-$('#backupBtn').addEventListener('click', ()=>{ download(`BAGHDAD-GPL-backup-${todayISO()}.json`, JSON.stringify({app:'BAGHDAD GPL Loyalty Card', version:2, exportedAt:new Date().toISOString(), settings, customers}, null, 2)); toast('تم تنزيل النسخة الاحتياطية'); });
-$('#restoreInput').addEventListener('change', async e=>{
-  const file=e.target.files[0]; if(!file) return; e.target.value='';
+$('#btnAjouterWilaya').addEventListener('click', ()=>{ const v=$('#nouvelleWilaya').value.trim(); if(!v) return; if(parametres.wilayas.some(w=>w.toLowerCase()===v.toLowerCase())){ notifier('Cette wilaya existe déjà','err'); return; } parametres.wilayas.push(v); enregistrerParametres(); $('#nouvelleWilaya').value=''; afficherParametres(); notifier(`Wilaya « ${v} » ajoutée`); });
+$('#nouvelleWilaya').addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); $('#btnAjouterWilaya').click(); } });
+$('#btnAjouterType').addEventListener('click', ()=>{ const v=$('#nouveauType').value.trim(); if(!v) return; if(parametres.typesOperation.some(t=>t.nom.toLowerCase()===v.toLowerCase())){ notifier('Ce type existe déjà','err'); return; } parametres.typesOperation.push({nom:v, compteMaintenance:false, sansRemise:false}); enregistrerParametres(); $('#nouveauType').value=''; afficherParametres(); notifier(`Type « ${v} » ajouté`); });
+$('#nouveauType').addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); $('#btnAjouterType').click(); } });
+$('#btnAjouterEmploye').addEventListener('click', ()=>{ const v=$('#nouvelEmploye').value.trim(); if(!v) return; if(!parametres.employes.includes(v)) parametres.employes.push(v); enregistrerParametres(); $('#nouvelEmploye').value=''; afficherParametres(); notifier('Employé ajouté'); });
+$('#nouvelEmploye').addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); $('#btnAjouterEmploye').click(); } });
+$('#vue-parametres').addEventListener('click', async e=>{
+  const b=e.target.closest('[data-supprimer-wilaya],[data-supprimer-type],[data-supprimer-employe]'); if(!b) return; const d=b.dataset;
+  if(d.supprimerWilaya){
+    const w=d.supprimerWilaya; const n=clientsDeWilaya(w).length;
+    if(parametres.wilayas.length<=1){ notifier('Au moins une wilaya est requise','err'); return; }
+    if(n){ notifier(`Impossible : ${n} client(s) fidélité sont rattachés à ${w}. Videz d'abord cette wilaya.`,'err',4000); return; }
+    if(!await confirmer({titre:'Supprimer la wilaya', texte:`Retirer <b>${echapper(w)}</b> de la liste des wilayas ?`, ok:'Supprimer', danger:true})) return;
+    parametres.wilayas=parametres.wilayas.filter(x=>x!==w); if(wilayaActive===w){ wilayaActive=''; localStorage.removeItem(CLES.wilayaActive); }
+    enregistrerParametres(); afficherParametres(); rafraichirEnteteWilaya(); if(!wilayaActive) afficherSelecteurWilaya();
+  } else if(d.supprimerType){
+    const i=+d.supprimerType; const t=parametres.typesOperation[i]; if(parametres.typesOperation.length<=1){ notifier('Au moins un type est requis','err'); return; }
+    if(!await confirmer({titre:'Supprimer le type', texte:`Supprimer le type <b>${echapper(t.nom)}</b> ? Les opérations déjà enregistrées avec ce type sont conservées.`, ok:'Supprimer', danger:true})) return;
+    parametres.typesOperation.splice(i,1); enregistrerParametres(); afficherParametres();
+  } else if(d.supprimerEmploye){ parametres.employes=parametres.employes.filter(x=>x!==d.supprimerEmploye); enregistrerParametres(); afficherParametres(); }
+});
+$('#corpsTypes').addEventListener('change', e=>{
+  const m=e.target.dataset.typeMaint, r=e.target.dataset.typeRemise;
+  if(m!=null) parametres.typesOperation[+m].compteMaintenance=e.target.checked;
+  if(r!=null) parametres.typesOperation[+r].sansRemise=!e.target.checked;
+  enregistrerParametres(); afficherRegles(); notifier('Types d\'opération mis à jour');
+});
+$('#btnSauvegarde').addEventListener('click', ()=>{ telecharger(`BAGHDAD-GPL-fidelite-sauvegarde-${aujourdhuiISO()}.json`, JSON.stringify({application:'BAGHDAD GPL — Programme de fidélité', version:3, exporteLe:new Date().toISOString(), parametres, clients}, null, 2)); notifier('Sauvegarde téléchargée'); });
+$('#fichierRestauration').addEventListener('change', async e=>{
+  const fichier=e.target.files[0]; if(!fichier) return; e.target.value='';
   try{
-    const data=JSON.parse(await file.text()); const list=Array.isArray(data)? data : (data.customers||[]);
-    if(!Array.isArray(list)||!list.length) throw new Error('empty');
-    const mode = await confirmDlg({title:'استرجاع النسخة', text:`الملف يحتوي على <b>${list.length}</b> زبون.<br>«دمج» يضيف الزبائن الجدد ويحدّث الموجودين حسب الكود، أو اختر إلغاء.`, ok:'دمج مع البيانات الحالية'});
-    if(!mode) return;
-    const incoming=list.map(migrateCustomer).filter(Boolean); let added=0, updated=0;
-    incoming.forEach(inc=>{ const ex=customers.find(c=>c.id===inc.id || (inc.code && c.code===inc.code)); if(ex){ Object.assign(ex, inc, {id:ex.id}); updated++; } else { customers.push(inc); added++; } });
-    if(data.settings && typeof data.settings==='object') settings={...settings, ...data.settings, workers:[...new Set([...(settings.workers||[]), ...(data.settings.workers||[])])]};
-    ensureCodes(); save(); saveSettings(); renderAll(); toast(`تم الاسترجاع: ${added} جديد · ${updated} محدّث ✅`,'ok',4000);
-  }catch(err){ toast('ملف غير صالح','err'); }
+    const donnees=JSON.parse(await fichier.text()); const liste=Array.isArray(donnees)? donnees : (donnees.clients||donnees.customers||[]);
+    if(!Array.isArray(liste)||!liste.length) throw new Error('vide');
+    if(!await confirmer({titre:'Restaurer la sauvegarde', texte:`Le fichier contient <b>${liste.length}</b> client(s) fidélité. Les codes existants (même wilaya) seront mis à jour, les autres ajoutés.`, ok:'Fusionner'})) return;
+    if(donnees.parametres && donnees.parametres.version===3){ const p=migrerParametres(donnees.parametres); parametres={...parametres, ...p, wilayas:[...new Set([...parametres.wilayas, ...p.wilayas])], employes:[...new Set([...parametres.employes, ...p.employes])]}; }
+    const entrants=liste.map(migrerClient).filter(c=>c&&c.code); let ajoutes=0, misAJour=0;
+    entrants.forEach(inc=>{ const ex=clients.find(c=>c.wilaya===inc.wilaya && c.code===inc.code); if(ex){ Object.assign(ex, inc, {id:ex.id}); misAJour++; } else { clients.push(inc); ajoutes++; } if(!parametres.wilayas.includes(inc.wilaya)) parametres.wilayas.push(inc.wilaya); });
+    enregistrerClients(); enregistrerParametres(); toutRafraichir(); notifier(`Restauration : ${ajoutes} ajouté(s) · ${misAJour} mis à jour ✅`,'ok',4000);
+  }catch(err){ notifier('Fichier de sauvegarde invalide','err'); }
 });
-$('#wipeBtn').addEventListener('click', async ()=>{
-  if(!await confirmDlg({title:'حذف جميع البيانات', text:'سيتم حذف <b>جميع</b> الزبائن والخدمات من هذا الجهاز نهائياً. هل أنت متأكد؟', ok:'نعم، احذف الكل', danger:true})) return;
-  if(!await confirmDlg({title:'تأكيد أخير', text:'هذا الإجراء لا يمكن التراجع عنه. ننصح بتنزيل نسخة احتياطية أولاً.', ok:'حذف نهائي', danger:true})) return;
-  customers=[]; save(); renderAll(); toast('تم حذف جميع البيانات','warn');
+$('#btnViderWilaya').addEventListener('click', async ()=>{
+  if(!wilayaActive) return;
+  if(!await confirmer({titre:`Vider ${wilayaActive}`, texte:`Supprimer <b>tous</b> les clients fidélité et opérations de <b>${echapper(wilayaActive)}</b> ? Les autres wilayas ne sont pas affectées.`, ok:'Vider cette wilaya', danger:true})) return;
+  clients=clients.filter(c=>c.wilaya!==wilayaActive); enregistrerClients(); toutRafraichir(); notifier(`Données de ${wilayaActive} supprimées`,'warn');
+});
+$('#btnViderTout').addEventListener('click', async ()=>{
+  if(!await confirmer({titre:'Tout supprimer', texte:'Supprimer <b>toutes</b> les données de fidélité de <b>toutes</b> les wilayas ?', ok:'Oui, tout supprimer', danger:true})) return;
+  if(!await confirmer({titre:'Dernière confirmation', texte:'Cette action est irréversible. Téléchargez d\'abord une sauvegarde.', ok:'Supprimer définitivement', danger:true})) return;
+  clients=[]; enregistrerClients(); toutRafraichir(); notifier('Toutes les données ont été supprimées','warn');
 });
 
 /* ------------------------------------------------------------------ */
-/*  Init                                                               */
+/*  Initialisation                                                     */
 /* ------------------------------------------------------------------ */
-function renderAll(){ renderWorker(); renderDashboard(); renderCustomers(); renderSettings(); $('#navCount').textContent=customers.length; }
-load();
-renderAll();
-const startView=(location.hash||'#dashboard').slice(1);
-showView(['dashboard','customers','new','settings'].includes(startView)? startView : 'dashboard');
-if(!currentWorker) setTimeout(()=>$('#workerChip').click(), 400);
-window.addEventListener('storage', e=>{ if(e.key===KEYS.customers){ load(); renderAll(); } });
+function toutRafraichir(){ rafraichirEnteteWilaya(); afficherTableauDeBord(); afficherClients(); preparerFormulaireOperation(); afficherParametres(); }
+chargerDonnees();
+toutRafraichir();
+const vueInitiale=(location.hash||'#tableau').slice(1);
+afficherVue(['tableau','operation','clients','parametres'].includes(vueInitiale)? vueInitiale : 'tableau');
+if(!wilayaActive) setTimeout(afficherSelecteurWilaya, 300);
+window.addEventListener('storage', e=>{ if(e.key===CLES.clients || e.key===CLES.parametres){ chargerDonnees(); toutRafraichir(); } });
 
-// Expose a tiny API for debugging / tests
-window.BGPL = { membership, calcInvoice, discountForNew, get customers(){ return customers; }, RULES };
+// Petite API exposée pour le débogage / les tests
+window.BGPL = { statutFidelite, calculerFacture, tauxPourNouvelleOperation, filtrerOperations, get clients(){ return clients; }, get parametres(){ return parametres; }, get wilayaActive(){ return wilayaActive; }, definirWilaya };
 })();
 </script>
 </body>
