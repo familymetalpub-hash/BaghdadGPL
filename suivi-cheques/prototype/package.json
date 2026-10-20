@@ -1,0 +1,12 @@
+{
+  "name": "suivi-cheques-prototype-tests",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Tests automatisés du prototype HTML autonome (Mode A) — Suivi des chèques",
+  "scripts": {
+    "test": "node tests/ui-smoke.js && node tests/workflows.js && node tests/import-wizard.js"
+  },
+  "devDependencies": {
+    "jsdom": "^25.0.1"
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "name": "suivi-cheques",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Suivi des chèques bancaires multi-sociétés — application Electron sécurisée (SQLite) et prototype HTML autonome",
+  "author": "Direction Générale — Groupe",
+  "license": "UNLICENSED",
+  "main": "src/main/main.js",
+  "scripts": {
+    "start": "electron .",
+    "setup": "node scripts/check-env.mjs",
+    "test": "node --test --test-reporter=spec tests/*.test.js",
+    "test:coverage": "node --test --experimental-test-coverage tests/*.test.js",
+    "rebuild": "electron-builder install-app-deps",
+    "pack:win": "electron-builder --win --x64",
+    "pack:dir": "electron-builder --dir",
+    "lint": "node scripts/lint.mjs"
+  },
+  "dependencies": {
+    "adm-zip": "0.6.1",
+    "better-sqlite3": "13.0.3",
+    "exceljs": "4.4.0",
+    "pdfkit": "0.20.2",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "electron": "44.9.0",
+    "electron-builder": "26.15.3"
+  },
+  "build": {
+    "appId": "dz.groupe.suivicheques",
+    "productName": "Suivi des Chèques",
+    "copyright": "© 2026 Groupe — usage interne",
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "files": [
+      "src/**/*",
+      "assets/**/*",
+      "package.json",
+      "!**/*.map",
+      "!**/tests/**"
+    ],
+    "asar": true,
+    "asarUnpack": [
+      "node_modules/better-sqlite3/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "../docs",
+        "to": "docs",
+        "filter": [
+          "**/*.md"
+        ]
+      },
+      {
+        "from": "../prototype/suivi-cheques-prototype.html",
+        "to": "docs/suivi-cheques-prototype.html"
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "Suivi-Cheques-${version}-${arch}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Suivi des Chèques",
+      "uninstallDisplayName": "Suivi des Chèques",
+      "deleteAppDataOnUninstall": false
+    },
+    "portable": {
+      "artifactName": "Suivi-Cheques-${version}-portable.${ext}"
+    }
+  }
+}
