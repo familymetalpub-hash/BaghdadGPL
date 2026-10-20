@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; media-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Suivi des Chèques</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="boot" class="boot">
+    <div class="boot-mark">SC</div>
+    <p>Chargement de l’application…</p>
+  </div>
+
+  <div id="auth-view" class="auth-view" hidden>
+    <div class="auth-aside">
+      <div class="brand-block">
+        <div class="brand-mark">SC</div>
+        <div>
+          <h1>Suivi des Chèques</h1>
+          <p class="muted">Gestion multi-sociétés des chèques émis et reçus</p>
+        </div>
+      </div>
+      <div class="auth-points">
+        <div><strong>Trésorerie fiable</strong><span>Solde comptable, relevés bancaires et prévisionnel distincts.</span></div>
+        <div><strong>Traçabilité</strong><span>Approbations, historique des statuts et journal d’audit.</span></div>
+        <div><strong>Données locales</strong><span>Base SQLite et documents stockés hors du dossier d’installation.</span></div>
+      </div>
+      <p class="auth-version" id="auth-version"></p>
+    </div>
+
+    <div class="auth-panel">
+      <section id="login-panel">
+        <h2>Connexion</h2>
+        <p class="muted">Utilisez votre identifiant personnel. Aucun mot de passe partagé.</p>
+        <form id="login-form" autocomplete="off">
+          <label>Identifiant<input name="username" required maxlength="40" autocomplete="username" /></label>
+          <label>Mot de passe<input name="password" type="password" required maxlength="200" autocomplete="current-password" /></label>
+          <div id="login-error" class="form-error" hidden></div>
+          <button type="submit" class="btn btn-primary btn-block">Se connecter</button>
+        </form>
+        <p class="hint">Après cinq échecs, le compte est temporairement verrouillé. La session se verrouille après une période d’inactivité configurable.</p>
+      </section>
+
+      <section id="setup-panel" hidden>
+        <h2>Initialisation</h2>
+        <p class="muted">Créez le compte du Directeur Général et celui de l’Administrateur. Ces deux comptes sont distincts : l’administrateur ne peut pas approuver les opérations financières.</p>
+        <form id="setup-form" autocomplete="off">
+          <label>Nom du groupe / organisation<input name="orgName" required maxlength="120" value="Groupe" /></label>
+          <div class="form-grid">
+            <label>Identifiant DG<input name="dgUsername" required minlength="3" maxlength="40" /></label>
+            <label>Nom complet DG<input name="dgFullName" required maxlength="120" /></label>
+            <label>Mot de passe DG<input name="dgPassword" type="password" required minlength="12" maxlength="200" autocomplete="new-password" /></label>
+            <label>Confirmation DG<input name="dgConfirm" type="password" required minlength="12" maxlength="200" autocomplete="new-password" /></label>
+          </div>
+          <div class="form-grid">
+            <label>Identifiant administrateur<input name="adminUsername" required minlength="3" maxlength="40" /></label>
+            <label>Nom complet administrateur<input name="adminFullName" required maxlength="120" /></label>
+            <label>Mot de passe administrateur<input name="adminPassword" type="password" required minlength="12" maxlength="200" autocomplete="new-password" /></label>
+            <label>Confirmation administrateur<input name="adminConfirm" type="password" required minlength="12" maxlength="200" autocomplete="new-password" /></label>
+          </div>
+          <fieldset>
+            <legend>Première société (facultatif)</legend>
+            <div class="form-grid">
+              <label>Code<input name="companyCode" maxlength="20" placeholder="EX-01" /></label>
+              <label>Raison sociale<input name="companyName" maxlength="200" /></label>
+            </div>
+          </fieldset>
+          <p class="hint">Le mot de passe doit contenir au moins 12 caractères et trois types de caractères. Aucune donnée de démonstration n’est créée.</p>
+          <div id="setup-error" class="form-error" hidden></div>
+          <button type="submit" class="btn btn-primary btn-block">Créer les comptes</button>
+        </form>
+      </section>
+
+      <section id="password-panel" hidden>
+        <h2>Changement de mot de passe requis</h2>
+        <p class="muted">Votre mot de passe provisoire doit être remplacé avant toute utilisation.</p>
+        <form id="password-form">
+          <label>Mot de passe actuel<input name="currentPassword" type="password" required autocomplete="current-password" /></label>
+          <label>Nouveau mot de passe<input name="newPassword" type="password" required minlength="12" maxlength="200" autocomplete="new-password" /></label>
+          <label>Confirmation<input name="confirmPassword" type="password" required minlength="12" maxlength="200" autocomplete="new-password" /></label>
+          <div id="password-error" class="form-error" hidden></div>
+          <button type="submit" class="btn btn-primary btn-block">Enregistrer</button>
+          <button type="button" id="password-logout" class="btn btn-ghost btn-block">Se déconnecter</button>
+        </form>
+      </section>
+    </div>
+  </div>
+
+  <div id="shell" hidden>
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-mark small">SC</div>
+        <div>
+          <strong>Suivi des Chèques</strong>
+          <span id="org-name" class="sidebar-org"></span>
+        </div>
+      </div>
+      <nav id="nav" aria-label="Navigation principale"></nav>
+      <div class="sidebar-footer">
+        <div class="user-chip">
+          <span id="user-initials" class="avatar"></span>
+          <div>
+            <strong id="user-name"></strong>
+            <span id="user-role" class="muted"></span>
+          </div>
+        </div>
+        <button id="lock-button" class="btn btn-ghost btn-small" type="button">Verrouiller</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <h1 id="page-title">Tableau de bord</h1>
+          <p id="page-subtitle" class="muted"></p>
+        </div>
+        <div class="topbar-actions">
+          <button id="notifications-button" class="icon-button" type="button" title="Notifications" aria-label="Notifications">
+            <span class="bell">🔔</span><span id="notification-count" class="count-badge" hidden>0</span>
+          </button>
+          <button id="refresh-button" class="btn btn-ghost btn-small" type="button">Actualiser</button>
+        </div>
+      </header>
+      <section id="page" class="page" aria-live="polite"></section>
+      <footer class="app-footer">Suivi des Chèques 2.0 · Données locales SQLite · Les soldes affichés sont explicitement qualifiés.</footer>
+    </main>
+  </div>
+
+  <div id="modal-root"></div>
+  <div id="toast-root" class="toast-root" aria-live="assertive"></div>
+
+  <script src="js/util.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/pages/dashboard.js"></script>
+  <script src="js/pages/masterdata.js"></script>
+  <script src="js/pages/cheques.js"></script>
+  <script src="js/pages/approvals.js"></script>
+  <script src="js/pages/reconciliation.js"></script>
+  <script src="js/pages/reports.js"></script>
+  <script src="js/pages/audit.js"></script>
+  <script src="js/pages/documents.js"></script>
+  <script src="js/pages/backup.js"></script>
+  <script src="js/pages/settings.js"></script>
+</body>
+</html>

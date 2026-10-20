@@ -1,0 +1,27 @@
+# Dépendances
+node_modules/
+**/node_modules/
+
+# Artefacts de construction et de packaging
+dist/
+out/
+build/
+release/
+*.asar
+*.exe
+*.msi
+*.nsis*
+
+# Bases et sauvegardes locales de développement
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+*.db
+sauvegardes/
+backups/
+
+# Divers
+.DS_Store
+Thumbs.db
+*.log
+npm-debug.log*
