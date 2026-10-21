@@ -69,7 +69,8 @@ let S={companies:[],cheques:[],accounts:[],parties:[],log:[]};
 try{S=JSON.parse(localStorage.getItem('chq_simple'))||S}catch(e){}
 S.cheques=S.cheques||[];S.accounts=S.accounts||[];S.log=S.log||[];S.parties=S.parties||[];
 /* ترحيل البيانات القديمة: المرتجع أصبح ملغى */
-S.cheques.forEach(c=>{if(c.status==='returned')c.status='cancelled';if(c.rd&&!c.cd)c.cd=c.rd;if(c.rr&&!c.cr)c.cr=c.rr;if(c.rs&&!c.cs)c.cs=c.rs;delete c.rd;delete c.rr;delete c.rs});
+S.cheques.forEach(c=>{if(c.status==='returned')c.status='cancelled';if(c.rd&&!c.cd)c.cd=c.rd;if(c.rr&&!c.cr)c.cr=c.rr;if(c.rs&&!c.cs)c.cs=c.rs;delete c.rd;delete c.rr;delete c.rs;
+ if(!CATS[c.cat]){const pr=S.parties.find(x=>x.id===c.pid)||S.parties.find(x=>x.name===c.party);c.cat=pr&&CATS[pr.cat]?pr.cat:(c.dir==='in'?'customer':'supplier')}});
 const save=()=>{try{localStorage.setItem('chq_simple',JSON.stringify(S))}catch(e){}};
 let tab='dash',cur='',flt='all',edit='',showF=false,pedit='',showP=false,ptab='customer';
 const co=id=>S.companies.find(c=>c.id===id)||{name:'؟',color:'#888'};
@@ -126,31 +127,39 @@ function chq(){
  <label>الاتجاه<select id="f_dir" onchange="fillSt()"><option value="in">وارد (استلمته)</option><option value="out">صادر (قطعته)</option></select></label>
  <label>الحساب<select id="f_acc">${S.accounts.filter(a=>a.co===cur).map(a=>`<option value="${a.id}">${esc(accName(a.id))}</option>`).join('')}</select></label>
  <label>رقم الشيك<input id="f_no" required></label>
- <label>الطرف<select id="f_party" required></select></label>
+ <label>الطرف<select id="f_cat" onchange="fillPartyList()"></select></label>
+ <label>اسم الطرف<input id="f_party" list="f_plist" placeholder="اكتب أو اختر" required><datalist id="f_plist"></datalist></label>
  <label>البنك المسحوب عليه<select id="f_bank">${bankOpts()}</select></label>
  <label>المبلغ (DA)<input id="f_amt" type="number" min="1" step="0.01" required oninput="$('#f_w').textContent=ar(+this.value)+' دينار جزائري'"><small id="f_w" class="k"></small></label>
+ <label>تاريخ العملية<input id="f_op" type="date" value="${T}"></label>
  <label>تاريخ الاستحقاق<input id="f_due" type="date" value="${T}" required></label>
  <label>الحالة<select id="f_st"></select></label>
  <label>ملاحظة<input id="f_note"></label>
  <label>&nbsp;<button class="p">حفظ الشيك</button></label></form>`:''}</div>
  <div class="card"><div class="chips">${[['all','الكل'],['pend','معلقة'],['late','متأخرة'],['can','ملغاة'],['done','منتهية']].map(x=>`<button class="${flt===x[0]?'on':''}" onclick="flt='${x[0]}';render()">${x[1]}</button>`).join('')}</div>
- <div class="tw"><table><tr><th></th><th>رقم</th><th>الطرف</th><th>البنك</th><th>المبلغ</th><th>الاستحقاق</th><th>الحالة</th><th></th></tr>
- ${L.map(c=>`<tr><td class="${c.dir}">${c.dir==='in'?'وارد':'صادر'}</td><td>${esc(c.no)}</td><td>${esc(c.party)}${c.note?`<br><span class="k">${esc(c.note)}</span>`:''}</td><td>${esc(c.bank)}<br><span class="k">${esc(accName(c.acc))}</span>${c.status==='cancelled'?`<br><span class="late">ملغى ${fd(c.cd)}: ${esc(c.cr||'')}</span> ${c.cs?`<span class="in">سُوّي ${fd(c.cs)}</span>`:`<button onclick="settle('${c.id}')">تسوية</button>`}`:''}</td><td class="num ${c.dir}">${fmt(c.amt)}</td><td class="${dueCls(c)}">${fd(c.due)}</td>
+ <div class="tw"><table><tr><th></th><th>رقم</th><th>الطرف</th><th>البنك</th><th>المبلغ</th><th>تاريخ العملية</th><th>الاستحقاق</th><th>الحالة</th><th></th></tr>
+ ${L.map(c=>`<tr><td class="${c.dir}">${c.dir==='in'?'وارد':'صادر'}</td><td>${esc(c.no)}</td><td>${esc(c.party)}${c.cat?`<br><span class="k">${esc(CATS[c.cat]||'')}</span>`:''}${c.note?`<br><span class="k">${esc(c.note)}</span>`:''}</td><td>${esc(c.bank)}<br><span class="k">${esc(accName(c.acc))}</span>${c.status==='cancelled'?`<br><span class="late">ملغى ${fd(c.cd)}: ${esc(c.cr||'')}</span> ${c.cs?`<span class="in">سُوّي ${fd(c.cs)}</span>`:`<button onclick="settle('${c.id}')">تسوية</button>`}`:''}</td><td class="num ${c.dir}">${fmt(c.amt)}</td><td class="num">${fd(c.op)||'—'}</td><td class="${dueCls(c)}">${fd(c.due)}</td>
  <td><select onchange="setSt('${c.id}',this.value)">${Object.entries(ST[c.dir]).map(([k,v])=>`<option value="${k}" ${c.status===k?'selected':''}>${v}</option>`).join('')}</select></td>
- <td><button class="d" onclick="delChq('${c.id}')">✕</button></td></tr>`).join('')||'<tr><td colspan="8" class="k">لا توجد شيكات.</td></tr>'}</table></div></div>`;
+ <td><button class="d" onclick="delChq('${c.id}')">✕</button></td></tr>`).join('')||'<tr><td colspan="9" class="k">لا توجد شيكات.</td></tr>'}</table></div></div>`;
 }
 function fillSt(){const d=$('#f_dir');if(!d)return;const dir=d.value;
  $('#f_st').innerHTML=Object.entries(ST[dir]).map(([k,v])=>`<option value="${k}">${v}</option>`).join('');
- const ps=S.parties.filter(p=>CATDIR[p.cat]===dir).sort((a,b)=>a.name.localeCompare(b.name,'ar'));
- $('#f_party').innerHTML='<option value="">— اختر الطرف —</option>'+ps.map(p=>`<option value="${p.id}">${esc(p.name)}</option>`).join('')+'<option value="__o">أخرى…</option>';
+ const cs=DIRCATS[dir];
+ $('#f_cat').innerHTML=cs.map(k=>`<option value="${k}">${CATS[k]}</option>`).join('');
+ fillPartyList();
+}
+function fillPartyList(){const c=$('#f_cat'),l=$('#f_plist');if(!c||!l)return;
+ const ps=S.parties.filter(p=>p.cat===c.value).sort((a,b)=>a.name.localeCompare(b.name,'ar'));
+ l.innerHTML=ps.map(p=>`<option value="${esc(p.name)}">`).join('');
 }
 function addChq(e){e.preventDefault();const g=i=>$('#f_'+i).value.trim();
  if(!g('acc')){alert('أضف حساباً بنكياً لهذه الشركة أولاً (تبويب الحسابات).');return}
- let pid=g('party'),party='';
- if(pid==='__o'){party=prompt('اسم الطرف')||'';if(!party)return;pid=''}
- else if(pid){const p=S.parties.find(x=>x.id===pid);party=p?p.name:''}
- if(!party){alert('اختر الطرف أو أضفه من الإعدادات ← معلومات الأطراف.');return}
- S.cheques.push({id:uid(),co:cur,acc:g('acc'),dir:g('dir'),no:g('no'),party,pid,bank:bv(g('bank')),amt:+g('amt'),due:g('due'),status:g('st'),note:g('note')});save();showF=false;render()}
+ const cat=g('cat'),party=g('party');
+ if(!party){alert('اكتب اسم الطرف.');return}
+ const p=S.parties.find(x=>x.name===party&&x.cat===cat)||S.parties.find(x=>x.name===party);
+ S.cheques.push({id:uid(),co:cur,acc:g('acc'),dir:g('dir'),no:g('no'),cat,party,pid:p?p.id:'',bank:bv(g('bank')),amt:+g('amt'),op:g('op'),due:g('due'),status:g('st'),note:g('note')});
+ if(!p){S.parties.push({id:uid(),name:party,cat,phone:'',note:''});S.cheques[S.cheques.length-1].pid=S.parties[S.parties.length-1].id}
+ save();showF=false;render()}
 function setSt(id,v){const c=S.cheques.find(c=>c.id===id);c.status=v;if(v==='cancelled'){c.cd=T;c.cr=prompt('سبب الإلغاء (مثلاً: إلغاء بالاتفاق)')||''}save();render()}
 function delChq(id){if(confirm('حذف هذا الشيك؟')){S.cheques=S.cheques.filter(c=>c.id!==id);save();render()}}
 
@@ -244,7 +253,7 @@ function pts(){
  S.parties.forEach(p=>{if(!CATS[p.cat])return;rows[p.cat][p.name]=rows[p.cat][p.name]||{name:p.name,n:0,amt:0,can:0,canA:0,reg:true}});
  // شيكات لم تُسجَّل أطرافها بعد
  L.forEach(c=>{const q=partyOf(c),nm=nameOf(c)||'—';if(!nm)return;
-  const cat=q&&CATS[q.cat]?q.cat:(c.dir==='in'?'customer':'supplier');
+  const cat=(c.cat&&CATS[c.cat])?(c.cat):(q&&CATS[q.cat]?q.cat:(c.dir==='in'?'customer':'supplier'));
   const r=rows[cat][nm]=rows[cat][nm]||{name:nm,n:0,amt:0,can:0,canA:0,reg:!!q};
   r.n++;r.amt+=c.amt;if(c.status==='cancelled'){r.can++;r.canA+=c.amt}});
  const dir=CATDIR[ptab],amtLab=dir==='in'?'الوارد منه':'الصادر له';
@@ -263,7 +272,7 @@ function ar(n){n=Math.round(n);if(!n)return'';const U=['','واحد','اثنان
  const b=x=>{const h=Math.floor(x/100),r=x%100,p=[];if(h)p.push(H[h]);if(r){if(r<20)p.push(U[r]);else{const u=r%10;p.push((u?U[u]+' و':'')+Tn[Math.floor(r/10)])}}return p.join(' و')};
  let P=[],i=0;while(n>0){const g=n%1000;n=Math.floor(n/1000);if(g){let t;if(!i)t=b(g);else{const w=sc[i-1];t=g===1?w[0]:g===2?w[1]:g<=10?b(g)+' '+w[2]:b(g)+' '+w[3]}P.unshift(t)}i++}return P.join(' و')}
 function csv(){const q=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
- return ['الشركة','الاتجاه','الحساب','الرقم','الطرف','المبلغ','الاستحقاق','الحالة','سبب الإلغاء'].join(';')+'\n'+S.cheques.map(c=>[co(c.co).name,c.dir==='in'?'وارد':'صادر',accName(c.acc),c.no,c.party,c.amt,c.due,ST[c.dir][c.status],c.cr||''].map(q).join(';')).join('\n')}
+ return ['الشركة','الاتجاه','الحساب','الرقم','الفئة','الطرف','المبلغ','تاريخ العملية','الاستحقاق','الحالة','سبب الإلغاء'].join(';')+'\n'+S.cheques.map(c=>[co(c.co).name,c.dir==='in'?'وارد':'صادر',accName(c.acc),c.no,CATS[c.cat]||'',c.party,c.amt,c.op||'',c.due,ST[c.dir][c.status],c.cr||''].map(q).join(';')).join('\n')}
 function lg(t){S.log.push({d:new Date().toISOString().slice(0,16).replace('T',' '),t});S.log=S.log.slice(-300)}
 async function hs(v){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(v));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
 function lockUI(){if(!S.pw)return;const d=document.createElement('div');d.style.cssText='position:fixed;inset:0;background:var(--bg);z-index:99;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px';
