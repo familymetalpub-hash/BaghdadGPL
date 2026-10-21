@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>متابعة الشيكات</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#f3f5f7;--card:#fff;--tx:#18222d;--mu:#667585;--bd:#dde3e9;--pr:#0f766e;--in:#15803d;--out:#b91c1c;--wa:#b45309}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f151c;--card:#18212b;--tx:#e6ebf0;--mu:#93a1b0;--bd:#2a3644;--pr:#2dd4bf;--in:#4ade80;--out:#f87171;--wa:#fbbf24}}
+:root[data-theme="dark"]{--bg:#0f151c;--card:#18212b;--tx:#e6ebf0;--mu:#93a1b0;--bd:#2a3644;--pr:#2dd4bf;--in:#4ade80;--out:#f87171;--wa:#fbbf24}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:"Segoe UI",Tahoma,Arial,sans-serif;font-size:15px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--card);z-index:10}
+header{position:sticky;top:env(safe-area-inset-top,0px);background:var(--card);border-bottom:1px solid var(--bd);z-index:11}
+.brand{padding:10px 16px;font-weight:700;font-size:17px;border-bottom:1px solid var(--bd)}
+nav{display:flex;gap:6px;padding:8px 12px;flex-wrap:wrap}
+nav button{flex:1;min-width:90px}
+main{max-width:1000px;margin:auto;padding:14px}
+button,input,select{font:inherit;color:var(--tx);background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:8px 12px}
+button{cursor:pointer}
+button.on,button.p{background:var(--pr);color:#fff;border-color:var(--pr)}
+button.d{color:var(--out);padding:3px 9px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px;margin-bottom:14px}
+h2{font-size:16px;margin:0 0 10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:14px}
+.k{color:var(--mu);font-size:13px}.v{font-size:19px;font-weight:700;margin-top:4px;direction:ltr;text-align:right}
+.in{color:var(--in)}.out{color:var(--out)}.late{color:var(--out);font-weight:700}.soon{color:var(--wa);font-weight:700}
+.co{border-top:5px solid var(--pr);cursor:pointer}
+.co h3{margin:0 0 8px;font-size:16px}
+.row{display:flex;justify-content:space-between;gap:8px;padding:3px 0;font-size:14px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.chips button{border-width:2px}
+form{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+label{display:flex;flex-direction:column;gap:3px;font-size:13px;color:var(--mu)}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:8px;text-align:right;border-bottom:1px solid var(--bd);white-space:nowrap}
+th{color:var(--mu);font-weight:600}
+.num{direction:ltr}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-left:6px}
+@media print{header,nav,button,form{display:none!important}}
+.empty{text-align:center;color:var(--mu);padding:30px 10px}
+textarea{width:100%;height:110px;direction:ltr;font-family:monospace;font-size:12px;background:var(--card);color:var(--tx);border:1px solid var(--bd);border-radius:8px}
+</style>
+</head>
+<body>
+<header>
+<div class="brand">🧾 متابعة الشيكات</div>
+<nav id="nav"></nav>
+</header>
+<main id="main"></main>
+<script>
+const $=s=>document.querySelector(s);
+const uid=()=>Math.random().toString(36).slice(2,9);
+const iso=d=>d.toISOString().slice(0,10);
+const add=n=>{const d=new Date();d.setDate(d.getDate()+n);return iso(d)};
+const T=iso(new Date());
+const fmt=n=>n.toLocaleString('fr-FR',{minimumFractionDigits:2,maximumFractionDigits:2})+' DA';
+const fd=s=>s?s.split('-').reverse().join('/'):'';
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const ST={in:{received:'مستلم',deposited:'مودَع',cashed:'محصَّل',cancelled:'ملغى'},out:{issued:'صادر',delivered:'مسلَّم',paid:'مصروف',cancelled:'ملغى'}};
+const PEND={in:['received','deposited'],out:['issued','delivered']};
+const CATS={customer:'زبون',supplier:'مورّد',obligation:'التزامات أخرى',right:'حقوق أخرى'};
+const CATDIR={customer:'in',supplier:'out',obligation:'out',right:'in'};
+const DIRCATS={in:['customer','right'],out:['supplier','obligation']};
+let S={companies:[],cheques:[],accounts:[],parties:[],log:[]};
+try{S=JSON.parse(localStorage.getItem('chq_simple'))||S}catch(e){}
+S.cheques=S.cheques||[];S.accounts=S.accounts||[];S.log=S.log||[];S.parties=S.parties||[];
+/* ترحيل البيانات القديمة: المرتجع أصبح ملغى */
+S.cheques.forEach(c=>{if(c.status==='returned')c.status='cancelled';if(c.rd&&!c.cd)c.cd=c.rd;if(c.rr&&!c.cr)c.cr=c.rr;if(c.rs&&!c.cs)c.cs=c.rs;delete c.rd;delete c.rr;delete c.rs});
+const save=()=>{try{localStorage.setItem('chq_simple',JSON.stringify(S))}catch(e){}};
+let tab='dash',cur='',flt='all',edit='',showF=false,pedit='',showP=false,ptab='customer';
+const co=id=>S.companies.find(c=>c.id===id)||{name:'؟',color:'#888'};
+const pend=c=>PEND[c.dir].includes(c.status);
+const sum=l=>l.reduce((s,c)=>s+c.amt,0);
+const dueCls=c=>!pend(c)?'':c.due<T?'late':c.due<=add(3)?'soon':'';
+
+function render(){
+ const tabs=[['dash','لوحة التحكم'],['chq','الشيكات'],['acc','الحسابات'],['pt','الأطراف'],['set','الإعدادات']];
+ $('#nav').innerHTML=tabs.map(t=>`<button class="${tab===t[0]?'on':''}" onclick="go('${t[0]}')">${t[1]}</button>`).join('');
+ if(!S.companies.some(c=>c.id===cur))cur=S.companies[0]?S.companies[0].id:'';
+ $('#main').innerHTML=({dash,chq,acc:accs,pt:pts,set})[tab]();
+ if(tab==='chq')fillSt();
+}
+function go(t){tab=t;render();scrollTo(0,0)}
+function goCo(id){cur=id;flt='all';go('chq')}
+
+/* ---------- لوحة التحكم ---------- */
+function dash(){
+ if(!S.companies.length)return`<div class="card empty">لم تضف أي شركة بعد.<br><br><button class="p" onclick="showF=true;go('set')">+ إضافة شركتي الأولى</button></div>`;
+ const P=S.cheques.filter(pend),late=P.filter(c=>c.due<T),soon=P.filter(c=>c.due>=T&&c.due<=add(7));
+ const up=P.slice().sort((a,b)=>a.due.localeCompare(b.due)).slice(0,10);
+ return`${alerts(S.accounts)}<div class="grid">
+ <div class="card"><div class="k">الرصيد الفعلي (كل الحسابات)</div><div class="v">${fmt(S.accounts.reduce((s,a)=>s+bal(a),0))}</div></div>
+ <div class="card"><div class="k">شيكات واردة معلقة</div><div class="v in">${fmt(sum(P.filter(c=>c.dir==='in')))}</div></div>
+ <div class="card"><div class="k">شيكات صادرة معلقة</div><div class="v out">${fmt(sum(P.filter(c=>c.dir==='out')))}</div></div>
+ <div class="card"><div class="k">تستحق خلال 7 أيام</div><div class="v soon">${soon.length}</div></div>
+ <div class="card"><div class="k">متأخرة</div><div class="v ${late.length?'out':''}">${late.length}</div></div>
+ <div class="card"><div class="k">ملغاة</div><div class="v ${S.cheques.some(c=>c.status==='cancelled')?'out':''}">${S.cheques.filter(c=>c.status==='cancelled').length}</div></div></div>
+ <h2>الشركات</h2><div class="grid">${S.companies.map(c=>{const p=P.filter(x=>x.co===c.id),l=p.filter(x=>x.due<T).length;
+ return`<div class="card co" style="border-top-color:${c.color}" onclick="goCo('${c.id}')"><h3>${esc(c.name)}</h3>
+ <div class="row"><span class="k">واردة معلقة</span><b class="in num">${fmt(sum(p.filter(x=>x.dir==='in')))}</b></div>
+ <div class="row"><span class="k">صادرة معلقة</span><b class="out num">${fmt(sum(p.filter(x=>x.dir==='out')))}</b></div>
+ <div class="row"><span class="k">متأخرة</span><b class="${l?'late':''}">${l}</b></div>
+ <div class="row"><span class="k">الرصيد الفعلي</span><b class="num">${fmt(S.accounts.filter(a=>a.co===c.id).reduce((s,a)=>s+bal(a),0))}</b></div>
+ <div class="row"><span class="k">كل الشيكات</span><b>${S.cheques.filter(x=>x.co===c.id).length}</b></div></div>`}).join('')}</div>
+ <div class="card"><h2>أقرب الاستحقاقات (كل الشركات)</h2>${up.length?`<div class="tw"><table><tr><th>الشركة</th><th></th><th>الطرف</th><th>المبلغ</th><th>الاستحقاق</th></tr>${up.map(c=>`<tr><td><span class="dot" style="background:${co(c.co).color}"></span>${esc(co(c.co).name)}</td><td class="${c.dir}">${c.dir==='in'?'وارد':'صادر'}</td><td>${esc(c.party)}</td><td class="num">${fmt(c.amt)}</td><td class="${dueCls(c)}">${fd(c.due)}</td></tr>`).join('')}</table></div>`:'<div class="k">لا توجد شيكات معلقة.</div>'}</div>`;
+}
+
+/* ---------- الشيكات ---------- */
+function chq(){
+ if(!S.companies.length)return`<div class="card empty">أضف شركة أولاً من صفحة الإعدادات.<br><br><button class="p" onclick="showF=true;go('set')">+ إضافة شركة</button></div>`;
+ let L=S.cheques.filter(c=>c.co===cur);
+ const f={all:()=>true,pend,late:c=>pend(c)&&c.due<T,can:c=>c.status==='cancelled',done:c=>!pend(c)&&c.status!=='cancelled'};
+ L=L.filter(f[flt]).sort((a,b)=>a.due.localeCompare(b.due));
+ const all=S.cheques.filter(c=>c.co===cur);
+ return`${alerts(S.accounts.filter(a=>a.co===cur))}<div class="chips">${S.companies.map(c=>`<button class="${c.id===cur?'on':''}" style="${c.id===cur?'':'border-color:'+c.color}" onclick="cur='${c.id}';flt='all';render()">${esc(c.name)}</button>`).join('')}</div>
+ <div class="grid">
+ <div class="card"><div class="k">واردة معلقة</div><div class="v in">${fmt(sum(all.filter(c=>c.dir==='in'&&pend(c))))}</div></div>
+ <div class="card"><div class="k">صادرة معلقة</div><div class="v out">${fmt(sum(all.filter(c=>c.dir==='out'&&pend(c))))}</div></div>
+ <div class="card"><div class="k">متأخرة</div><div class="v ${all.some(f.late)?'out':''}">${all.filter(f.late).length}</div></div></div>
+ <div class="card"><button class="p" onclick="showF=!showF;render()">${showF?'إخفاء النموذج':'+ شيك جديد'}</button>
+ ${showF?`<form onsubmit="addChq(event)" style="margin-top:12px">
+ <label>الاتجاه<select id="f_dir" onchange="fillSt()"><option value="in">وارد (استلمته)</option><option value="out">صادر (قطعته)</option></select></label>
+ <label>الحساب<select id="f_acc">${S.accounts.filter(a=>a.co===cur).map(a=>`<option value="${a.id}">${esc(accName(a.id))}</option>`).join('')}</select></label>
+ <label>رقم الشيك<input id="f_no" required></label>
+ <label>الطرف<select id="f_party" required></select></label>
+ <label>البنك المسحوب عليه<select id="f_bank">${bankOpts()}</select></label>
+ <label>المبلغ (DA)<input id="f_amt" type="number" min="1" step="0.01" required oninput="$('#f_w').textContent=ar(+this.value)+' دينار جزائري'"><small id="f_w" class="k"></small></label>
+ <label>تاريخ الاستحقاق<input id="f_due" type="date" value="${T}" required></label>
+ <label>الحالة<select id="f_st"></select></label>
+ <label>ملاحظة<input id="f_note"></label>
+ <label>&nbsp;<button class="p">حفظ الشيك</button></label></form>`:''}</div>
+ <div class="card"><div class="chips">${[['all','الكل'],['pend','معلقة'],['late','متأخرة'],['can','ملغاة'],['done','منتهية']].map(x=>`<button class="${flt===x[0]?'on':''}" onclick="flt='${x[0]}';render()">${x[1]}</button>`).join('')}</div>
+ <div class="tw"><table><tr><th></th><th>رقم</th><th>الطرف</th><th>البنك</th><th>المبلغ</th><th>الاستحقاق</th><th>الحالة</th><th></th></tr>
+ ${L.map(c=>`<tr><td class="${c.dir}">${c.dir==='in'?'وارد':'صادر'}</td><td>${esc(c.no)}</td><td>${esc(c.party)}${c.note?`<br><span class="k">${esc(c.note)}</span>`:''}</td><td>${esc(c.bank)}<br><span class="k">${esc(accName(c.acc))}</span>${c.status==='cancelled'?`<br><span class="late">ملغى ${fd(c.cd)}: ${esc(c.cr||'')}</span> ${c.cs?`<span class="in">سُوّي ${fd(c.cs)}</span>`:`<button onclick="settle('${c.id}')">تسوية</button>`}`:''}</td><td class="num ${c.dir}">${fmt(c.amt)}</td><td class="${dueCls(c)}">${fd(c.due)}</td>
+ <td><select onchange="setSt('${c.id}',this.value)">${Object.entries(ST[c.dir]).map(([k,v])=>`<option value="${k}" ${c.status===k?'selected':''}>${v}</option>`).join('')}</select></td>
+ <td><button class="d" onclick="delChq('${c.id}')">✕</button></td></tr>`).join('')||'<tr><td colspan="8" class="k">لا توجد شيكات.</td></tr>'}</table></div></div>`;
+}
+function fillSt(){const d=$('#f_dir');if(!d)return;const dir=d.value;
+ $('#f_st').innerHTML=Object.entries(ST[dir]).map(([k,v])=>`<option value="${k}">${v}</option>`).join('');
+ const ps=S.parties.filter(p=>CATDIR[p.cat]===dir).sort((a,b)=>a.name.localeCompare(b.name,'ar'));
+ $('#f_party').innerHTML='<option value="">— اختر الطرف —</option>'+ps.map(p=>`<option value="${p.id}">${esc(p.name)}</option>`).join('')+'<option value="__o">أخرى…</option>';
+}
+function addChq(e){e.preventDefault();const g=i=>$('#f_'+i).value.trim();
+ if(!g('acc')){alert('أضف حساباً بنكياً لهذه الشركة أولاً (تبويب الحسابات).');return}
+ let pid=g('party'),party='';
+ if(pid==='__o'){party=prompt('اسم الطرف')||'';if(!party)return;pid=''}
+ else if(pid){const p=S.parties.find(x=>x.id===pid);party=p?p.name:''}
+ if(!party){alert('اختر الطرف أو أضفه من الإعدادات ← معلومات الأطراف.');return}
+ S.cheques.push({id:uid(),co:cur,acc:g('acc'),dir:g('dir'),no:g('no'),party,pid,bank:bv(g('bank')),amt:+g('amt'),due:g('due'),status:g('st'),note:g('note')});save();showF=false;render()}
+function setSt(id,v){const c=S.cheques.find(c=>c.id===id);c.status=v;if(v==='cancelled'){c.cd=T;c.cr=prompt('سبب الإلغاء (مثلاً: إلغاء بالاتفاق)')||''}save();render()}
+function delChq(id){if(confirm('حذف هذا الشيك؟')){S.cheques=S.cheques.filter(c=>c.id!==id);save();render()}}
+
+/* ---------- الإعدادات ---------- */
+function set(){
+ const c=S.companies.find(x=>x.id===edit)||{color:'#0f766e'};
+ const f=(id,l,r='')=>`<label>${l}<input id="c_${id}" value="${esc(c[id]||'')}" ${r}></label>`;
+ return`<div class="card"><h2>شركاتي</h2>
+ ${showF||edit?`<form onsubmit="saveCo(event)">
+ ${f('name','اسم الشركة','required')}
+ <label>الشكل القانوني<select id="c_form">${['SARL','EURL','SPA','SNC','مؤسسة فردية','أخرى'].map(o=>`<option ${c.form===o?'selected':''}>${o}</option>`).join('')}</select></label>
+ ${f('nif','NIF')}${f('nis','NIS')}${f('rc','السجل التجاري RC')}${f('phone','الهاتف')}${f('address','العنوان')}
+ <label>اللون<input id="c_color" type="color" value="${c.color}"></label>
+ <label>&nbsp;<button class="p">${edit?'حفظ التعديل':'حفظ الشركة'}</button></label>
+ <label>&nbsp;<button type="button" onclick="edit='';showF=false;render()">إلغاء</button></label></form>`
+ :`<button class="p" onclick="showF=true;render()">+ إضافة شركة</button>`}
+ <div class="tw" style="margin-top:12px"><table><tr><th>الشركة</th><th>الشكل</th><th>NIF</th><th>الهاتف</th><th>الشيكات</th><th></th></tr>
+ ${S.companies.map(c=>`<tr><td><span class="dot" style="background:${c.color}"></span>${esc(c.name)}</td><td>${esc(c.form)}</td><td>${esc(c.nif)}</td><td class="num">${esc(c.phone)}</td><td>${S.cheques.filter(x=>x.co===c.id).length}</td>
+ <td><button onclick="edit='${c.id}';render();scrollTo(0,0)">تعديل</button> <button class="d" onclick="delCo('${c.id}')">✕</button></td></tr>`).join('')||'<tr><td colspan="6" class="k">لا توجد شركات بعد.</td></tr>'}</table></div></div>
+ ${partiesCard()}
+ ${extras()}<div class="card"><h2>نسخة احتياطية</h2><p class="k">بياناتك محفوظة في متصفح هذا الجهاز فقط. انسخ النص أدناه واحفظه في ملف، وللاستعادة الصق نسخة سابقة واضغط استيراد.</p>
+ <textarea id="bt">${esc(JSON.stringify(S))}</textarea><p><button class="p" onclick="imp()">استيراد</button></p></div>`;
+}
+function partiesCard(){
+ const ed=S.parties.find(p=>p.id===pedit);
+ return`<div class="card"><h2>معلومات الأطراف</h2>
+ <p class="k">الأطراف هنا تُستخدم في الشيكات وتُصنَّف تلقائياً في تبويبات صفحة الأطراف.</p>
+ ${showP||pedit?`<form onsubmit="saveParty(event)">
+ <label>اسم الطرف<input id="p_name" value="${esc(ed?ed.name:'')}" required></label>
+ <label>الفئة<select id="p_cat">${Object.entries(CATS).map(([k,v])=>`<option value="${k}" ${ed&&ed.cat===k?'selected':''}>${v}</option>`).join('')}</select></label>
+ <label>الهاتف (اختياري)<input id="p_phone" value="${esc(ed?ed.phone:'')}"></label>
+ <label>ملاحظة (اختياري)<input id="p_note" value="${esc(ed?ed.note:'')}"></label>
+ <label>&nbsp;<button class="p">${pedit?'حفظ التعديل':'حفظ الطرف'}</button></label>
+ <label>&nbsp;<button type="button" onclick="pedit='';showP=false;render()">إلغاء</button></label></form>`
+ :`<button class="p" onclick="showP=true;render()">+ إضافة طرف</button>`}
+ <div class="tw" style="margin-top:12px"><table><tr><th>الطرف</th><th>الفئة</th><th>الهاتف</th><th>الشيكات</th><th></th></tr>
+ ${S.parties.slice().sort((a,b)=>a.name.localeCompare(b.name,'ar')).map(p=>`<tr><td>${esc(p.name)}</td><td>${esc(CATS[p.cat]||'')}</td><td class="num">${esc(p.phone||'')}</td><td>${S.cheques.filter(c=>c.co===cur&&(c.pid===p.id||(!c.pid&&c.party===p.name))).length}</td>
+ <td><button onclick="pedit='${p.id}';showP=false;render();scrollTo(0,0)">تعديل</button> <button class="d" onclick="delParty('${p.id}')">✕</button></td></tr>`).join('')||'<tr><td colspan="5" class="k">لا توجد أطراف بعد.</td></tr>'}</table></div></div>`;
+}
+function saveParty(e){e.preventDefault();const g=i=>$('#p_'+i).value.trim();
+ const name=g('name');if(!name){alert('اسم الطرف مطلوب.');return}
+ if(S.parties.some(p=>p.id!==pedit&&p.name===name)){alert('يوجد طرف بهذا الاسم.');return}
+ const d={name,cat:g('cat'),phone:g('phone'),note:g('note')};
+ if(pedit){const old=S.parties.find(p=>p.id===pedit);Object.assign(old,d);
+  S.cheques.forEach(c=>{if(c.pid===old.id)c.party=name})}
+ else S.parties.push({id:uid(),...d});
+ pedit='';showP=false;save();render()}
+function delParty(id){const p=S.parties.find(x=>x.id===id);if(!p)return;
+ const n=S.cheques.filter(c=>c.pid===id||(!c.pid&&c.party===p.name)).length;
+ if(!confirm(n?`هذا الطرف مرتبط بـ ${n} شيك. سيُحذف من القائمة وتبقى أسماء الشيكات كما هي. متابعة؟`:'حذف هذا الطرف؟'))return;
+ S.parties=S.parties.filter(x=>x.id!==id);S.cheques.forEach(c=>{if(c.pid===id){c.pid='';c.party=p.name}});pedit='';save();render()}
+function saveCo(e){e.preventDefault();const g=i=>$('#c_'+i).value.trim();
+ const d={name:g('name'),form:g('form'),nif:g('nif'),nis:g('nis'),rc:g('rc'),phone:g('phone'),address:g('address'),color:g('color')};
+ if(edit){Object.assign(S.companies.find(c=>c.id===edit),d);edit=''}
+ else{const n={id:uid(),...d};S.companies.push(n);cur=n.id}
+ showF=false;save();render()}
+function delCo(id){
+ if(S.cheques.some(c=>c.co===id)||S.accounts.some(a=>a.co===id)){alert('لا يمكن حذف شركة لديها شيكات أو حسابات. احذفها أولاً.');return}
+ if(confirm('حذف هذه الشركة؟')){S.companies=S.companies.filter(c=>c.id!==id);save();render()}}
+function imp(){try{const d=JSON.parse($('#bt').value);if(!Array.isArray(d.companies)||!Array.isArray(d.cheques))throw 0;S=d;S.accounts=S.accounts||[];S.log=S.log||[];S.parties=S.parties||[];
+ S.cheques.forEach(c=>{if(c.status==='returned')c.status='cancelled'});save();render()}catch(e){alert('نص غير صالح.')}}
+const BANKS=['BEA – البنك الخارجي الجزائري','BNA – البنك الوطني الجزائري','CPA – القرض الشعبي الجزائري','BDL – بنك التنمية المحلية','BADR – بنك الفلاحة والتنمية الريفية','CNEP-Banque – الصندوق الوطني للتوفير والاحتياط','BNH – البنك الوطني للإسكان','Al Baraka Bank – بنك البركة','Société Générale Algérie (SGA)','BNP Paribas El Djazaïr','Natixis Algérie','Citibank Algeria','HSBC Algeria','Arab Bank Algeria','Arab Banking Corporation (ABC)','Trust Bank Algeria','Housing Bank Algeria','Gulf Bank Algérie (AGB)','Fransabank El Djazaïr','Al Salam Bank Algeria','Ziraat Bank Algeria','بريد الجزائر – CCP','صندوق نقدي (Caisse)'];
+const bankOpts=()=>'<option value="">— اختر —</option>'+BANKS.map(b=>`<option>${b}</option>`).join('')+'<option value="__o">أخرى…</option>';
+const bv=v=>v==='__o'?(prompt('اسم البنك')||''):v;
+const eff=c=>c.dir==='in'&&c.status==='cashed'?c.amt:c.dir==='out'&&c.status==='paid'?-c.amt:0;
+const bal=a=>a.open+S.cheques.filter(c=>c.acc===a.id).reduce((s,c)=>s+eff(c),0);
+const pn=a=>S.cheques.filter(c=>c.acc===a.id&&pend(c)).reduce((s,c)=>s+(c.dir==='in'?c.amt:-c.amt),0);
+const accName=id=>{const a=S.accounts.find(x=>x.id===id);return a?a.bank.split(' – ')[0]+(a.no?' '+a.no:''):''};
+const chips=()=>`<div class="chips">${S.companies.map(c=>`<button class="${c.id===cur?'on':''}" style="${c.id===cur?'':'border-color:'+c.color}" onclick="cur='${c.id}';render()">${esc(c.name)}</button>`).join('')}</div>`;
+const noCo=`<div class="card empty">أضف شركة أولاً من صفحة الإعدادات.<br><br><button class="p" onclick="showF=true;go('set')">+ إضافة شركة</button></div>`;
+function alerts(A){let h='';
+ A.forEach(a=>{let r=bal(a);for(const c of S.cheques.filter(c=>c.acc===a.id&&pend(c)).sort((x,y)=>x.due.localeCompare(y.due))){r+=c.dir==='in'?c.amt:-c.amt;if(r<0){h+=`<div class="card late">⚠️ عجز متوقع في حساب ${esc(accName(a.id))} (${esc(co(a.co).name)}) بتاريخ ${fd(c.due)}: ${fmt(r)}</div>`;break}}});
+ const bad=S.cheques.filter(c=>c.dir==='out'&&c.status==='cancelled'&&!c.cs&&A.some(a=>a.id===c.acc));
+ if(bad.length)h+=`<div class="card late">🚫 ${bad.length} شيك صادر ملغى غير مسوّى: راجع بنكك وسوِّ وضعيته.</div>`;
+ return h}
+function accs(){if(!S.companies.length)return noCo;const A=S.accounts.filter(a=>a.co===cur);
+ return`${chips()}<div class="card"><h2>حساب جديد</h2><form onsubmit="addAcc(event)"><label>البنك / CCP<select id="a_bank">${bankOpts()}</select></label><label>رقم الحساب / RIB<input id="a_no"></label><label>الرصيد الافتتاحي (DA)<input id="a_open" type="number" step="0.01" value="0"></label><label>&nbsp;<button class="p">حفظ الحساب</button></label></form></div>
+ <div class="card"><h2>الحسابات – الرصيد الفعلي ${fmt(A.reduce((s,a)=>s+bal(a),0))}</h2><div class="tw"><table><tr><th>البنك</th><th>الرقم</th><th>افتتاحي</th><th>الرصيد الفعلي</th><th>المتوقع</th><th></th></tr>
+ ${A.map(a=>`<tr><td>${esc(a.bank)}</td><td class="num">${esc(a.no)}</td><td class="num">${fmt(a.open)}</td><td class="num"><b>${fmt(bal(a))}</b></td><td class="num ${bal(a)+pn(a)<0?'out':''}">${fmt(bal(a)+pn(a))}</td><td><button class="d" onclick="delAcc('${a.id}')">✕</button></td></tr>`).join('')||'<tr><td colspan="6" class="k">لا توجد حسابات.</td></tr>'}</table></div>
+ <p class="k">الرصيد الفعلي يتغير تلقائياً عند تحويل شيك وارد إلى «محصَّل» أو صادر إلى «مصروف». المتوقع يضيف الشيكات المعلقة.</p></div>`}
+function addAcc(e){e.preventDefault();const b=bv($('#a_bank').value);if(!b){alert('اختر البنك.');return}
+ S.accounts.push({id:uid(),co:cur,bank:b,no:$('#a_no').value.trim(),open:+$('#a_open').value||0});save();render()}
+function delAcc(id){if(S.cheques.some(c=>c.acc===id)){alert('لا يمكن حذف حساب مرتبط بشيكات.');return}S.accounts=S.accounts.filter(a=>a.id!==id);save();render()}
+function pts(){
+ if(!S.companies.length)return noCo;
+ const L=S.cheques.filter(c=>c.co===cur);
+ const nameOf=c=>{if(c.pid){const p=S.parties.find(x=>x.id===c.pid);if(p)return p.name}return c.party||''};
+ const partyOf=c=>{if(c.pid){const p=S.parties.find(x=>x.id===c.pid);if(p)return p}return S.parties.find(x=>x.name===c.party)};
+ const rows={};Object.keys(CATS).forEach(k=>rows[k]={});
+ // الأطراف المسجلة أولاً
+ S.parties.forEach(p=>{if(!CATS[p.cat])return;rows[p.cat][p.name]=rows[p.cat][p.name]||{name:p.name,n:0,amt:0,can:0,canA:0,reg:true}});
+ // شيكات لم تُسجَّل أطرافها بعد
+ L.forEach(c=>{const q=partyOf(c),nm=nameOf(c)||'—';if(!nm)return;
+  const cat=q&&CATS[q.cat]?q.cat:(c.dir==='in'?'customer':'supplier');
+  const r=rows[cat][nm]=rows[cat][nm]||{name:nm,n:0,amt:0,can:0,canA:0,reg:!!q};
+  r.n++;r.amt+=c.amt;if(c.status==='cancelled'){r.can++;r.canA+=c.amt}});
+ const dir=CATDIR[ptab],amtLab=dir==='in'?'الوارد منه':'الصادر له';
+ const list=Object.values(rows[ptab]).sort((a,b)=>b.amt-a.amt||a.name.localeCompare(b.name,'ar'));
+ const tot=list.reduce((t,r)=>({n:t.n+r.n,amt:t.amt+r.amt,can:t.can+r.can,canA:t.canA+r.canA}),{n:0,amt:0,can:0,canA:0});
+ return`${chips()}<div class="card">
+ <div class="chips">${Object.entries(CATS).map(([k,v])=>`<button class="${ptab===k?'on':''}" onclick="ptab='${k}';render()">${v}</button>`).join('')}</div>
+ <h2>${CATS[ptab]}</h2>
+ <div class="tw"><table><tr><th>${ptab==='customer'?'اسم الزبون':ptab==='supplier'?'اسم المورد':'الطرف'}</th><th>عدد الشيكات</th><th>${amtLab}</th><th>الملغات</th></tr>
+ ${list.map(r=>`<tr><td>${esc(r.name)}${r.reg?'':' <span class="k">(غير مسجَّل)</span>'}</td><td>${r.n}</td><td class="num ${dir}">${fmt(r.amt)}</td><td class="num ${r.can?'late':''}">${r.can?fmt(r.canA):'—'}${r.can?`<br><span class="k">${r.can} شيك</span>`:''}</td></tr>`).join('')
+   ||`<tr><td colspan="4" class="k">لا توجد بيانات في «${CATS[ptab]}».</td></tr>`}
+ ${list.length?`<tr><td><b>المجموع</b></td><td><b>${tot.n}</b></td><td class="num"><b>${fmt(tot.amt)}</b></td><td class="num"><b>${tot.can?fmt(tot.canA):'—'}</b>${tot.can?`<br><span class="k">${tot.can} شيك</span>`:''}</td></tr>`:''}</table></div>
+ <p class="k">تُصنَّف الأطراف حسب فئتها في الإعدادات ← معلومات الأطراف. الشيكات المسجّلة بأسماء غير مضافة تظهر معلَّمة بـ«غير مسجَّل».</p></div>`}
+function settle(id){const c=S.cheques.find(c=>c.id===id),d=prompt('تاريخ التسوية (YYYY-MM-DD)',T);if(d){c.cs=d;save();render()}}
+function ar(n){n=Math.round(n);if(!n)return'';const U=['','واحد','اثنان','ثلاثة','أربعة','خمسة','ستة','سبعة','ثمانية','تسعة','عشرة','أحد عشر','اثنا عشر','ثلاثة عشر','أربعة عشر','خمسة عشر','ستة عشر','سبعة عشر','ثمانية عشر','تسعة عشر'],Tn=['','','عشرون','ثلاثون','أربعون','خمسون','ستون','سبعون','ثمانون','تسعون'],H=['','مائة','مائتان','ثلاثمائة','أربعمائة','خمسمائة','ستمائة','سبعمائة','ثمانمائة','تسعمائة'],sc=[['ألف','ألفان','آلاف','ألفاً'],['مليون','مليونان','ملايين','مليوناً'],['مليار','ملياران','مليارات','ملياراً']];
+ const b=x=>{const h=Math.floor(x/100),r=x%100,p=[];if(h)p.push(H[h]);if(r){if(r<20)p.push(U[r]);else{const u=r%10;p.push((u?U[u]+' و':'')+Tn[Math.floor(r/10)])}}return p.join(' و')};
+ let P=[],i=0;while(n>0){const g=n%1000;n=Math.floor(n/1000);if(g){let t;if(!i)t=b(g);else{const w=sc[i-1];t=g===1?w[0]:g===2?w[1]:g<=10?b(g)+' '+w[2]:b(g)+' '+w[3]}P.unshift(t)}i++}return P.join(' و')}
+function csv(){const q=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
+ return ['الشركة','الاتجاه','الحساب','الرقم','الطرف','المبلغ','الاستحقاق','الحالة','سبب الإلغاء'].join(';')+'\n'+S.cheques.map(c=>[co(c.co).name,c.dir==='in'?'وارد':'صادر',accName(c.acc),c.no,c.party,c.amt,c.due,ST[c.dir][c.status],c.cr||''].map(q).join(';')).join('\n')}
+function lg(t){S.log.push({d:new Date().toISOString().slice(0,16).replace('T',' '),t});S.log=S.log.slice(-300)}
+async function hs(v){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(v));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
+function lockUI(){if(!S.pw)return;const d=document.createElement('div');d.style.cssText='position:fixed;inset:0;background:var(--bg);z-index:99;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px';
+ d.innerHTML='<h2>🔒 أدخل كلمة المرور</h2><input id="lp" type="password"><button class="p" id="lb">دخول</button>';document.body.appendChild(d);
+ const go=async()=>{if(await hs($('#lp').value)===S.pw)d.remove();else alert('كلمة مرور خاطئة')};$('#lb').onclick=go;$('#lp').onkeydown=e=>{if(e.key==='Enter')go()}}
+async function setPw(){const v=prompt('كلمة المرور الجديدة');if(!v)return;S.pw=await hs(v);lg('تعيين كلمة المرور');save();render()}
+function rmPw(){if(confirm('إزالة كلمة المرور؟')){delete S.pw;lg('إزالة كلمة المرور');save();render()}}
+function extras(){return`<div class="card"><h2>الأمان</h2><p>${S.pw?'🔒 كلمة المرور مفعّلة':'لا توجد كلمة مرور'}</p><button class="p" onclick="setPw()">${S.pw?'تغيير':'تعيين'} كلمة المرور</button> ${S.pw?`<button onclick="rmPw()">إزالة</button>`:''}<p class="k">القفل يمنع فتح الواجهة فقط، والبيانات غير مشفّرة داخل المتصفح.</p></div>
+ <div class="card"><h2>تصدير (CSV لـ Excel) وطباعة</h2><textarea id="ct">${esc(csv())}</textarea><p><button onclick="window.print()">طباعة الصفحة</button></p></div>
+ <div class="card"><h2>سجل التعديلات</h2><div class="tw"><table>${S.log.slice(-50).reverse().map(l=>`<tr><td class="num">${l.d}</td><td>${esc(l.t)}</td></tr>`).join('')||'<tr><td class="k">لا يوجد.</td></tr>'}</table></div></div>`}
+const LB={addChq:'إضافة شيك',setSt:'تغيير حالة شيك',delChq:'حذف شيك',saveCo:'حفظ شركة',delCo:'حذف شركة',addAcc:'إضافة حساب',delAcc:'حذف حساب',settle:'تسوية شيك ملغى',saveParty:'حفظ طرف',delParty:'حذف طرف'};
+Object.keys(LB).forEach(n=>{const f=window[n];window[n]=function(...a){let x=LB[n];if(n==='setSt'){const c=S.cheques.find(c=>c.id===a[0]);x+=' '+(c?c.no:'')+' ← '+a[1]}
+ const h=JSON.stringify([S.cheques,S.accounts,S.companies]);f.apply(this,a);if(JSON.stringify([S.cheques,S.accounts,S.companies])!==h){lg(x);save()}}});
+lockUI();render();
+</script>
+</body>
+</html>
