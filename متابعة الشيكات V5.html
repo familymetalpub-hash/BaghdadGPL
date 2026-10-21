@@ -128,7 +128,8 @@ function chq(){
  <label>الحساب<select id="f_acc">${S.accounts.filter(a=>a.co===cur).map(a=>`<option value="${a.id}">${esc(accName(a.id))}</option>`).join('')}</select></label>
  <label>رقم الشيك<input id="f_no" required></label>
  <label>الطرف<select id="f_cat" onchange="fillPartyList()"></select></label>
- <label>اسم الطرف<input id="f_party" list="f_plist" placeholder="اكتب أو اختر" required><datalist id="f_plist"></datalist></label>
+ <label>اسم الطرف<select id="f_party" onchange="partyPick()"></select></label>
+ <label id="f_newli" style="display:none">اسم طرف جديد (كتابة يدوية)<input id="f_new" placeholder="اكتب اسم الطرف"></label>
  <label>البنك المسحوب عليه<select id="f_bank">${bankOpts()}</select></label>
  <label>المبلغ (DA)<input id="f_amt" type="number" min="1" step="0.01" required oninput="$('#f_w').textContent=ar(+this.value)+' دينار جزائري'"><small id="f_w" class="k"></small></label>
  <label>تاريخ العملية<input id="f_op" type="date" value="${T}"></label>
@@ -148,15 +149,25 @@ function fillSt(){const d=$('#f_dir');if(!d)return;const dir=d.value;
  $('#f_cat').innerHTML=cs.map(k=>`<option value="${k}">${CATS[k]}</option>`).join('');
  fillPartyList();
 }
-function fillPartyList(){const c=$('#f_cat'),l=$('#f_plist');if(!c||!l)return;
+function fillPartyList(){const c=$('#f_cat'),sl=$('#f_party');if(!c||!sl)return;
  const ps=S.parties.filter(p=>p.cat===c.value).sort((a,b)=>a.name.localeCompare(b.name,'ar'));
- l.innerHTML=ps.map(p=>`<option value="${esc(p.name)}">`).join('');
+ sl.innerHTML=(ps.length?ps.map(p=>`<option value="${p.id}">${esc(p.name)}</option>`).join('')
+   :`<option value="__new">— لا يوجد ${CATS[c.value]} مسجَّل —</option>`)
+  +`<option value="__new">➕ اسم جديد (كتابة يدوية)</option>`;
+ sl.value=ps.length?ps[0].id:'__new';
+ partyPick();
+}
+function partyPick(){const sl=$('#f_party'),li=$('#f_newli');if(!sl||!li)return;
+ const manual=!sl.value||sl.value==='__new';
+ li.style.display=manual?'':'none';
+ if(manual){const n=$('#f_new');if(n)n.focus()}
 }
 function addChq(e){e.preventDefault();const g=i=>$('#f_'+i).value.trim();
  if(!g('acc')){alert('أضف حساباً بنكياً لهذه الشركة أولاً (تبويب الحسابات).');return}
- const cat=g('cat'),party=g('party');
- if(!party){alert('اكتب اسم الطرف.');return}
- const p=S.parties.find(x=>x.name===party&&x.cat===cat)||S.parties.find(x=>x.name===party);
+ const cat=g('cat');let pid=g('party'),party='',p=null;
+ if(pid&&pid!=='__new'){p=S.parties.find(x=>x.id===pid)||null;party=p?p.name:''}
+ if(!p){party=($('#f_new')?$('#f_new').value.trim():'')||'';}
+ if(!party){alert('اختر اسم الطرف من القائمة أو اكتب اسماً جديداً.');return}
  S.cheques.push({id:uid(),co:cur,acc:g('acc'),dir:g('dir'),no:g('no'),cat,party,pid:p?p.id:'',bank:bv(g('bank')),amt:+g('amt'),op:g('op'),due:g('due'),status:g('st'),note:g('note')});
  if(!p){S.parties.push({id:uid(),name:party,cat,phone:'',note:''});S.cheques[S.cheques.length-1].pid=S.parties[S.parties.length-1].id}
  save();showF=false;render()}
